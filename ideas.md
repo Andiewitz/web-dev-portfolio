@@ -84,3 +84,6 @@ The revised artwork is commissioned through GPT Image for three specific jobs: a
 - The VisionFX lockup uses a custom focus-lens mark and a deliberately compressed FX treatment rather than a default typed wordmark or the removed slash motif.
 - Orange functions as the VisionFX mark, a single earned emphasis in the opening proposition, primary actions, and the single contact field. It does not decorate routine UI.
 - Every primary section must pair editorial clarity with a concrete signal of web production discipline, including responsive systems, component thinking, semantic structure, performance, QA, or launch handoff.
+- The projects showcase communicates representative engagement directions rather than inventing client names, project outcomes, or testimonials. Its original GPT-generated artwork supports the story without implying a real client relationship.
+- Project direction cards read as build engagements rather than generic agency tiles: each gives a business context plus concrete deliverable and handoff signals, including responsive templates, component architecture, semantic markup, launch QA, and team handoff.
+- The VisionFX focus-lens mark is an orange field with a cream or charcoal concentric lens and signal point; it appears at meaningful brand touchpoints without reintroducing the removed slash or numeric ornament.

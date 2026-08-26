@@ -20,3 +20,7 @@ The final browser smoke test confirmed that the primary header CTA changes the U
 The redesign removed the standalone slash, numeric indexing, and pseudo-technical receipt from the user-facing experience. Desktop and 375px mobile audits confirm the revised visual rhythm: open parchment hero, one charcoal editorial thesis band, text-led capability sections, studio imagery, a single orange conversion field, and a charcoal footer. The custom VisionFX focus-lens mark and compressed FX lockup now provide a more deliberate brand signature without returning to arbitrary graphic notation.
 
 The updated homepage makes its web-development role explicit through visible references to frontend engineering, responsive systems, semantic structure, interaction states, performance, QA, and launch handoff. TypeScript validation and the production build passed following these changes.
+
+## Projects-section verification — 2026-08-27
+
+The new Projects destination appears in desktop and mobile navigation and leads into a dedicated editorial showcase. The cards present representative engagement directions rather than fabricated client work: each includes a business context and concrete deliverable signals such as responsive templates, component architecture, semantic markup, launch QA, and team handoff. The desktop audit confirms that original GPT-generated artwork has replaced temporary placeholders, while the 375px audit confirms a readable single-column project sequence without horizontal overflow.

@@ -9,6 +9,7 @@ import VisionMark from "@/components/VisionMark";
 const navItems = [
   { href: "#services", label: "Services" },
   { href: "#approach", label: "Approach" },
+  { href: "#projects", label: "Projects" },
   { href: "#studio", label: "Studio" },
 ];
 
@@ -42,6 +43,30 @@ const principles = [
   {
     title: "Leave room for the idea",
     text: "We use less ornament so the important parts have space to carry their own weight.",
+  },
+];
+
+const projects = [
+  {
+    title: "A launch site with a clear first move",
+    type: "New product presence",
+    context: "When a new offer needs to make sense before the next meeting.",
+    deliverables: "Content architecture · responsive templates · launch QA",
+    image: "/manus-storage/visionfx-project-launch_acb1f6be.jpg",
+  },
+  {
+    title: "A platform people can understand faster",
+    type: "Digital platform redesign",
+    context: "When a complex product needs a more useful route into its value.",
+    deliverables: "Information model · component architecture · responsive UI",
+    image: "/manus-storage/visionfx-project-platform_40fd618e.jpg",
+  },
+  {
+    title: "A content system built to keep growing",
+    type: "Editorial and component system",
+    context: "When publishing needs a clearer structure without a new page feeling like a rebuild.",
+    deliverables: "Editorial blocks · semantic markup · team handoff",
+    image: "/manus-storage/visionfx-project-system_4723ebe2.jpg",
   },
 ];
 
@@ -90,6 +115,7 @@ export default function Home() {
                 VisionFX brings strategy, interface design, and frontend engineering together for teams who need their next website to mean something and work properly everywhere.
               </p>
               <a className="text-cta" href="#contact">Tell us what you’re building</a>
+              <p className="hero-proof">Responsive systems · semantic builds · performance QA</p>
             </div>
             <figure className="hero-art editorial-reveal editorial-reveal--late">
               <div className="image-shell image-shell--hero">
@@ -135,6 +161,35 @@ export default function Home() {
                   <p className="service__detail">{service.detail}</p>
                   <h3>{service.title}</h3>
                   <p>{service.text}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section id="projects" className="projects-section">
+          <div className="content-frame">
+            <div className="projects-heading">
+              <div>
+                <p className="eyebrow">Project directions</p>
+                <h2>Built for the moment a better website changes what happens next.</h2>
+              </div>
+              <p>Representative builds, not a template catalog: each one takes a business decision through structure, responsive components, testing, and a launch-ready handoff.</p>
+            </div>
+            <div className="project-grid">
+              {projects.map((project) => (
+                <article className="project-card" key={project.title}>
+                  <div className="project-card__frame">
+                    <div className="project-card__image-wrap">
+                      <img src={project.image} alt="" loading="lazy" />
+                    </div>
+                    <div className="project-card__content">
+                      <p className="project-card__type">{project.type}</p>
+                      <h3>{project.title}</h3>
+                      <p className="project-card__context">{project.context}</p>
+                      <p className="project-card__deliverables">{project.deliverables}</p>
+                    </div>
+                  </div>
                 </article>
               ))}
             </div>
