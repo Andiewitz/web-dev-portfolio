@@ -32,3 +32,7 @@ At 1280×720, the original hero extends below the viewport after the sticky head
 After calibration, both 1280×720 and 1920×1080 viewport checks show the complete hero composition above the next section: headline, supporting text, primary action, proof line, art-directed image, and caption all remain visible without clipping. The 16:9 desktop hero now uses the available viewport height rather than a fixed vertical stack.
 
 At 768×1024, the hero intentionally transitions to its single-column reading order: clear proposition and CTA first, then the full-width artwork. At 375×812, the mobile header, headline, supporting copy, CTA, proof line, and artwork remain unobstructed and legible, with no horizontal overflow observed.
+
+## Ink-led color-distribution verification — 2026-08-27
+
+The revised desktop and mobile audits confirm that VisionFX no longer reads as overwhelmingly pale. Near-black now carries the hero, approach, projects, contact, and footer; warm sand structures the service and studio bands; parchment is limited to local project cards and image framing. The only visible orange areas are the brand mark, one highlighted proposition phrase, and primary conversion controls. The project showcase now reads as an asymmetric folio, with a lead engagement and two supporting entries rather than equal generic cards.

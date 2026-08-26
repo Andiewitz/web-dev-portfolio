@@ -10,3 +10,5 @@
 - [x] Verify the projects section at desktop and mobile widths, then save and deliver an updated checkpoint.
 - [x] Recalibrate the hero to fit inside common 16:9 desktop viewports without hiding its primary message or action.
 - [x] Verify the homepage at 16:9 desktop, tablet, and narrow mobile viewport sizes, then save and deliver the responsive refinement.
+- [x] Research practical color-distribution principles for an editorial marketing site and document the chosen VisionFX allocation.
+- [x] Rebalance VisionFX surfaces so the homepage is no longer overwhelmingly pale, then verify desktop and mobile color rhythm before delivery.

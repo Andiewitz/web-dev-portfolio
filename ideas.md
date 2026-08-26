@@ -87,3 +87,11 @@ The revised artwork is commissioned through GPT Image for three specific jobs: a
 - The projects showcase communicates representative engagement directions rather than inventing client names, project outcomes, or testimonials. Its original GPT-generated artwork supports the story without implying a real client relationship.
 - Project direction cards read as build engagements rather than generic agency tiles: each gives a business context plus concrete deliverable and handoff signals, including responsive templates, component architecture, semantic markup, launch QA, and team handoff.
 - The VisionFX focus-lens mark is an orange field with a cream or charcoal concentric lens and signal point; it appears at meaningful brand touchpoints without reintroducing the removed slash or numeric ornament.
+
+## Style Decisions — Color Distribution Correction
+
+- The color system is ink-led rather than parchment-led: near-black carries the hero, services, navigation, and footer; sand carries project and studio context; parchment is a smaller local reading surface.
+- Target visible-page allocation: 50–55% deep ink surfaces, 35–40% warm sand/parchment surfaces, less than 6% VisionFX orange, with the remaining balance in image material and fine neutral rules.
+- Orange has only three jobs: VisionFX brand signature, a deliberately highlighted proposition detail, and the primary conversion moment. It never becomes a default card or section color.
+- The final conversion section uses deep charcoal rather than an orange field; the orange conversion control is the earned action signal. This keeps orange below the target allocation while maintaining a decisive CTA.
+- Project directions use an asymmetric folio spread. The lead engagement is an expanded editorial artifact, while the remaining directions are secondary entries rather than three identical generic tiles.

@@ -1,6 +1,6 @@
 /**
- * VisionFX design reminder: calm, Anthropic-inspired editorial pacing with original VisionFX content.
- * Use open cream space, sparse type, measured charcoal media blocks, and a single orange action band.
+ * VisionFX design reminder: ink-led editorial pacing with original VisionFX content.
+ * Use deep charcoal as the dominant surface, sand as structure, parchment as a local reading surface, and orange for action only.
  */
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
@@ -18,16 +18,19 @@ const services = [
     title: "Clarify the message",
     text: "We shape the message, hierarchy, and visual language of a homepage around the decision it needs to support.",
     detail: "Positioning, content structure, and launch pages",
+    proof: "Decision map · page architecture · responsive content plan",
   },
   {
     title: "Turn it into a system",
     text: "We design responsive interfaces that feel deliberate on the first visit and remain clear when the site begins to grow.",
     detail: "Design direction, responsive UI, and components",
+    proof: "Component architecture · responsive templates · interaction states",
   },
   {
     title: "Build it for real",
     text: "We develop accessible, performant frontends with semantic structure, careful interaction states, and a handoff your team can use.",
     detail: "Frontend engineering, QA, and launch support",
+    proof: "Semantic markup · performance pass · QA and handoff",
   },
 ];
 
@@ -161,6 +164,7 @@ export default function Home() {
                   <p className="service__detail">{service.detail}</p>
                   <h3>{service.title}</h3>
                   <p>{service.text}</p>
+                  <p className="service__proof">{service.proof}</p>
                 </article>
               ))}
             </div>
