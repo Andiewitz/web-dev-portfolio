@@ -8,3 +8,5 @@
 - [x] Save and deliver a new checkpoint with the revised design.
 - [x] Add a dedicated Projects navigation destination and editorial project showcase to the homepage.
 - [x] Verify the projects section at desktop and mobile widths, then save and deliver an updated checkpoint.
+- [x] Recalibrate the hero to fit inside common 16:9 desktop viewports without hiding its primary message or action.
+- [x] Verify the homepage at 16:9 desktop, tablet, and narrow mobile viewport sizes, then save and deliver the responsive refinement.

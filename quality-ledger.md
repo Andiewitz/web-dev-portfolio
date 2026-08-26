@@ -24,3 +24,11 @@ The updated homepage makes its web-development role explicit through visible ref
 ## Projects-section verification — 2026-08-27
 
 The new Projects destination appears in desktop and mobile navigation and leads into a dedicated editorial showcase. The cards present representative engagement directions rather than fabricated client work: each includes a business context and concrete deliverable signals such as responsive templates, component architecture, semantic markup, launch QA, and team handoff. The desktop audit confirms that original GPT-generated artwork has replaced temporary placeholders, while the 375px audit confirms a readable single-column project sequence without horizontal overflow.
+
+## 16:9 hero-fit baseline — 2026-08-27
+
+At 1280×720, the original hero extends below the viewport after the sticky header, causing the primary proof line and lower image area to fall below the initial screen. At 1920×1080, the whole composition is visible but has more vertical breathing room than needed. The responsive calibration will use viewport-aware hero padding, a bounded media height, and a slightly more compact display scale so the headline, image, primary action, and proof line fit inside common 16:9 desktop viewports without constraining mobile’s natural reading flow.
+
+After calibration, both 1280×720 and 1920×1080 viewport checks show the complete hero composition above the next section: headline, supporting text, primary action, proof line, art-directed image, and caption all remain visible without clipping. The 16:9 desktop hero now uses the available viewport height rather than a fixed vertical stack.
+
+At 768×1024, the hero intentionally transitions to its single-column reading order: clear proposition and CTA first, then the full-width artwork. At 375×812, the mobile header, headline, supporting copy, CTA, proof line, and artwork remain unobstructed and legible, with no horizontal overflow observed.
