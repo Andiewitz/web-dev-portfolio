@@ -95,3 +95,7 @@ The revised artwork is commissioned through GPT Image for three specific jobs: a
 - Orange has only three jobs: VisionFX brand signature, a deliberately highlighted proposition detail, and the primary conversion moment. It never becomes a default card or section color.
 - The final conversion section uses deep charcoal rather than an orange field; the orange conversion control is the earned action signal. This keeps orange below the target allocation while maintaining a decisive CTA.
 - Project directions use an asymmetric folio spread. The lead engagement is an expanded editorial artifact, while the remaining directions are secondary entries rather than three identical generic tiles.
+
+## Reference-Driven Placement Correction
+
+The user-provided Anthropic screenshot is the ground-truth specification for the opening composition. VisionFX will not use a competing split image hero. It will begin on a quiet warm-cream canvas with a modest cream navigation bar, one two-column editorial argument, and a single wide near-black slab below. The hero's visual focal point is typography and whitespace; original VisionFX imagery moves to later supporting sections.

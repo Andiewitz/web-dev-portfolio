@@ -36,3 +36,9 @@ At 768×1024, the hero intentionally transitions to its single-column reading or
 ## Ink-led color-distribution verification — 2026-08-27
 
 The revised desktop and mobile audits confirm that VisionFX no longer reads as overwhelmingly pale. Near-black now carries the hero, approach, projects, contact, and footer; warm sand structures the service and studio bands; parchment is limited to local project cards and image framing. The only visible orange areas are the brand mark, one highlighted proposition phrase, and primary conversion controls. The project showcase now reads as an asymmetric folio, with a lead engagement and two supporting entries rather than equal generic cards.
+
+## Reference-driven opening verification — 2026-08-27
+
+At the user-provided 1366×768 viewport, the revised VisionFX opening now follows the requested hierarchy: a quiet cream header and canvas, an editorial two-column argument with a bold left statement and narrow right serif paragraph, then a single near-black full-width slab. The original competing split-image hero has been removed from the opening. A second pass tightened the left statement into three intentional lines and aligned the right column lower to create the same editorial cadence without copying Anthropic’s wording or identity.
+
+At 375×812, the two-column argument resolves into a legible single-column sequence, followed immediately by the dark statement slab. The mobile header remains compact and the change does not introduce horizontal overflow. TypeScript validation and the production build both pass after the placement correction.

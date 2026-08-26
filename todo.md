@@ -12,3 +12,5 @@
 - [x] Verify the homepage at 16:9 desktop, tablet, and narrow mobile viewport sizes, then save and deliver the responsive refinement.
 - [x] Research practical color-distribution principles for an editorial marketing site and document the chosen VisionFX allocation.
 - [x] Rebalance VisionFX surfaces so the homepage is no longer overwhelmingly pale, then verify desktop and mobile color rhythm before delivery.
+- [x] Replace the unrelated split-image hero with the user-provided Anthropic-inspired two-column editorial opening and a single dark content slab below.
+- [x] Validate the corrected placement at 1366×768 and mobile widths, then save and deliver the reference-driven update.

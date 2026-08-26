@@ -1,6 +1,6 @@
 /**
- * VisionFX design reminder: ink-led editorial pacing with original VisionFX content.
- * Use deep charcoal as the dominant surface, sand as structure, parchment as a local reading surface, and orange for action only.
+ * VisionFX design reminder: reference-driven editorial placement with original VisionFX content.
+ * Begin with a cream two-column argument and a single dark slab; use imagery only in later supporting sections.
  */
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
@@ -110,33 +110,28 @@ export default function Home() {
 
       <main id="main">
         <section id="top" className="hero-section">
-          <div className="content-frame hero-grid">
-            <div className="hero-copy editorial-reveal">
-              <p className="eyebrow">Independent web development studio</p>
-              <h1>A digital presence with a <em>point of view.</em></h1>
-              <p className="hero-lede">
-                VisionFX brings strategy, interface design, and frontend engineering together for teams who need their next website to mean something and work properly everywhere.
-              </p>
-              <a className="text-cta" href="#contact">Tell us what you’re building</a>
-              <p className="hero-proof">Responsive systems · semantic builds · performance QA</p>
+          <div className="content-frame opening-grid editorial-reveal">
+            <h1>Websites that <span>make</span><br />the next <span>move</span><br />clear.</h1>
+            <p className="opening-statement">
+              A website has to make its case quickly. VisionFX shapes the argument, builds the frontend, and leaves a system your team can carry forward.
+            </p>
+          </div>
+        </section>
+
+        <section className="hero-slab-section">
+          <div className="content-frame">
+            <div className="hero-slab">
+              <p>Strategy, design, and frontend engineering — in one room.</p>
+              <h2>Made for the work<br /><em>after the first click.</em></h2>
+              <a className="hero-slab__cta" href="#contact">Start a conversation</a>
             </div>
-            <figure className="hero-art editorial-reveal editorial-reveal--late">
-              <div className="image-shell image-shell--hero">
-                <img
-                  src="/manus-storage/visionfx-editorial-hero_0499b4c7.jpg"
-                  alt="Folded ivory paper forms arranged around a charcoal monolith and an orange ceramic accent"
-                  fetchPriority="high"
-                />
-              </div>
-              <figcaption>Clarity has a material quality.</figcaption>
-            </figure>
           </div>
         </section>
 
         <section id="approach" className="approach-section">
           <div className="content-frame approach-layout">
             <div className="approach-heading">
-              <p className="eyebrow eyebrow--inverse">Our approach</p>
+              <p className="eyebrow">Our approach</p>
               <h2>A website earns trust when the idea and the implementation agree.</h2>
               <p>Message, visual language, responsive behavior, and production detail all need to carry the same argument. That is the difference between a page that looks finished and a website that is ready to work.</p>
             </div>
