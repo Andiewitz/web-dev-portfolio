@@ -1,27 +1,16 @@
 /**
- * VisionFX design reminder: Voltage Editorial — an orange forward route on a cream/charcoal system.
- * The mark is a compact brand anchor, not decorative iconography.
+ * VisionFX design reminder: quiet editorial identity with typography doing the branding work.
+ * The wordmark deliberately avoids standalone slash, arrow, and numeric motifs.
  */
 type VisionMarkProps = {
-  className?: string;
-  label?: boolean;
   inverse?: boolean;
 };
 
-export default function VisionMark({
-  className = "",
-  label = true,
-  inverse = false,
-}: VisionMarkProps) {
+export default function VisionMark({ inverse = false }: VisionMarkProps) {
   return (
-    <span className={`vision-mark ${inverse ? "vision-mark--inverse" : ""} ${className}`}>
-      <img
-        src="/manus-storage/visionfx-mark_d3fc86cc.png"
-        alt=""
-        aria-hidden="true"
-        className="vision-mark__symbol"
-      />
-      {label && <span className="vision-mark__word">Vision<span>FX</span></span>}
+    <span className={`vision-wordmark ${inverse ? "vision-wordmark--inverse" : ""}`}>
+      <span className="vision-wordmark__mark" aria-hidden="true"><i /></span>
+      <span className="vision-wordmark__name">Vision</span><span className="vision-wordmark__fx">FX</span>
     </span>
   );
 }

@@ -14,3 +14,9 @@
 The desktop audit confirmed the intended parchment → charcoal → parchment → ember → charcoal band rhythm. The hero’s asymmetric split, build receipt, headline scale, and primary CTA remain legible. The 375px audit confirmed a single-column reflow, compact header control, contained project imagery, and a readable CTA band without horizontal overflow. The independent visual review found no revision needed and advised preserving the Voltage Editorial signatures.
 
 The final browser smoke test confirmed that the primary header CTA changes the URL to `#contact` and lands on the orange contact band as intended.
+
+## Editorial redesign verification — 2026-08-27
+
+The redesign removed the standalone slash, numeric indexing, and pseudo-technical receipt from the user-facing experience. Desktop and 375px mobile audits confirm the revised visual rhythm: open parchment hero, one charcoal editorial thesis band, text-led capability sections, studio imagery, a single orange conversion field, and a charcoal footer. The custom VisionFX focus-lens mark and compressed FX lockup now provide a more deliberate brand signature without returning to arbitrary graphic notation.
+
+The updated homepage makes its web-development role explicit through visible references to frontend engineering, responsive systems, semantic structure, interaction states, performance, QA, and launch handoff. TypeScript validation and the production build passed following these changes.

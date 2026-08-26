@@ -65,9 +65,22 @@ The VisionFX wordmark is set in bold display type with a custom **“/” voltag
 
 **VisionFX Orange — `#FF5F1F`**.
 
+## Revision: Anthropic-Inspired Editorial Restraint
+
+The redesign removes the prior forward-slash mark, decorative numeric indices, and pseudo-technical build receipt. In their place, VisionFX adopts a calmer rhythm inspired by Anthropic’s current public homepage: open off-white space, sparse utility navigation, a single art-directed media moment, one charcoal thesis band, and clear text-led sections. The intent is to borrow principles of restraint and editorial pacing, not Anthropic’s branding, content, or composition.
+
+The revised artwork is commissioned through GPT Image for three specific jobs: a hero still life that creates visual gravity without technical ornament, a studio object image that humanizes the craft, and an inline graphic study that adds a quiet visual pause. The orange accent remains unique to VisionFX and is reserved for meaningful calls to action.
+
 ## Style Decisions
 
 - Honor the supplied 0.5px hairline rule throughout; never use 1px borders.
 - Apply the nested radius formula whenever a surface contains another surface.
 - Do not introduce gradients, box shadows, generic icon decoration, fabricated proof, or testimonial content.
 - Make all CTA destinations meaningful through page anchors; a contact request link may use a `mailto:` destination until VisionFX provides a scheduling workflow.
+- Remove arbitrary numbers, standalone slash marks, directional-arrow ornament, and fake technical UI language from the public experience.
+
+## Style Decisions — Revision Review
+
+- The VisionFX lockup uses a custom focus-lens mark and a deliberately compressed FX treatment rather than a default typed wordmark or the removed slash motif.
+- Orange functions as the VisionFX mark, a single earned emphasis in the opening proposition, primary actions, and the single contact field. It does not decorate routine UI.
+- Every primary section must pair editorial clarity with a concrete signal of web production discipline, including responsive systems, component thinking, semantic structure, performance, QA, or launch handoff.
