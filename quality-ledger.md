@@ -80,3 +80,14 @@ The production server now disables directory index resolution in its static midd
 ## Vercel deployment-entry correction — 2026-08-27
 
 The user-provided deployment screenshot showed Vercel returning the bundled `server/index.ts` source at the root URL because the repository had no explicit Vercel output contract; Vercel inferred the server file as the entrypoint. Added `vercel.json` with the Vite framework, frozen-lockfile install, `pnpm build`, `dist/public` output directory, and an asset-safe SPA rewrite to `/index.html`. The build produced `dist/public/index.html` plus hashed CSS and JavaScript assets. The serving regression test, TypeScript check, and production build pass. The fix is prepared but still requires a fresh Vercel deployment to verify the live URL.
+
+
+## Live Vercel verification — 2026-08-27
+
+After the Vercel configuration was picked up, `https://visionfx-five.vercel.app/` served the VisionFX HTML application rather than raw server source. The live page title is `VisionFX — Digital presence, made clear`; the root rendered the homepage content, and the page includes the expected client route anchors and hashed asset references. This confirms the deployment-entry fix in the actual Vercel environment.
+
+
+The live root now serves the VisionFX application correctly. A direct request to `/projects` also reaches the Vercel HTML application, but the current client router intentionally has no standalone `/projects` page and therefore renders the project’s own 404 view; this is not raw server source. Asset content-type verification remains to be completed against a hashed live bundle URL.
+
+
+Final live verification: `https://visionfx-five.vercel.app/assets/index-Bs-TVEY2.js` returned `application/javascript` and a valid JavaScript prefix (`function mv(i,s){...}`). This confirms that Vercel is correctly serving the built frontend assets and HTML entry, and the source-serving regression is fully resolved.

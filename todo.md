@@ -41,4 +41,4 @@
 
 - [x] Add an explicit Vercel deployment contract that builds the frontend and serves `dist/public/index.html` instead of inferring `server/index.ts` as the entrypoint.
 - [x] Verify the local Vercel-compatible output: `dist/public/index.html`, hashed assets, production build, type check, and static-serving regression test.
-- [ ] Verify the live Vercel root and client route after redeploy, then confirm asset handling and save the deployment configuration checkpoint.
+- [x] Verify the live Vercel root and client route after redeploy, then confirm asset handling and save the deployment configuration checkpoint.
