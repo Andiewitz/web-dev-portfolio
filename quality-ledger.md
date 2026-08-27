@@ -48,3 +48,9 @@ At 375×812, the two-column argument resolves into a legible single-column seque
 The dark statement surface now lives in a dedicated scroll region rather than behaving as a static panel. At 1366×768 it begins as a contained rounded window within the cream canvas. The implementation pins the stage while scroll progress transitions the slab from `inset(10vh 7vw 10vh 7vw round 22px)` to edge-to-edge through `clip-path`, then releases to the following page content. Content position and opacity transition with the same scroll progress; reduced-motion and mobile variants intentionally use a static, readable slab.
 
 At 375×812, the scroll-specific desktop treatment resolves to a static near-black statement surface immediately below the opening argument. The small-screen fallback preserves the reading order and strong visual transition without introducing a sticky scroll trap or positioning movement on a touch-first screen.
+
+The final fallback uses the template’s existing `useIsMobile` breakpoint hook at 768px, so mobile no longer receives scroll-linked inline transform or opacity values. CSS switches the slab to normal document flow below 768px, matching the runtime behavior rather than relying on a visual override alone.
+
+## Immediate document-scroll timing — 2026-08-27
+
+The expansion is now driven by the page-level `scrollYProgress`, not a local section observer. It begins at global scroll progress `0` and completes across the first 14% of document scroll, so the very first user scroll movement starts changing the slab’s inset and content state. The verified mobile path remains static below 768px.

@@ -95,7 +95,7 @@ button { border: 0; }
 .image-shell--hero img { display: block; width: 100%; height: clamp(360px, 54svh, 505px); object-fit: cover; border: 0.5px solid rgba(242,233,215,0.2); border-radius: 16px; }
 .hero-art figcaption { margin: 10px 0 0 14px; color: rgba(242,233,215,0.45); font-family: var(--font-mono); font-size: 10px; }
 
-.hero-slab-scroll-region { height: 220svh; background: var(--canvas); }
+.hero-slab-scroll-region { height: 150svh; background: var(--canvas); }
 .hero-slab-stage { position: sticky; top: 0; width: 100%; height: 100svh; overflow: hidden; }
 .hero-slab { position: absolute; inset: 0; display: flex; min-height: 100svh; flex-direction: column; background: var(--charcoal); color: var(--paper); will-change: clip-path; }
 .hero-slab__inner { display: flex; width: min(1180px, calc(100% - 96px)); min-height: 100%; margin-inline: auto; flex-direction: column; justify-content: flex-end; padding: clamp(32px, 5vw, 78px) 0; will-change: transform, opacity; }
@@ -187,7 +187,7 @@ button { border: 0; }
   .opening-grid { gap: 34px; }
   .opening-grid h1 { max-width: 760px; }
   .opening-statement { max-width: 500px; margin-top: 0; }
-  .hero-slab-scroll-region { height: 190svh; }
+  .hero-slab-scroll-region { height: 145svh; }
   .hero-slab__inner { width: min(100% - 48px, 1180px); }
   .approach-layout, .services-layout { gap: 52px; }
   .studio-layout { gap: 52px; }
@@ -200,16 +200,18 @@ button { border: 0; }
   .footer-layout { grid-template-columns: 1fr 1fr; }
   .footer-links { justify-content: flex-start; }
 }
+@media (max-width: 767px) {
+  .hero-slab-scroll-region { height: auto; padding: 0 0 72px; }
+  .hero-slab-stage { position: static; height: auto; overflow: visible; }
+  .hero-slab { position: relative; min-height: 420px; clip-path: none !important; }
+  .hero-slab__inner { width: 100%; min-height: 420px; padding: 26px; }
+}
 @media (max-width: 600px) {
   .content-frame, .site-header__inner, .mobile-nav nav { width: min(100% - 32px, 1180px); }
   .site-header__inner { min-height: 64px; }
   .hero-section { padding: 74px 0 58px; }
   .opening-grid h1 { font-size: clamp(48px, 13vw, 64px); }
   .opening-statement { font-size: 22px; }
-  .hero-slab-scroll-region { height: auto; padding: 0 0 72px; }
-  .hero-slab-stage { position: static; height: auto; overflow: visible; }
-  .hero-slab { position: relative; min-height: 420px; clip-path: none !important; }
-  .hero-slab__inner { width: 100%; min-height: 420px; padding: 26px; }
   .hero-slab h2 { margin-top: 52px; font-size: clamp(54px, 16vw, 68px); }
   .hero-lede { margin: 24px 0 28px; font-size: 16px; }
   .image-shell--hero { padding: 8px; border-radius: 20px; }

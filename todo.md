@@ -16,3 +16,5 @@
 - [x] Validate the corrected placement at 1366×768 and mobile widths, then save and deliver the reference-driven update.
 - [x] Replace the static dark statement slab with a scroll-driven contained-to-viewport expansion that releases smoothly into the following section.
 - [x] Provide a motion-reduced/static fallback and verify the effect across desktop and mobile viewports before delivery.
+- [x] Bind the dark-slab expansion to the first pixel of document scroll rather than waiting for the slab section to enter the viewport.
+- [x] Verify the revised immediate-expansion behavior and deliver the timing correction.

@@ -2,10 +2,11 @@
  * VisionFX design reminder: reference-driven editorial placement with original VisionFX content.
  * Begin with a cream two-column argument and a single dark slab; use imagery only in later supporting sections.
  */
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import VisionMark from "@/components/VisionMark";
+import { useIsMobile } from "@/hooks/useMobile";
 
 const navItems = [
   { href: "#services", label: "Services" },
@@ -77,18 +78,16 @@ const projects = [
 export default function Home() {
   const [navOpen, setNavOpen] = useState(false);
   const shouldReduceMotion = useReducedMotion();
-  const slabRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: slabRef,
-    offset: ["start start", "end end"],
-  });
+  const isMobile = useIsMobile();
+  const useStaticSlab = shouldReduceMotion || isMobile;
+  const { scrollYProgress } = useScroll();
   const slabClipPath = useTransform(
     scrollYProgress,
-    [0, 0.58],
+    [0, 0.14],
     ["inset(10vh 7vw 10vh 7vw round 22px)", "inset(0vh 0vw 0vh 0vw round 0px)"],
   );
-  const slabContentOpacity = useTransform(scrollYProgress, [0, 0.22, 0.58], [0.72, 0.84, 1]);
-  const slabContentY = useTransform(scrollYProgress, [0, 0.58], ["translateY(7vh)", "translateY(0)"]);
+  const slabContentOpacity = useTransform(scrollYProgress, [0, 0.05, 0.14], [0.72, 0.84, 1]);
+  const slabContentY = useTransform(scrollYProgress, [0, 0.14], ["translateY(7vh)", "translateY(0)"]);
   const closeNav = () => setNavOpen(false);
 
   return (
@@ -132,10 +131,10 @@ export default function Home() {
           </div>
         </section>
 
-        <section ref={slabRef} className="hero-slab-scroll-region" aria-label="VisionFX statement">
+        <section className="hero-slab-scroll-region" aria-label="VisionFX statement">
           <div className="hero-slab-stage">
-            <motion.div className="hero-slab" style={shouldReduceMotion ? undefined : { clipPath: slabClipPath }}>
-              <motion.div className="hero-slab__inner" style={shouldReduceMotion ? undefined : { opacity: slabContentOpacity, transform: slabContentY }}>
+            <motion.div className="hero-slab" style={useStaticSlab ? undefined : { clipPath: slabClipPath }}>
+              <motion.div className="hero-slab__inner" style={useStaticSlab ? undefined : { opacity: slabContentOpacity, transform: slabContentY }}>
               <p>Strategy, design, and frontend engineering — in one room.</p>
               <h2>Made for the work<br /><em>after the first click.</em></h2>
               <a className="hero-slab__cta" href="#contact">Start a conversation</a>
