@@ -2,9 +2,11 @@
  * VisionFX design reminder: reference-driven editorial placement with original VisionFX content.
  * Begin with a cream two-column argument and a single dark slab; use imagery only in later supporting sections.
  */
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import VisionMark from "@/components/VisionMark";
+import { useIsMobile } from "@/hooks/useMobile";
 
 const navItems = [
   { href: "#services", label: "Services" },
@@ -75,50 +77,19 @@ const projects = [
 
 export default function Home() {
   const [navOpen, setNavOpen] = useState(false);
-  const slabRegionRef = useRef<HTMLElement>(null);
-  const slabRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const region = slabRegionRef.current;
-    const slab = slabRef.current;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-
-    if (!region || !slab) return;
-
-    let frame = 0;
-    const updateSlab = () => {
-      frame = 0;
-      if (window.innerWidth < 768 || reducedMotion.matches) {
-        slab.style.clipPath = "";
-        return;
-      }
-
-      const regionTop = region.getBoundingClientRect().top;
-      const start = window.innerHeight * 0.85;
-      const end = window.innerHeight * 0.15;
-      const progress = Math.min(1, Math.max(0, (start - regionTop) / (start - end)));
-      const inset = (7 * (1 - progress)).toFixed(3);
-      const radius = (22 * (1 - progress)).toFixed(2);
-      slab.style.clipPath = `inset(0 ${inset}vw 0 ${inset}vw round ${radius}px)`;
-    };
-
-    const requestUpdate = () => {
-      if (!frame) frame = window.requestAnimationFrame(updateSlab);
-    };
-
-    updateSlab();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
-    reducedMotion.addEventListener("change", requestUpdate);
-
-    return () => {
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-      reducedMotion.removeEventListener("change", requestUpdate);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, []);
-
+  const slabRef = useRef<HTMLElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const useStaticSlab = shouldReduceMotion || isMobile;
+  const { scrollYProgress } = useScroll({
+    target: slabRef,
+    offset: ["start end", "start start"],
+  });
+  const slabClipPath = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["inset(0 7vw 0 7vw round 22px)", "inset(0 0 0 0 round 0px)"],
+  );
   const closeNav = () => setNavOpen(false);
 
   return (
@@ -169,15 +140,15 @@ export default function Home() {
           </div>
         </section>
 
-        <section ref={slabRegionRef} className="hero-slab-scroll-region" aria-label="VisionFX statement">
+        <section ref={slabRef} className="hero-slab-scroll-region" aria-label="VisionFX statement">
           <div className="hero-slab-stage">
-            <div ref={slabRef} className="hero-slab">
+            <motion.div className="hero-slab" style={useStaticSlab ? undefined : { clipPath: slabClipPath }}>
               <div className="hero-slab__inner">
               <p>One team for the whole website project.</p>
               <h2>From a rough brief<br />to a <em>live website.</em></h2>
               <a className="hero-slab__cta" href="#services">What we do</a>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 

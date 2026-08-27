@@ -24,9 +24,5 @@
 - [x] Verify the rewritten content in desktop and mobile layouts, then deliver the client-clarity update.
 - [x] Restore the dark-slab scroll expansion after the clear opening offer and inquiry action, without obscuring first-visit comprehension.
 - [x] Verify the restored desktop motion and mobile fallback, then save and deliver the update.
-- [ ] Repair the dark-slab regression so it begins visibly inset rather than loading as a solid full-page field.
-- [ ] Verify the panel’s contained start and local scroll expansion at desktop width before delivering the fix.
-- [x] Repair the dark-slab regression so it begins visibly inset rather than loading as a solid full-page field.
-- [x] Verify the panel’s contained start and local scroll expansion at desktop width before delivering the fix.
 - [ ] Restore the dark-slab scroll expansion after the clear opening offer and inquiry action, without obscuring first-visit comprehension.
 - [ ] Verify the restored desktop motion and mobile fallback, then save and deliver the update.

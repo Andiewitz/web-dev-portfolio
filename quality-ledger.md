@@ -62,7 +62,3 @@ The approved page layout is unchanged, while the copy now explains the offer dir
 ## Restored local scroll treatment — 2026-08-27
 
 The clear opening remains intact before the dark statement surface. At desktop width, the dark panel begins as an inset, rounded surface and expands as that local section enters the viewport; its sticky stage holds the editorial moment before releasing into the main page. At 375×812, the panel deliberately remains static in normal flow, preserving clear reading and avoiding a touch-device scroll trap.
-
-## Contained-state repair — 2026-08-27
-
-The repaired desktop initial state is visibly inset from both page edges with rounded corners and a cream frame; it no longer loads as a solid full-page dark field. The local scroll calculation begins from this CSS-defined contained state and updates only the slab’s `clip-path` as the section crosses its entry range. At 375×812, the verified mobile fallback remains a normal-flow, static dark panel.
