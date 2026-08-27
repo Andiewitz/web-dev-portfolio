@@ -55,3 +55,10 @@
 - [x] Reuse verified bespoke VisionFX assets with distinct roles for project direction, studio/process, and supporting visual pause.
 - [x] Integrate image assets into the editorial grid with asymmetric crops and image-led hierarchy instead of repeated card shells; the final treatment intentionally uses direct editorial placement rather than forced overlaps.
 - [x] Verify image loading, responsive crops, alt text, contrast, and desktop/mobile presentation, then save and deliver the image-art-direction checkpoint.
+
+## Intro and Scroll Motion Revision
+
+- [x] Restore a visible first-visit intro choreography that gives the opening a crafted arrival without delaying comprehension.
+- [x] Increase the perceptual range of the slab’s scroll-driven continuity transition so its inset, expansion, and content state are unmistakable during normal scrolling.
+- [x] Preserve reduced-motion, touch, and keyboard accessibility; keep UI feedback composited while documenting the slab’s intentional clip-path continuity transition.
+- [x] Verify the intro and slab animation at desktop and mobile sizes, then save and deliver the motion revision checkpoint.

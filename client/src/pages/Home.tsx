@@ -74,10 +74,12 @@ export default function Home() {
   const [navOpen, setNavOpen] = useState(false);
   const slabRegionRef = useRef<HTMLElement>(null);
   const slabRef = useRef<HTMLDivElement>(null);
+  const slabInnerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const region = slabRegionRef.current;
     const slab = slabRef.current;
+    const slabInner = slabInnerRef.current;
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     if (!region || !slab) return;
@@ -87,16 +89,25 @@ export default function Home() {
       frame = 0;
       if (window.innerWidth < 768 || reducedMotion.matches) {
         slab.style.clipPath = "";
+        if (slabInner) {
+          slabInner.style.transform = "";
+          slabInner.style.opacity = "";
+        }
         return;
       }
 
       const regionTop = region.getBoundingClientRect().top;
-      const start = window.innerHeight * 0.85;
-      const end = window.innerHeight * 0.15;
+      const start = window.innerHeight * 0.96;
+      const end = -window.innerHeight * 0.12;
       const progress = Math.min(1, Math.max(0, (start - regionTop) / (start - end)));
       const inset = (7 * (1 - progress)).toFixed(3);
       const radius = (22 * (1 - progress)).toFixed(2);
       slab.style.clipPath = `inset(0 ${inset}vw 0 ${inset}vw round ${radius}px)`;
+      if (slabInner) {
+        const lift = ((1 - progress) * 32).toFixed(2);
+        slabInner.style.transform = `translate3d(0, ${lift}px, 0)`;
+        slabInner.style.opacity = (0.76 + (progress * 0.24)).toFixed(3);
+      }
     };
 
     const requestUpdate = () => {
@@ -154,7 +165,7 @@ export default function Home() {
           <div className="content-frame opening-grid">
             <div>
               <p className="eyebrow opening-eyebrow">VisionFX — web development studio</p>
-              <h1>Plan it.<br /><span>Design</span> it.<br />Build it.</h1>
+              <h1><span className="hero-line">Plan it.</span><br /><span className="hero-line hero-line--design">Design it.</span><br /><span className="hero-line">Build it.</span></h1>
             </div>
             <div className="opening-side">
               <p className="opening-statement">
@@ -169,7 +180,7 @@ export default function Home() {
         <section ref={slabRegionRef} className="hero-slab-scroll-region" aria-label="VisionFX statement">
           <div className="hero-slab-stage">
             <div ref={slabRef} className="hero-slab">
-              <div className="hero-slab__inner">
+              <div ref={slabInnerRef} className="hero-slab__inner">
                 <p className="hero-slab__eyebrow">The whole website, handled together.</p>
                 <div className="hero-slab__content">
                   <h2>Make the website<br />the <em>easy part.</em></h2>

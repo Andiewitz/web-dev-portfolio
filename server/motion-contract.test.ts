@@ -12,6 +12,8 @@ describe("VisionFX motion contract", () => {
     expect(css).not.toContain("grid-template-rows 220ms");
     expect(css).not.toContain(".editorial-reveal");
     expect(css).toContain(".hero-slab");
+    expect(css).toContain("@keyframes visionfx-hero-enter");
+    expect(css).toContain("translate3d(0, 22px, 0)");
     expect(css).toContain("@media (hover: hover) and (pointer: fine)");
     expect(css).toContain("@media (prefers-reduced-motion: reduce)");
     expect(css).toContain(".mobile-nav { position: absolute");
@@ -22,6 +24,9 @@ describe("VisionFX motion contract", () => {
     const home = await readFile(projectPath("client/src/pages/Home.tsx"), "utf8");
     const notFound = await readFile(projectPath("client/src/pages/NotFound.tsx"), "utf8");
 
+    expect(home).toContain("const start = window.innerHeight * 0.96");
+    expect(home).toContain("const end = -window.innerHeight * 0.12");
+    expect(home).toContain("slab.style.clipPath");
     expect(home).not.toContain("editorial-reveal");
     expect(notFound).not.toContain("animate-pulse");
     expect(notFound).not.toContain("transition-all");
