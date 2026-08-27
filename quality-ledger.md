@@ -76,3 +76,7 @@ The animation review informed the refinement: scroll expansion remains explanato
 ## Deployment serving-path verification — 2026-08-27
 
 The production server now disables directory index resolution in its static middleware and explicitly sends the built `index.html` for `/` and extensionless client routes. Extension-bearing paths are left to static serving or normal 404 behavior, preventing a missing asset from receiving the document fallback. A deployed-style smoke test returned `text/html` and an `<!doctype html>` body for `/` and `/projects`, while the referenced bundle returned `application/javascript`. The regression is covered by `server/static-serving.test.ts`; Vitest, TypeScript validation, and the production build pass.
+
+## Vercel deployment-entry correction — 2026-08-27
+
+The user-provided deployment screenshot showed Vercel returning the bundled `server/index.ts` source at the root URL because the repository had no explicit Vercel output contract; Vercel inferred the server file as the entrypoint. Added `vercel.json` with the Vite framework, frozen-lockfile install, `pnpm build`, `dist/public` output directory, and an asset-safe SPA rewrite to `/index.html`. The build produced `dist/public/index.html` plus hashed CSS and JavaScript assets. The serving regression test, TypeScript check, and production build pass. The fix is prepared but still requires a fresh Vercel deployment to verify the live URL.
