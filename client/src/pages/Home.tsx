@@ -127,6 +127,31 @@ export default function Home() {
     };
   }, []);
 
+  useEffect(() => {
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const targets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
+
+    if (window.innerWidth < 768 || reducedMotion.matches || targets.length === 0) return;
+
+    document.documentElement.classList.add("has-motion");
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
+        });
+      },
+      { threshold: 0.14, rootMargin: "0px 0px -8% 0px" },
+    );
+
+    targets.forEach((target) => observer.observe(target));
+    return () => {
+      observer.disconnect();
+      document.documentElement.classList.remove("has-motion");
+    };
+  }, []);
+
   const closeNav = () => setNavOpen(false);
 
   return (
@@ -197,14 +222,14 @@ export default function Home() {
 
         <section id="approach" className="approach-section">
           <div className="content-frame approach-layout">
-            <div className="approach-heading">
+            <div className="approach-heading" data-reveal>
               <p className="eyebrow">How we work</p>
               <h2>One partner from website strategy to launch.</h2>
               <p>You do not have to manage a strategist, a designer, and a developer separately. VisionFX takes the website through each stage as one connected project.</p>
             </div>
             <div className="principle-list">
               {principles.map((principle) => (
-                <article className="principle" key={principle.title}>
+                <article className="principle" data-reveal key={principle.title}>
                   <h3>{principle.title}</h3>
                   <p>{principle.text}</p>
                 </article>
@@ -215,14 +240,14 @@ export default function Home() {
 
         <section id="services" className="services-section">
           <div className="content-frame services-layout">
-            <div className="services-intro">
+            <div className="services-intro" data-reveal>
               <p className="eyebrow">Services</p>
               <h2>Three parts of a website project.</h2>
               <p>Choose the support you need. Most projects include all three so the website is clear, well-designed, and ready to launch.</p>
             </div>
             <div className="service-list">
               {services.map((service) => (
-                <article className="service" key={service.title}>
+                <article className="service" data-reveal key={service.title}>
                   <p className="service__detail">{service.detail}</p>
                   <h3>{service.title}</h3>
                   <p>{service.text}</p>
@@ -235,7 +260,7 @@ export default function Home() {
 
         <section id="projects" className="projects-section">
           <div className="content-frame">
-            <div className="projects-heading">
+            <div className="projects-heading" data-reveal>
               <div>
                 <p className="eyebrow">Projects</p>
                 <h2>Types of website projects we take on.</h2>
@@ -243,7 +268,7 @@ export default function Home() {
               <p>These are common project types, not made-up case studies. Each one starts with a business goal and ends with a live, responsive website your team can use.</p>
             </div>
             <div className="project-ledger">
-              <article className="project-lead">
+              <article className="project-lead" data-reveal>
                 <figure className="project-lead__visual">
                   <img src="/manus-storage/visionfx-project-launch_acb1f6be.jpg" alt="A pale paper form arranged on a tabletop with a small orange accent" loading="lazy" />
                   <figcaption>Visual study / from brief to built form</figcaption>
@@ -255,7 +280,7 @@ export default function Home() {
                   <p className="project-card__deliverables">{projects[0].deliverables}</p>
                 </div>
               </article>
-              <div className="project-index">
+              <div className="project-index" data-reveal>
                 <article className="project-entry">
                   <div className="project-entry__visual">
                     <img src="/manus-storage/visionfx-project-platform_40fd618e.jpg" alt="A tactile paper study with a dark folded form and a warm orange accent" loading="lazy" />
@@ -282,7 +307,7 @@ export default function Home() {
 
         <section id="studio" className="studio-section">
           <div className="content-frame studio-layout">
-            <figure className="studio-art">
+            <figure className="studio-art" data-reveal>
               <img
                 src="/manus-storage/visionfx-studio-objects_54fe8b9b.jpg"
                 alt="A quiet studio still life of paper and a dark folded object"
@@ -290,7 +315,7 @@ export default function Home() {
               />
               <figcaption>Connected work / planning, design, build</figcaption>
             </figure>
-            <div className="studio-copy">
+            <div className="studio-copy" data-reveal>
               <p className="eyebrow">Inside the studio</p>
               <h2>Work directly with the people building your website.</h2>
               <p>We plan, design, and develop the site in the same small team. That means fewer handoffs, quicker answers, and a website that works the way it was designed to.</p>
@@ -304,7 +329,7 @@ export default function Home() {
         </section>
 
         <section id="contact" className="contact-section">
-          <div className="content-frame contact-layout">
+          <div className="content-frame contact-layout" data-reveal>
             <p className="eyebrow eyebrow--ember">Start a project</p>
             <div>
               <h2>Tell us what<br />needs to change.</h2>
@@ -316,7 +341,7 @@ export default function Home() {
       </main>
 
       <footer className="site-footer">
-        <div className="content-frame footer-layout">
+        <div className="content-frame footer-layout" data-reveal>
           <VisionMark inverse />
           <p>Websites planned, designed, and built for businesses ready to grow.</p>
           <div className="footer-links">

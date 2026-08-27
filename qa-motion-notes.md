@@ -31,3 +31,9 @@ At 1280px, the visual hierarchy reads as one large project study followed by sma
 The desktop capture shows the hero remains immediately understandable while the headline is now structured as individually composited lines, giving the live first visit a clear staggered arrival rather than a static wall of text. The slab’s contained rounded starting state remains visible at the bottom of the opening viewport.
 
 The mobile capture confirms the opening still resolves cleanly to one column and the slab remains a static normal-flow section below 768px. The desktop-only scroll calculation now uses a wider local entry window: it begins as the slab approaches the viewport and finishes after it passes through the viewport, making the clip-path expansion perceptible instead of completing too early. Reduced-motion still clears the transforms and clip path.
+
+## Full-page motion expansion — desktop and mobile
+
+The full-page desktop capture confirms the page now has section-level reveal targets beyond the hero: the approach heading and principles, service introduction and rows, project heading and ledger, studio visual and copy, contact band, and footer each participate in the same orchestration. Project and studio images also settle through a restrained transform after their parent content becomes visible.
+
+The mobile capture remains a clean normal-flow page. Because the observer is disabled under reduced motion and the existing mobile slab fallback remains static below 768px, the new section choreography does not create a touch scroll trap or hide content on narrow screens.

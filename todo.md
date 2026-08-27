@@ -62,3 +62,10 @@
 - [x] Increase the perceptual range of the slab’s scroll-driven continuity transition so its inset, expansion, and content state are unmistakable during normal scrolling.
 - [x] Preserve reduced-motion, touch, and keyboard accessibility; keep UI feedback composited while documenting the slab’s intentional clip-path continuity transition.
 - [x] Verify the intro and slab animation at desktop and mobile sizes, then save and deliver the motion revision checkpoint.
+
+## Full-page Motion Expansion Revision
+
+- [x] Add purposeful scroll reveals for the approach, services, projects, studio, contact, and footer sections instead of limiting motion to the hero.
+- [x] Add restrained section-specific image movement and staged list choreography without introducing layout animation, jank, or generic effects.
+- [x] Preserve reduced-motion and touch-safe fallbacks for every new animated surface.
+- [x] Verify full-page motion at desktop and mobile widths, then save and deliver the expanded motion checkpoint.
