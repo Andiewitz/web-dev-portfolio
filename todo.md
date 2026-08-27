@@ -42,3 +42,9 @@
 - [x] Add an explicit Vercel deployment contract that builds the frontend and serves `dist/public/index.html` instead of inferring `server/index.ts` as the entrypoint.
 - [x] Verify the local Vercel-compatible output: `dist/public/index.html`, hashed assets, production build, type check, and static-serving regression test.
 - [x] Verify the live Vercel root and client route after redeploy, then confirm asset handling and save the deployment configuration checkpoint.
+
+- [x] Document the full remaining motion inventory and assign a purpose to each active animation, including mobile navigation, skip-link reveal, project hover lift, slab expansion, and link/button feedback.
+- [x] Refactor the mobile navigation open/close animation away from grid-template-rows to transform/opacity-based motion.
+- [x] Audit the current VisionFX animations and assign each motion a concrete purpose: orientation, narrative expansion, or action feedback.
+- [x] Remove decorative or redundant motion, tune timing and easing, and preserve reduced-motion and mobile-safe fallbacks.
+- [x] Verify animation behavior at desktop and mobile sizes, then save and deliver the animation refinement checkpoint.

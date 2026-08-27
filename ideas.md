@@ -37,7 +37,7 @@ Interactions should feel decisive and tactile: buttons compress slightly on pres
 
 ### Animation
 
-Motion uses transform and opacity only, with a snappy `cubic-bezier(0.23, 1, 0.32, 1)` curve. Hero text and the build receipt reveal in a restrained 40–70ms stagger; hover states remain under 180ms. No looping decorative animation, parallax, or delayed content. All non-essential motion is disabled for reduced-motion preferences.
+Motion uses transform and opacity where movement is needed, with a snappy `cubic-bezier(0.23, 1, 0.32, 1)` curve. The hero content appears immediately; motion is reserved for the slab’s scroll-linked narrative expansion, direct press feedback, fine-pointer hover states, focus indication, and the mobile menu’s open/close state. No looping decorative animation, parallax, or delayed content. All non-essential motion is disabled for reduced-motion preferences.
 
 ### Typography System
 
@@ -107,3 +107,9 @@ The dark statement slab returns as a local scroll-driven editorial surface, not 
 ## Content Clarity Contract
 
 Keep the approved composition, but ensure a prospective client can identify the target audience, service scope, deliverables, and inquiry process without translating agency language. Begin each section with a concrete client outcome; use editorial phrasing only after the factual meaning is clear.
+
+## Intentional Animation Audit
+
+The motion system is intentionally limited to spatial continuity, direct action feedback, and clear state transitions. The hero slab keeps its scroll-driven `clip-path` expansion because the same surface visibly connects a contained statement to a full-viewport editorial field. Button presses use a small scale-down for tactile confirmation, while project card lift and image scale remain hover-only selection feedback. Link color/border transitions and the skip-link translate reveal communicate interactive or focus state. The hero entrance keyframe and the 404 pulse were removed because they delayed or decorated content without helping the reader.
+
+The mobile navigation remains a state transition rather than an ambient effect. The menu panel uses opacity and translate motion for its open/close affordance; it no longer animates grid rows or other layout properties. Hover states are scoped to fine pointers, and all non-essential motion is reduced or removed under `prefers-reduced-motion`.

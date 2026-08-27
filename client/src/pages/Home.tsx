@@ -154,7 +154,7 @@ export default function Home() {
 
       <main id="main">
         <section id="top" className="hero-section">
-          <div className="content-frame opening-grid editorial-reveal">
+          <div className="content-frame opening-grid">
             <div>
               <p className="eyebrow opening-eyebrow">VisionFX — web development studio</p>
               <h1>Plan it.<br /><span>Design</span> it.<br />Build it.</h1>
