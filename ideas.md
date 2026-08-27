@@ -102,7 +102,7 @@ The user-provided Anthropic screenshot is the ground-truth specification for the
 
 ## Scroll Transition Contract
 
-The dark statement slab returns as a local scroll-driven editorial surface, not a first-visit scroll event. The opening must communicate what VisionFX does, for whom, its core disciplines, and the contact action before the reader enters the animated region. As the dark slab enters the viewport, it expands from a rounded inset panel to a full-viewport field, holds the statement in place, then releases into the rest of the page. Mobile and reduced-motion contexts retain a static slab.
+The dark statement slab returns as a local scroll-driven editorial surface, not a first-visit scroll event. The opening must communicate what VisionFX does, for whom, its core disciplines, and the contact action before the reader enters the animated region. It has a visible contained CSS starting state in all states. A small local scroll calculation reads the slab region’s position directly and updates only that slab’s `clip-path` from an inset panel to an edge-to-edge field during the section’s entry range. Mobile and reduced-motion contexts retain a static slab.
 
 ## Content Clarity Contract
 
