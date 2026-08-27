@@ -55,21 +55,18 @@ const projects = [
     type: "For a new offer",
     context: "Help people understand what is new, who it is for, and why they should care.",
     deliverables: "Messaging · page design · responsive build",
-    image: "/manus-storage/visionfx-project-launch_acb1f6be.jpg",
   },
   {
     title: "Replace a website that no longer fits",
     type: "For a growing business",
     context: "Turn an outdated or confusing site into a clearer introduction to your business.",
     deliverables: "Website plan · design system · development",
-    image: "/manus-storage/visionfx-project-platform_40fd618e.jpg",
   },
   {
     title: "Make a complex offer easier to explain",
     type: "For a complex product",
     context: "Give customers a simpler path through a product, service, or platform with a lot to say.",
     deliverables: "Content structure · reusable pages · team handoff",
-    image: "/manus-storage/visionfx-project-system_4723ebe2.jpg",
   },
 ];
 
@@ -234,22 +231,40 @@ export default function Home() {
               </div>
               <p>These are common project types, not made-up case studies. Each one starts with a business goal and ends with a live, responsive website your team can use.</p>
             </div>
-            <div className="project-grid">
-              {projects.map((project) => (
-                <article className="project-card" key={project.title}>
-                  <div className="project-card__frame">
-                    <div className="project-card__image-wrap">
-                      <img src={project.image} alt="" loading="lazy" />
-                    </div>
-                    <div className="project-card__content">
-                      <p className="project-card__type">{project.type}</p>
-                      <h3>{project.title}</h3>
-                      <p className="project-card__context">{project.context}</p>
-                      <p className="project-card__deliverables">{project.deliverables}</p>
-                    </div>
+            <div className="project-ledger">
+              <article className="project-lead">
+                <figure className="project-lead__visual">
+                  <img src="/manus-storage/visionfx-project-launch_acb1f6be.jpg" alt="A pale paper form arranged on a tabletop with a small orange accent" loading="lazy" />
+                  <figcaption>Visual study / from brief to built form</figcaption>
+                </figure>
+                <div className="project-lead__copy">
+                  <p className="project-card__type">{projects[0].type}</p>
+                  <h3>{projects[0].title}</h3>
+                  <p className="project-card__context">{projects[0].context}</p>
+                  <p className="project-card__deliverables">{projects[0].deliverables}</p>
+                </div>
+              </article>
+              <div className="project-index">
+                <article className="project-entry">
+                  <div className="project-entry__visual">
+                    <img src="/manus-storage/visionfx-project-platform_40fd618e.jpg" alt="A tactile paper study with a dark folded form and a warm orange accent" loading="lazy" />
+                  </div>
+                  <div className="project-entry__copy">
+                    <p className="project-card__type">{projects[1].type}</p>
+                    <h3>{projects[1].title}</h3>
+                    <p className="project-card__context">{projects[1].context}</p>
+                    <p className="project-card__deliverables">{projects[1].deliverables}</p>
                   </div>
                 </article>
-              ))}
+                <article className="project-entry project-entry--text-only">
+                  <div className="project-entry__copy">
+                    <p className="project-card__type">{projects[2].type}</p>
+                    <h3>{projects[2].title}</h3>
+                    <p className="project-card__context">{projects[2].context}</p>
+                    <p className="project-card__deliverables">{projects[2].deliverables}</p>
+                  </div>
+                </article>
+              </div>
             </div>
           </div>
         </section>
@@ -257,13 +272,12 @@ export default function Home() {
         <section id="studio" className="studio-section">
           <div className="content-frame studio-layout">
             <figure className="studio-art">
-              <div className="image-shell image-shell--studio">
-                <img
-                  src="/manus-storage/visionfx-studio-objects_54fe8b9b.jpg"
-                  alt="An open charcoal portfolio folder with unmarked cream cards and a small orange accent"
-                  loading="lazy"
-                />
-              </div>
+              <img
+                src="/manus-storage/visionfx-studio-objects_54fe8b9b.jpg"
+                alt="A quiet studio still life of paper and a dark folded object"
+                loading="lazy"
+              />
+              <figcaption>Connected work / planning, design, build</figcaption>
             </figure>
             <div className="studio-copy">
               <p className="eyebrow">Inside the studio</p>

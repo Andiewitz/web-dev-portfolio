@@ -48,3 +48,10 @@
 - [x] Audit the current VisionFX animations and assign each motion a concrete purpose: orientation, narrative expansion, or action feedback.
 - [x] Remove decorative or redundant motion, tune timing and easing, and preserve reduced-motion and mobile-safe fallbacks.
 - [x] Verify animation behavior at desktop and mobile sizes, then save and deliver the animation refinement checkpoint.
+
+## Image Art Direction Revision
+
+- [x] Replace generic image-in-container presentation with art-directed visual compositions tied to each section’s message.
+- [x] Reuse verified bespoke VisionFX assets with distinct roles for project direction, studio/process, and supporting visual pause.
+- [x] Integrate image assets into the editorial grid with asymmetric crops and image-led hierarchy instead of repeated card shells; the final treatment intentionally uses direct editorial placement rather than forced overlaps.
+- [x] Verify image loading, responsive crops, alt text, contrast, and desktop/mobile presentation, then save and deliver the image-art-direction checkpoint.

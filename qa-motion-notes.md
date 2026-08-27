@@ -19,3 +19,9 @@ The full page retains the intended editorial sequence and no layout drift is vis
 ## Full-page pass — 390 × 844 mobile
 
 The page remains a normal-flow single column with no horizontal overflow. The mobile slab is static, legible, and visually contained; the absolute closed menu does not reserve unexpected space or cover the hero. The full-page capture confirms the sand, parchment, and ink bands retain their rhythm down to the contact section.
+
+## Image art-direction pass — desktop and mobile
+
+The project section no longer presents three interchangeable rounded image cards. A dominant image now sits directly in the editorial ledger with its caption and project explanation below; a secondary visual is embedded as a narrow supporting strip beside a text-led entry; the final direction is intentionally text-only. The studio visual is now a direct cropped figure with a caption instead of an image nested inside a second rounded shell.
+
+At 1280px, the visual hierarchy reads as one large project study followed by smaller editorial entries, and the ink section retains its visual weight. At 390px, the ledger collapses to a clear vertical sequence without horizontal overflow; the images crop predictably and remain subordinate to the surrounding client-focused copy.
