@@ -102,4 +102,8 @@ The user-provided Anthropic screenshot is the ground-truth specification for the
 
 ## Scroll Transition Contract
 
-The dark statement slab is not a static panel. On desktop, it begins as a contained rounded window within the cream page, then starts expanding from the first document-scroll movement until it fills the viewport edge-to-edge. The dark field remains pinned long enough for the statement to land and then releases into the following content. The expansion uses `clip-path` because it preserves the fixed content scale while revealing the full surface; it does not animate layout dimensions. Mobile and reduced-motion contexts receive a static, readable contained alternative.
+The dark statement slab is a calm static editorial surface, not a first-visit scroll event. The opening must communicate what VisionFX does, for whom, its core disciplines, and the contact action before asking the reader to interpret any visual treatment. Scroll motion is reserved for later supporting detail only, where it cannot delay or obscure comprehension.
+
+## Content Clarity Contract
+
+Keep the approved composition, but ensure a prospective client can identify the target audience, service scope, deliverables, and inquiry process without translating agency language. Begin each section with a concrete client outcome; use editorial phrasing only after the factual meaning is clear.

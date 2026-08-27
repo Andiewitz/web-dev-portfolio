@@ -54,3 +54,7 @@ The final fallback uses the template’s existing `useIsMobile` breakpoint hook 
 ## Immediate document-scroll timing — 2026-08-27
 
 The expansion is now driven by the page-level `scrollYProgress`, not a local section observer. It begins at global scroll progress `0` and completes across the first 14% of document scroll, so the very first user scroll movement starts changing the slab’s inset and content state. The verified mobile path remains static below 768px.
+
+## Client-comprehension rewrite — 2026-08-27
+
+The approved page layout is unchanged, while the copy now explains the offer directly. At 1366×768, a prospective client sees “VisionFX — web development studio,” the three-part scope “Plan it. Design it. Build it.,” the client situations VisionFX serves, the three service disciplines, and a direct inquiry action before the following statement surface. At 375×812, this same information remains visible in one clear top-to-bottom sequence, with no text overlap or horizontal overflow observed.

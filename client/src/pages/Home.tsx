@@ -3,10 +3,8 @@
  * Begin with a cream two-column argument and a single dark slab; use imagery only in later supporting sections.
  */
 import { useState } from "react";
-import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import VisionMark from "@/components/VisionMark";
-import { useIsMobile } from "@/hooks/useMobile";
 
 const navItems = [
   { href: "#services", label: "Services" },
@@ -17,77 +15,66 @@ const navItems = [
 
 const services = [
   {
-    title: "Clarify the message",
-    text: "We shape the message, hierarchy, and visual language of a homepage around the decision it needs to support.",
-    detail: "Positioning, content structure, and launch pages",
-    proof: "Decision map · page architecture · responsive content plan",
+    title: "Plan your website",
+    text: "We work out what your website needs to say, what pages it needs, and what each page needs to help a visitor do.",
+    detail: "Website strategy and content planning",
+    proof: "Audience focus · page plan · content priorities",
   },
   {
-    title: "Turn it into a system",
-    text: "We design responsive interfaces that feel deliberate on the first visit and remain clear when the site begins to grow.",
-    detail: "Design direction, responsive UI, and components",
-    proof: "Component architecture · responsive templates · interaction states",
+    title: "Design the experience",
+    text: "We create a visual system and responsive page designs that make your offer easy to understand on every screen size.",
+    detail: "Website design and responsive page systems",
+    proof: "Visual direction · page designs · reusable components",
   },
   {
-    title: "Build it for real",
-    text: "We develop accessible, performant frontends with semantic structure, careful interaction states, and a handoff your team can use.",
-    detail: "Frontend engineering, QA, and launch support",
-    proof: "Semantic markup · performance pass · QA and handoff",
+    title: "Build and launch it",
+    text: "We develop the site, test it across devices, and hand it over in a way your team can confidently use and update.",
+    detail: "Frontend development, testing, and launch",
+    proof: "Responsive build · device testing · handoff support",
   },
 ];
 
 const principles = [
   {
-    title: "Start with the real question",
-    text: "A good website is clear about what needs to change in a visitor’s understanding.",
+    title: "Get clear before we design",
+    text: "We agree on the audience, the offer, and what the website needs to achieve before designing a page.",
   },
   {
-    title: "Make the structure visible",
-    text: "Content, visual design, and the build should tell the same story from every breakpoint.",
+    title: "Keep design and development together",
+    text: "The people planning the site stay involved through design and build, so the result remains consistent.",
   },
   {
-    title: "Leave room for the idea",
-    text: "We use less ornament so the important parts have space to carry their own weight.",
+    title: "Launch with a usable system",
+    text: "You receive a responsive site and clear foundations your team can continue to work with.",
   },
 ];
 
 const projects = [
   {
-    title: "A launch site with a clear first move",
-    type: "New product presence",
-    context: "When a new offer needs to make sense before the next meeting.",
-    deliverables: "Content architecture · responsive templates · launch QA",
+    title: "Launch a new product or service",
+    type: "For a new offer",
+    context: "Help people understand what is new, who it is for, and why they should care.",
+    deliverables: "Messaging · page design · responsive build",
     image: "/manus-storage/visionfx-project-launch_acb1f6be.jpg",
   },
   {
-    title: "A platform people can understand faster",
-    type: "Digital platform redesign",
-    context: "When a complex product needs a more useful route into its value.",
-    deliverables: "Information model · component architecture · responsive UI",
+    title: "Replace a website that no longer fits",
+    type: "For a growing business",
+    context: "Turn an outdated or confusing site into a clearer introduction to your business.",
+    deliverables: "Website plan · design system · development",
     image: "/manus-storage/visionfx-project-platform_40fd618e.jpg",
   },
   {
-    title: "A content system built to keep growing",
-    type: "Editorial and component system",
-    context: "When publishing needs a clearer structure without a new page feeling like a rebuild.",
-    deliverables: "Editorial blocks · semantic markup · team handoff",
+    title: "Make a complex offer easier to explain",
+    type: "For a complex product",
+    context: "Give customers a simpler path through a product, service, or platform with a lot to say.",
+    deliverables: "Content structure · reusable pages · team handoff",
     image: "/manus-storage/visionfx-project-system_4723ebe2.jpg",
   },
 ];
 
 export default function Home() {
   const [navOpen, setNavOpen] = useState(false);
-  const shouldReduceMotion = useReducedMotion();
-  const isMobile = useIsMobile();
-  const useStaticSlab = shouldReduceMotion || isMobile;
-  const { scrollYProgress } = useScroll();
-  const slabClipPath = useTransform(
-    scrollYProgress,
-    [0, 0.14],
-    ["inset(10vh 7vw 10vh 7vw round 22px)", "inset(0vh 0vw 0vh 0vw round 0px)"],
-  );
-  const slabContentOpacity = useTransform(scrollYProgress, [0, 0.05, 0.14], [0.72, 0.84, 1]);
-  const slabContentY = useTransform(scrollYProgress, [0, 0.14], ["translateY(7vh)", "translateY(0)"]);
   const closeNav = () => setNavOpen(false);
 
   return (
@@ -101,7 +88,7 @@ export default function Home() {
           <nav className="desktop-nav" aria-label="Primary navigation">
             {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
           </nav>
-          <a href="#contact" className="header-cta">Start a conversation</a>
+          <a href="#contact" className="header-cta">Start a project</a>
           <button
             type="button"
             className="menu-toggle"
@@ -116,7 +103,7 @@ export default function Home() {
         <div id="mobile-navigation" className={`mobile-nav ${navOpen ? "mobile-nav--open" : ""}`}>
           <nav aria-label="Mobile navigation">
             {navItems.map((item) => <a key={item.href} href={item.href} onClick={closeNav}>{item.label}</a>)}
-            <a href="#contact" onClick={closeNav}>Start a conversation</a>
+            <a href="#contact" onClick={closeNav}>Start a project</a>
           </nav>
         </div>
       </header>
@@ -124,31 +111,38 @@ export default function Home() {
       <main id="main">
         <section id="top" className="hero-section">
           <div className="content-frame opening-grid editorial-reveal">
-            <h1>Websites that <span>make</span><br />the next <span>move</span><br />clear.</h1>
-            <p className="opening-statement">
-              A website has to make its case quickly. VisionFX shapes the argument, builds the frontend, and leaves a system your team can carry forward.
-            </p>
+            <div>
+              <p className="eyebrow opening-eyebrow">VisionFX — web development studio</p>
+              <h1>Plan it.<br /><span>Design</span> it.<br />Build it.</h1>
+            </div>
+            <div className="opening-side">
+              <p className="opening-statement">
+                VisionFX helps businesses launch a new website, replace an old one, or make a complicated offer easier to understand.
+              </p>
+              <p className="opening-proof">Website strategy · Design · Frontend development</p>
+              <a className="opening-cta" href="#contact">Tell us about your website</a>
+            </div>
           </div>
         </section>
 
-        <section className="hero-slab-scroll-region" aria-label="VisionFX statement">
-          <div className="hero-slab-stage">
-            <motion.div className="hero-slab" style={useStaticSlab ? undefined : { clipPath: slabClipPath }}>
-              <motion.div className="hero-slab__inner" style={useStaticSlab ? undefined : { opacity: slabContentOpacity, transform: slabContentY }}>
-              <p>Strategy, design, and frontend engineering — in one room.</p>
-              <h2>Made for the work<br /><em>after the first click.</em></h2>
-              <a className="hero-slab__cta" href="#contact">Start a conversation</a>
-              </motion.div>
-            </motion.div>
+        <section className="hero-slab-section" aria-label="VisionFX statement">
+          <div className="content-frame">
+            <div className="hero-slab">
+              <div className="hero-slab__inner">
+              <p>One team for the whole website project.</p>
+              <h2>From a rough brief<br />to a <em>live website.</em></h2>
+              <a className="hero-slab__cta" href="#services">What we do</a>
+              </div>
+            </div>
           </div>
         </section>
 
         <section id="approach" className="approach-section">
           <div className="content-frame approach-layout">
             <div className="approach-heading">
-              <p className="eyebrow">Our approach</p>
-              <h2>A website earns trust when the idea and the implementation agree.</h2>
-              <p>Message, visual language, responsive behavior, and production detail all need to carry the same argument. That is the difference between a page that looks finished and a website that is ready to work.</p>
+              <p className="eyebrow">How we work</p>
+              <h2>One partner from website strategy to launch.</h2>
+              <p>You do not have to manage a strategist, a designer, and a developer separately. VisionFX takes the website through each stage as one connected project.</p>
             </div>
             <div className="principle-list">
               {principles.map((principle) => (
@@ -164,9 +158,9 @@ export default function Home() {
         <section id="services" className="services-section">
           <div className="content-frame services-layout">
             <div className="services-intro">
-              <p className="eyebrow">What we make</p>
-              <h2>From a clear decision to a durable frontend.</h2>
-              <p>We focus on the moments where a more useful digital presence makes the business easier to understand, trust, and choose — then make sure it performs across the actual ways people use it.</p>
+              <p className="eyebrow">Services</p>
+              <h2>Three parts of a website project.</h2>
+              <p>Choose the support you need. Most projects include all three so the website is clear, well-designed, and ready to launch.</p>
             </div>
             <div className="service-list">
               {services.map((service) => (
@@ -185,10 +179,10 @@ export default function Home() {
           <div className="content-frame">
             <div className="projects-heading">
               <div>
-                <p className="eyebrow">Project directions</p>
-                <h2>Built for the moment a better website changes what happens next.</h2>
+                <p className="eyebrow">Projects</p>
+                <h2>Types of website projects we take on.</h2>
               </div>
-              <p>Representative builds, not a template catalog: each one takes a business decision through structure, responsive components, testing, and a launch-ready handoff.</p>
+              <p>These are common project types, not made-up case studies. Each one starts with a business goal and ends with a live, responsive website your team can use.</p>
             </div>
             <div className="project-grid">
               {projects.map((project) => (
@@ -223,10 +217,10 @@ export default function Home() {
             </figure>
             <div className="studio-copy">
               <p className="eyebrow">Inside the studio</p>
-              <h2>We work in the overlap between ideas and implementation.</h2>
-              <p>That means fewer handoffs, faster decisions, and a more coherent result. We care about how a site reads, how it responds at every breakpoint, and what happens when your team needs to carry it forward.</p>
-              <p className="production-note">Responsive systems · semantic markup · performance judgment · launch-ready handoff</p>
-              <a className="quiet-link" href="#contact">Talk through a project</a>
+              <h2>Work directly with the people building your website.</h2>
+              <p>We plan, design, and develop the site in the same small team. That means fewer handoffs, quicker answers, and a website that works the way it was designed to.</p>
+              <p className="production-note">Responsive pages · accessible markup · performance checks · practical handoff</p>
+              <a className="quiet-link" href="#contact">Ask about a project</a>
             </div>
             <figure className="study-art" aria-hidden="true">
               <img src="/manus-storage/visionfx-graphic-study_6fe48003.jpg" alt="" loading="lazy" />
@@ -236,12 +230,12 @@ export default function Home() {
 
         <section id="contact" className="contact-section">
           <div className="content-frame contact-layout">
-            <p className="eyebrow eyebrow--ember">Start here</p>
+            <p className="eyebrow eyebrow--ember">Start a project</p>
             <div>
-              <h2>Bring the brief.<br />We’ll bring the care.</h2>
-              <p>Give us the shape of what needs to happen next. We’ll respond with a clear way forward.</p>
+              <h2>Tell us what<br />needs to change.</h2>
+              <p>Send a short overview of your website, your timeline, and what you need it to do. We will reply with whether we are a fit, an initial scope, and a practical next step.</p>
             </div>
-            <a className="contact-button" href="mailto:hello@visionfx.studio?subject=VisionFX%20project%20inquiry">Start a conversation</a>
+            <a className="contact-button" href="mailto:hello@visionfx.studio?subject=VisionFX%20website%20project">Email VisionFX</a>
           </div>
         </section>
       </main>
@@ -249,7 +243,7 @@ export default function Home() {
       <footer className="site-footer">
         <div className="content-frame footer-layout">
           <VisionMark inverse />
-          <p>Strategy, design, and development for a clearer digital presence.</p>
+          <p>Websites planned, designed, and built for businesses ready to grow.</p>
           <div className="footer-links">
             {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
             <a href="#contact">Contact</a>
