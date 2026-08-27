@@ -66,3 +66,9 @@ The clear opening remains intact before the dark statement surface. At desktop w
 ## Contained-state repair — 2026-08-27
 
 The repaired desktop initial state is visibly inset from both page edges with rounded corners and a cream frame; it no longer loads as a solid full-page dark field. The local scroll calculation begins from this CSS-defined contained state and updates only the slab’s `clip-path` as the section crosses its entry range. At 375×812, the verified mobile fallback remains a normal-flow, static dark panel.
+
+## Slab content refinement — 2026-08-27
+
+The slab now has one clear message rather than a rough label, oversized statement, and detached CTA. Its expanded content follows a deliberate hierarchy: a short eyebrow, a client-outcome headline (“Make the website the easy part”), one supporting sentence naming the process, a restrained Plan / Design / Build / Launch sequence, and one labeled action. Desktop and mobile screenshots confirm the content remains readable inside the existing contained-to-expanded interaction, with the mobile layout collapsing to a single column.
+
+The animation review informed the refinement: scroll expansion remains explanatory motion, copy itself does not drift, the existing reduced-motion/mobile fallback is preserved, and the new content uses static layout properties rather than additional animated surfaces.

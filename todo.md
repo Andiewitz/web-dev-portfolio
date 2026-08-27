@@ -18,15 +18,19 @@
 - [x] Provide a motion-reduced/static fallback and verify the effect across desktop and mobile viewports before delivery.
 - [x] Bind the dark-slab expansion to the first pixel of document scroll rather than waiting for the slab section to enter the viewport.
 - [x] Verify the revised immediate-expansion behavior and deliver the timing correction.
-- [ ] Simplify the opening so a first-time client sees VisionFX’s offer, proof, and contact action before any scroll-driven visual transition.
-- [ ] Move or remove the immediate dark-slab expansion, then verify the revised desktop and mobile first-visit flow before delivery.
+- [x] Simplify the opening so a first-time client sees VisionFX’s offer, proof, and contact action before any scroll-driven visual transition.
+- [x] Move or remove the immediate dark-slab expansion, then verify the revised desktop and mobile first-visit flow before delivery.
 - [x] Rewrite vague agency language across the homepage so prospects can quickly identify VisionFX’s audience, work, deliverables, and next step without changing the approved layout.
 - [x] Verify the rewritten content in desktop and mobile layouts, then deliver the client-clarity update.
 - [x] Restore the dark-slab scroll expansion after the clear opening offer and inquiry action, without obscuring first-visit comprehension.
 - [x] Verify the restored desktop motion and mobile fallback, then save and deliver the update.
-- [ ] Repair the dark-slab regression so it begins visibly inset rather than loading as a solid full-page field.
-- [ ] Verify the panel’s contained start and local scroll expansion at desktop width before delivering the fix.
 - [x] Repair the dark-slab regression so it begins visibly inset rather than loading as a solid full-page field.
 - [x] Verify the panel’s contained start and local scroll expansion at desktop width before delivering the fix.
-- [ ] Restore the dark-slab scroll expansion after the clear opening offer and inquiry action, without obscuring first-visit comprehension.
-- [ ] Verify the restored desktop motion and mobile fallback, then save and deliver the update.
+- [x] Repair the dark-slab regression so it begins visibly inset rather than loading as a solid full-page field.
+- [x] Verify the panel’s contained start and local scroll expansion at desktop width before delivering the fix.
+- [x] Restore the dark-slab scroll expansion after the clear opening offer and inquiry action, without obscuring first-visit comprehension.
+- [x] Verify the restored desktop motion and mobile fallback, then save and deliver the update.
+
+- [x] Redesign the slab content with a clear outcome, process cues, and one deliberate action without changing the scroll interaction.
+- [x] Verify the refined slab content at desktop and mobile widths.
+- [x] Save and deliver the refined slab-content checkpoint.

@@ -173,9 +173,15 @@ export default function Home() {
           <div className="hero-slab-stage">
             <div ref={slabRef} className="hero-slab">
               <div className="hero-slab__inner">
-              <p>One team for the whole website project.</p>
-              <h2>From a rough brief<br />to a <em>live website.</em></h2>
-              <a className="hero-slab__cta" href="#services">What we do</a>
+                <p className="hero-slab__eyebrow">The whole website, handled together.</p>
+                <div className="hero-slab__content">
+                  <h2>Make the website<br />the <em>easy part.</em></h2>
+                  <p>We turn a clear brief into a useful, responsive website — then stay close through design, development, testing, and launch.</p>
+                  <div className="hero-slab__details" aria-label="Project stages">
+                    <span>Plan</span><span>Design</span><span>Build</span><span>Launch</span>
+                  </div>
+                  <a className="hero-slab__cta" href="#services">See what you get</a>
+                </div>
               </div>
             </div>
           </div>
