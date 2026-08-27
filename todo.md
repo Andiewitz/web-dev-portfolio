@@ -69,3 +69,9 @@
 - [x] Add restrained section-specific image movement and staged list choreography without introducing layout animation, jank, or generic effects.
 - [x] Preserve reduced-motion and touch-safe fallbacks for every new animated surface.
 - [x] Verify full-page motion at desktop and mobile widths, then save and deliver the expanded motion checkpoint.
+
+## Runtime Animation Bug Fix
+
+- [x] Reproduce why the section reveal animations are not visibly firing in the live preview.
+- [x] Replace the unreliable animation trigger with a runtime-verifiable implementation that visibly animates on scroll.
+- [x] Verify animation states at multiple scroll positions on desktop and mobile, then save and deliver the runtime fix checkpoint.

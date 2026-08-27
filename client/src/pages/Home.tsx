@@ -131,23 +131,47 @@ export default function Home() {
     const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
     const targets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
 
-    if (window.innerWidth < 768 || reducedMotion.matches || targets.length === 0) return;
+    if (reducedMotion.matches || targets.length === 0) return;
 
     document.documentElement.classList.add("has-motion");
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (!entry.isIntersecting) return;
-          entry.target.classList.add("is-visible");
-          observer.unobserve(entry.target);
-        });
-      },
-      { threshold: 0.14, rootMargin: "0px 0px -8% 0px" },
-    );
+    let frame = 0;
 
-    targets.forEach((target) => observer.observe(target));
+    const updateSections = () => {
+      frame = 0;
+      targets.forEach((target, index) => {
+        const rect = target.getBoundingClientRect();
+        const start = window.innerHeight * 1.08;
+        const end = window.innerHeight * 0.16;
+        const progress = Math.min(1, Math.max(0, (start - rect.top) / (start - end)));
+        const eased = progress * progress * (3 - 2 * progress);
+        const offset = (1 - eased) * (window.innerWidth < 768 ? 18 : 64);
+        const scale = 0.985 + eased * 0.015;
+        target.style.opacity = eased.toFixed(3);
+        target.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
+        target.style.transitionDelay = `${Math.min(index * 24, 120)}ms`;
+
+        const image = target.querySelector<HTMLElement>("img[data-motion-image]");
+        if (image) {
+          const imageOffset = (1 - eased) * (window.innerWidth < 768 ? 10 : 42);
+          image.style.transform = `translate3d(0, ${imageOffset.toFixed(2)}px, 0) scale(${(1.08 - eased * 0.08).toFixed(4)})`;
+        }
+      });
+    };
+
+    const requestUpdate = () => {
+      if (!frame) frame = window.requestAnimationFrame(updateSections);
+    };
+
+    updateSections();
+    window.addEventListener("scroll", requestUpdate, { passive: true });
+    window.addEventListener("resize", requestUpdate);
+    reducedMotion.addEventListener("change", requestUpdate);
+
     return () => {
-      observer.disconnect();
+      window.removeEventListener("scroll", requestUpdate);
+      window.removeEventListener("resize", requestUpdate);
+      reducedMotion.removeEventListener("change", requestUpdate);
+      if (frame) window.cancelAnimationFrame(frame);
       document.documentElement.classList.remove("has-motion");
     };
   }, []);
@@ -270,7 +294,7 @@ export default function Home() {
             <div className="project-ledger">
               <article className="project-lead" data-reveal>
                 <figure className="project-lead__visual">
-                  <img src="/manus-storage/visionfx-project-launch_acb1f6be.jpg" alt="A pale paper form arranged on a tabletop with a small orange accent" loading="lazy" />
+                  <img data-motion-image src="/manus-storage/visionfx-project-launch_acb1f6be.jpg" alt="A pale paper form arranged on a tabletop with a small orange accent" loading="lazy" />
                   <figcaption>Visual study / from brief to built form</figcaption>
                 </figure>
                 <div className="project-lead__copy">
@@ -308,8 +332,7 @@ export default function Home() {
         <section id="studio" className="studio-section">
           <div className="content-frame studio-layout">
             <figure className="studio-art" data-reveal>
-              <img
-                src="/manus-storage/visionfx-studio-objects_54fe8b9b.jpg"
+              <img data-motion-image src="/manus-storage/visionfx-studio-objects_54fe8b9b.jpg"
                 alt="A quiet studio still life of paper and a dark folded object"
                 loading="lazy"
               />

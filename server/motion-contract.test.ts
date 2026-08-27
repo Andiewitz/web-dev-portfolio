@@ -30,8 +30,8 @@ describe("VisionFX motion contract", () => {
     expect(home).toContain("const start = window.innerHeight * 0.96");
     expect(home).toContain("const end = -window.innerHeight * 0.12");
     expect(home).toContain("slab.style.clipPath");
-    expect(home).toContain("IntersectionObserver");
-    expect(home).toContain("window.innerWidth < 768 || reducedMotion.matches");
+    expect(home).toContain("requestAnimationFrame(updateSections)");
+    expect(home).toContain("window.addEventListener(\"scroll\", requestUpdate");
     expect(home).toContain("data-reveal");
     expect(home).not.toContain("editorial-reveal");
     expect(notFound).not.toContain("animate-pulse");

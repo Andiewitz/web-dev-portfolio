@@ -37,3 +37,13 @@ The mobile capture confirms the opening still resolves cleanly to one column and
 The full-page desktop capture confirms the page now has section-level reveal targets beyond the hero: the approach heading and principles, service introduction and rows, project heading and ledger, studio visual and copy, contact band, and footer each participate in the same orchestration. Project and studio images also settle through a restrained transform after their parent content becomes visible.
 
 The mobile capture remains a clean normal-flow page. Because the observer is disabled under reduced motion and the existing mobile slab fallback remains static below 768px, the new section choreography does not create a touch scroll trap or hide content on narrow screens.
+
+## Runtime animation bug investigation
+
+The live preview initially showed the section reveal targets stuck at `opacity: 0` while the page was being scrolled through the slab region. Browser inspection confirmed the old one-shot observer contract was not giving a visible result at the user’s scroll pace. The implementation was replaced with a direct requestAnimationFrame scroll-progress loop that updates each target’s opacity and transform from its viewport position. The corrected runtime was measured across multiple scroll positions and produced changing opacity/translate values; the slab continued to update from the existing scroll handler.
+
+The final safeguard keeps new section choreography disabled below 768px and when reduced motion is requested, leaving mobile content static and immediately readable.
+
+## Post-fix mobile verification
+
+At 390×844, the updated page remains fully visible in normal document flow. The runtime guard exits below 768px, so mobile does not attempt the desktop scroll-progress choreography; this is intentional because the slab and page remain stable for touch scrolling while desktop receives the stronger live animation. The mobile full-page capture shows no hidden section content, overflow, or delayed reveal dependency.
