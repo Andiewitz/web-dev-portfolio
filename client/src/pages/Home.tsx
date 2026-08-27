@@ -2,7 +2,7 @@
  * VisionFX design reminder: reference-driven editorial placement with original VisionFX content.
  * Begin with a cream two-column argument and a single dark slab; use imagery only in later supporting sections.
  */
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, type CSSProperties } from "react";
 import { Menu, X } from "lucide-react";
 import VisionMark from "@/components/VisionMark";
 
@@ -48,6 +48,22 @@ const principles = [
     text: "You receive a responsive site and clear foundations your team can continue to work with.",
   },
 ];
+
+function CharacterText({ text, className = "" }: { text: string; className?: string }) {
+  return (
+    <span className={className} aria-hidden="true">
+      {Array.from(text).map((character, index) => (
+        <span className="motion-char" style={{ "--char-index": index } as CSSProperties} key={`${character}-${index}`}>
+          {character}
+        </span>
+      ))}
+    </span>
+  );
+}
+
+function MotionTitle({ text, as: Tag = "h3" }: { text: string; as?: "h2" | "h3" }) {
+  return <Tag aria-label={text}><CharacterText text={text} /></Tag>;
+}
 
 const projects = [
   {
@@ -103,6 +119,7 @@ export default function Home() {
       const inset = (7 * (1 - progress)).toFixed(3);
       const radius = (22 * (1 - progress)).toFixed(2);
       slab.style.clipPath = `inset(0 ${inset}vw 0 ${inset}vw round ${radius}px)`;
+      slab.querySelector(".hero-slab__content")?.classList.toggle("is-in-view", progress > 0.12);
       if (slabInner) {
         const lift = ((1 - progress) * 32).toFixed(2);
         slabInner.style.transform = `translate3d(0, ${lift}px, 0)`;
@@ -149,6 +166,7 @@ export default function Home() {
         target.style.opacity = eased.toFixed(3);
         target.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
         target.style.transitionDelay = `${Math.min(index * 24, 120)}ms`;
+        target.classList.toggle("is-visible", progress > 0.24);
 
         const image = target.querySelector<HTMLElement>("img[data-motion-image]");
         if (image) {
@@ -232,7 +250,10 @@ export default function Home() {
               <div ref={slabInnerRef} className="hero-slab__inner">
                 <p className="hero-slab__eyebrow">The whole website, handled together.</p>
                 <div className="hero-slab__content">
-                  <h2>Make the website<br />the <em>easy part.</em></h2>
+                  <h2 aria-label="Make the website the easy part.">
+                <span className="motion-line">Make the website</span>{" "}
+                <span className="motion-line">the <em><CharacterText text="easy part." /></em></span>
+              </h2>
                   <p>We turn a clear brief into a useful, responsive website — then stay close through design, development, testing, and launch.</p>
                   <div className="hero-slab__details" aria-label="Project stages">
                     <span>Plan</span><span>Design</span><span>Build</span><span>Launch</span>
@@ -248,7 +269,7 @@ export default function Home() {
           <div className="content-frame approach-layout">
             <div className="approach-heading" data-reveal>
               <p className="eyebrow">How we work</p>
-              <h2>One partner from website strategy to launch.</h2>
+                <h2 aria-label="One partner from website strategy to launch."><span className="motion-line">One partner from</span>{" "}<span className="motion-line">website strategy to launch.</span></h2>
               <p>You do not have to manage a strategist, a designer, and a developer separately. VisionFX takes the website through each stage as one connected project.</p>
             </div>
             <div className="principle-list">
@@ -266,14 +287,14 @@ export default function Home() {
           <div className="content-frame services-layout">
             <div className="services-intro" data-reveal>
               <p className="eyebrow">Services</p>
-              <h2>Three parts of a website project.</h2>
+              <h2 aria-label="Three parts of a website project."><span className="motion-line">Three parts of a</span>{" "}<span className="motion-line">website project.</span></h2>
               <p>Choose the support you need. Most projects include all three so the website is clear, well-designed, and ready to launch.</p>
             </div>
             <div className="service-list">
               {services.map((service) => (
                 <article className="service" data-reveal key={service.title}>
                   <p className="service__detail">{service.detail}</p>
-                  <h3>{service.title}</h3>
+                  <MotionTitle text={service.title} />
                   <p>{service.text}</p>
                   <p className="service__proof">{service.proof}</p>
                 </article>
@@ -294,12 +315,12 @@ export default function Home() {
             <div className="project-ledger">
               <article className="project-lead" data-reveal>
                 <figure className="project-lead__visual">
-                  <img data-motion-image src="/manus-storage/visionfx-project-launch_acb1f6be.jpg" alt="A pale paper form arranged on a tabletop with a small orange accent" loading="lazy" />
+                  <img data-motion-image src="/manus-storage/visionfx-project-launch-v2_aa9f09a1.jpg" alt="A folded ivory paper maquette, charcoal plane, and orange object arranged in an editorial studio still life" loading="eager" />
                   <figcaption>Visual study / from brief to built form</figcaption>
                 </figure>
                 <div className="project-lead__copy">
                   <p className="project-card__type">{projects[0].type}</p>
-                  <h3>{projects[0].title}</h3>
+                  <MotionTitle text={projects[0].title} />
                   <p className="project-card__context">{projects[0].context}</p>
                   <p className="project-card__deliverables">{projects[0].deliverables}</p>
                 </div>
@@ -307,11 +328,11 @@ export default function Home() {
               <div className="project-index" data-reveal>
                 <article className="project-entry">
                   <div className="project-entry__visual">
-                    <img src="/manus-storage/visionfx-project-platform_40fd618e.jpg" alt="A tactile paper study with a dark folded form and a warm orange accent" loading="lazy" />
+                    <img src="/manus-storage/visionfx-detail-study-v2_1a217749.jpg" alt="Layered paper and a charcoal fold with an orange thread in a close editorial study" loading="eager" />
                   </div>
                   <div className="project-entry__copy">
                     <p className="project-card__type">{projects[1].type}</p>
-                    <h3>{projects[1].title}</h3>
+                    <MotionTitle text={projects[1].title} />
                     <p className="project-card__context">{projects[1].context}</p>
                     <p className="project-card__deliverables">{projects[1].deliverables}</p>
                   </div>
@@ -319,7 +340,7 @@ export default function Home() {
                 <article className="project-entry project-entry--text-only">
                   <div className="project-entry__copy">
                     <p className="project-card__type">{projects[2].type}</p>
-                    <h3>{projects[2].title}</h3>
+                    <MotionTitle text={projects[2].title} />
                     <p className="project-card__context">{projects[2].context}</p>
                     <p className="project-card__deliverables">{projects[2].deliverables}</p>
                   </div>
@@ -332,21 +353,21 @@ export default function Home() {
         <section id="studio" className="studio-section">
           <div className="content-frame studio-layout">
             <figure className="studio-art" data-reveal>
-              <img data-motion-image src="/manus-storage/visionfx-studio-objects_54fe8b9b.jpg"
-                alt="A quiet studio still life of paper and a dark folded object"
-                loading="lazy"
+              <img data-motion-image src="/manus-storage/visionfx-studio-process-v2_b607d8d5.jpg"
+                alt="A studio worktable with blank paper, ruler, pencil, charcoal card, and an orange tab"
+                loading="eager"
               />
               <figcaption>Connected work / planning, design, build</figcaption>
             </figure>
             <div className="studio-copy" data-reveal>
               <p className="eyebrow">Inside the studio</p>
-              <h2>Work directly with the people building your website.</h2>
+                <h2 aria-label="Work directly with the people building your website."><span className="motion-line">Work directly with</span>{" "}<span className="motion-line">the people building</span>{" "}<span className="motion-line">your website.</span></h2>
               <p>We plan, design, and develop the site in the same small team. That means fewer handoffs, quicker answers, and a website that works the way it was designed to.</p>
               <p className="production-note">Responsive pages · accessible markup · performance checks · practical handoff</p>
               <a className="quiet-link" href="#contact">Ask about a project</a>
             </div>
             <figure className="study-art" aria-hidden="true">
-              <img src="/manus-storage/visionfx-graphic-study_6fe48003.jpg" alt="" loading="lazy" />
+              <img src="/manus-storage/visionfx-graphic-study_6fe48003.jpg" alt="" loading="eager" />
             </figure>
           </div>
         </section>
@@ -355,7 +376,7 @@ export default function Home() {
           <div className="content-frame contact-layout" data-reveal>
             <p className="eyebrow eyebrow--ember">Start a project</p>
             <div>
-              <h2>Tell us what<br />needs to change.</h2>
+              <h2 aria-label="Tell us what needs to change."><span className="motion-line">Tell us what</span>{" "}<span className="motion-line">needs to change.</span></h2>
               <p>Send a short overview of your website, your timeline, and what you need it to do. We will reply with whether we are a fit, an initial scope, and a practical next step.</p>
             </div>
             <a className="contact-button" href="mailto:hello@visionfx.studio?subject=VisionFX%20website%20project">Email VisionFX</a>

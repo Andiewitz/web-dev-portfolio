@@ -75,3 +75,10 @@
 - [x] Reproduce why the section reveal animations are not visibly firing in the live preview.
 - [x] Replace the unreliable animation trigger with a runtime-verifiable implementation that visibly animates on scroll.
 - [x] Verify animation states at multiple scroll positions on desktop and mobile, then save and deliver the runtime fix checkpoint.
+
+## Image Integrity and Text Choreography Revision
+
+- [x] Replace the corrupted project and studio image assets with verified, correctly loading visuals and update truthful alt text.
+- [x] Implement line-by-line choreography for major headlines and selective character-by-character emphasis for short labels or accent words.
+- [x] Add staggered row choreography for services, projects, and contact content while preserving readable DOM text and reduced-motion fallbacks.
+- [x] Verify asset loading and actual motion states at desktop/mobile scroll positions, then save and deliver the corrected checkpoint.

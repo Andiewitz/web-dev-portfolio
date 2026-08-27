@@ -94,7 +94,23 @@ button { border: 0; }
 
 .has-motion [data-reveal] { opacity: 0; transform: translate3d(0, 64px, 0) scale(0.985); will-change: opacity, transform; }
 .has-motion [data-reveal].is-visible { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+.has-motion [data-reveal] .motion-line { display: block; overflow: hidden; clip-path: inset(0 0 100% 0); }
+.has-motion [data-reveal].is-visible .motion-line { animation: visionfx-line-reveal 620ms var(--ease-out) both; }
+.has-motion [data-reveal] .motion-char, .hero-slab .motion-char { display: inline-block; opacity: 0; transform: translate3d(0, 0.85em, 0) rotate(3deg); }
+.has-motion [data-reveal].is-visible .motion-char { animation: visionfx-char-reveal 520ms var(--ease-out) both; animation-delay: calc(var(--char-index) * 18ms); }
+.hero-slab__content .motion-line { display: block; overflow: hidden; clip-path: inset(0 0 100% 0); }
+.hero-slab__content.is-in-view .motion-line { animation: visionfx-line-reveal 780ms var(--ease-out) 80ms both; }
+.hero-slab__content.is-in-view .motion-char { animation: visionfx-char-reveal 560ms var(--ease-out) both; animation-delay: calc(180ms + (var(--char-index) * 20ms)); }
 .has-motion .project-lead__visual img, .has-motion .studio-art img { will-change: transform; }
+
+@keyframes visionfx-line-reveal {
+  from { opacity: 0; clip-path: inset(0 0 100% 0); transform: translate3d(0, 0.3em, 0); }
+  to { opacity: 1; clip-path: inset(0 0 0 0); transform: translate3d(0, 0, 0); }
+}
+@keyframes visionfx-char-reveal {
+  from { opacity: 0; transform: translate3d(0, 0.85em, 0) rotate(3deg); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) rotate(0); }
+}
 
 
 .opening-statement { max-width: 370px; margin: clamp(40px, 5vw, 68px) 0 0; font-family: var(--font-editorial); font-size: clamp(22px, 2vw, 28px); line-height: 1.1; }
@@ -211,6 +227,8 @@ button { border: 0; }
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
   .mobile-nav { transition-delay: 0s !important; }
   [data-reveal] { opacity: 1 !important; transform: none !important; }
+  .motion-line { clip-path: none !important; }
+  .motion-char { opacity: 1 !important; transform: none !important; animation: none !important; }
 }
 @media (max-width: 920px) {
   .desktop-nav, .header-cta { display: none; }

@@ -18,6 +18,9 @@ describe("VisionFX motion contract", () => {
     expect(css).toContain("@media (prefers-reduced-motion: reduce)");
     expect(css).toContain(".has-motion [data-reveal]");
     expect(css).toContain(".has-motion [data-reveal].is-visible");
+    expect(css).toContain(".motion-line");
+    expect(css).toContain(".motion-char");
+    expect(css).toContain("@keyframes visionfx-char-reveal");
     expect(css).toContain(".project-lead__visual img");
     expect(css).toContain(".mobile-nav { position: absolute");
     expect(css).toContain("transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out)");
@@ -33,6 +36,9 @@ describe("VisionFX motion contract", () => {
     expect(home).toContain("requestAnimationFrame(updateSections)");
     expect(home).toContain("window.addEventListener(\"scroll\", requestUpdate");
     expect(home).toContain("data-reveal");
+    expect(home).toContain("function CharacterText");
+    expect(home).toContain("visionfx-project-launch-v2_aa9f09a1.jpg");
+    expect(home).toContain('loading="eager"');
     expect(home).not.toContain("editorial-reveal");
     expect(notFound).not.toContain("animate-pulse");
     expect(notFound).not.toContain("transition-all");

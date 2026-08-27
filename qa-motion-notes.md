@@ -47,3 +47,11 @@ The final safeguard keeps new section choreography disabled below 768px and when
 ## Post-fix mobile verification
 
 At 390×844, the updated page remains fully visible in normal document flow. The runtime guard exits below 768px, so mobile does not attempt the desktop scroll-progress choreography; this is intentional because the slab and page remain stable for touch scrolling while desktop receives the stronger live animation. The mobile full-page capture shows no hidden section content, overflow, or delayed reveal dependency.
+
+## Image and choreography correction
+
+The replacement image endpoints now return HTTP 200 with image/webp content and non-zero payloads through the live preview. The page markup contains 173 character spans and 11 line spans, including the slab headline and service/project titles. The final correction uses direct scroll-progress values for section movement, a line-reveal clip-path for headline lines, and staggered character animation for selected short titles and the orange slab accent.
+
+## Final image integrity and text choreography QA
+
+The desktop full-page capture shows the new generated editorial still lifes rendering cleanly in the Projects and Studio sections. The slab headline now reveals by line, with the orange accent phrase receiving character-level stagger. Service and project titles use character spans while preserving natural word wrapping. The mobile capture shows the same imagery loading correctly and keeps the touch-safe static section fallback; the DOM text remains readable and the character spans do not clip or break the layout.
