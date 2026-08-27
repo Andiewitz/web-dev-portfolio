@@ -102,7 +102,7 @@ The user-provided Anthropic screenshot is the ground-truth specification for the
 
 ## Scroll Transition Contract
 
-The dark statement slab is a calm static editorial surface, not a first-visit scroll event. The opening must communicate what VisionFX does, for whom, its core disciplines, and the contact action before asking the reader to interpret any visual treatment. Scroll motion is reserved for later supporting detail only, where it cannot delay or obscure comprehension.
+The dark statement slab returns as a local scroll-driven editorial surface, not a first-visit scroll event. The opening must communicate what VisionFX does, for whom, its core disciplines, and the contact action before the reader enters the animated region. As the dark slab enters the viewport, it expands from a rounded inset panel to a full-viewport field, holds the statement in place, then releases into the rest of the page. Mobile and reduced-motion contexts retain a static slab.
 
 ## Content Clarity Contract
 

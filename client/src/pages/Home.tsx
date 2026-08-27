@@ -2,9 +2,11 @@
  * VisionFX design reminder: reference-driven editorial placement with original VisionFX content.
  * Begin with a cream two-column argument and a single dark slab; use imagery only in later supporting sections.
  */
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import VisionMark from "@/components/VisionMark";
+import { useIsMobile } from "@/hooks/useMobile";
 
 const navItems = [
   { href: "#services", label: "Services" },
@@ -75,6 +77,19 @@ const projects = [
 
 export default function Home() {
   const [navOpen, setNavOpen] = useState(false);
+  const slabRef = useRef<HTMLElement>(null);
+  const shouldReduceMotion = useReducedMotion();
+  const isMobile = useIsMobile();
+  const useStaticSlab = shouldReduceMotion || isMobile;
+  const { scrollYProgress } = useScroll({
+    target: slabRef,
+    offset: ["start end", "start start"],
+  });
+  const slabClipPath = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["inset(0 7vw 0 7vw round 22px)", "inset(0 0 0 0 round 0px)"],
+  );
   const closeNav = () => setNavOpen(false);
 
   return (
@@ -125,15 +140,15 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="hero-slab-section" aria-label="VisionFX statement">
-          <div className="content-frame">
-            <div className="hero-slab">
+        <section ref={slabRef} className="hero-slab-scroll-region" aria-label="VisionFX statement">
+          <div className="hero-slab-stage">
+            <motion.div className="hero-slab" style={useStaticSlab ? undefined : { clipPath: slabClipPath }}>
               <div className="hero-slab__inner">
               <p>One team for the whole website project.</p>
               <h2>From a rough brief<br />to a <em>live website.</em></h2>
               <a className="hero-slab__cta" href="#services">What we do</a>
               </div>
-            </div>
+            </motion.div>
           </div>
         </section>
 

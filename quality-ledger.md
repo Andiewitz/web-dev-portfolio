@@ -58,3 +58,7 @@ The expansion is now driven by the page-level `scrollYProgress`, not a local sec
 ## Client-comprehension rewrite — 2026-08-27
 
 The approved page layout is unchanged, while the copy now explains the offer directly. At 1366×768, a prospective client sees “VisionFX — web development studio,” the three-part scope “Plan it. Design it. Build it.,” the client situations VisionFX serves, the three service disciplines, and a direct inquiry action before the following statement surface. At 375×812, this same information remains visible in one clear top-to-bottom sequence, with no text overlap or horizontal overflow observed.
+
+## Restored local scroll treatment — 2026-08-27
+
+The clear opening remains intact before the dark statement surface. At desktop width, the dark panel begins as an inset, rounded surface and expands as that local section enters the viewport; its sticky stage holds the editorial moment before releasing into the main page. At 375×812, the panel deliberately remains static in normal flow, preserving clear reading and avoiding a touch-device scroll trap.

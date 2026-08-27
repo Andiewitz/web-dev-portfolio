@@ -22,3 +22,7 @@
 - [ ] Move or remove the immediate dark-slab expansion, then verify the revised desktop and mobile first-visit flow before delivery.
 - [x] Rewrite vague agency language across the homepage so prospects can quickly identify VisionFX’s audience, work, deliverables, and next step without changing the approved layout.
 - [x] Verify the rewritten content in desktop and mobile layouts, then deliver the client-clarity update.
+- [x] Restore the dark-slab scroll expansion after the clear opening offer and inquiry action, without obscuring first-visit comprehension.
+- [x] Verify the restored desktop motion and mobile fallback, then save and deliver the update.
+- [ ] Restore the dark-slab scroll expansion after the clear opening offer and inquiry action, without obscuring first-visit comprehension.
+- [ ] Verify the restored desktop motion and mobile fallback, then save and deliver the update.
