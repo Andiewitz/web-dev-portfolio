@@ -72,3 +72,7 @@ The repaired desktop initial state is visibly inset from both page edges with ro
 The slab now has one clear message rather than a rough label, oversized statement, and detached CTA. Its expanded content follows a deliberate hierarchy: a short eyebrow, a client-outcome headline (“Make the website the easy part”), one supporting sentence naming the process, a restrained Plan / Design / Build / Launch sequence, and one labeled action. Desktop and mobile screenshots confirm the content remains readable inside the existing contained-to-expanded interaction, with the mobile layout collapsing to a single column.
 
 The animation review informed the refinement: scroll expansion remains explanatory motion, copy itself does not drift, the existing reduced-motion/mobile fallback is preserved, and the new content uses static layout properties rather than additional animated surfaces.
+
+## Deployment serving-path verification — 2026-08-27
+
+The production server now disables directory index resolution in its static middleware and explicitly sends the built `index.html` for `/` and extensionless client routes. Extension-bearing paths are left to static serving or normal 404 behavior, preventing a missing asset from receiving the document fallback. A deployed-style smoke test returned `text/html` and an `<!doctype html>` body for `/` and `/projects`, while the referenced bundle returned `application/javascript`. The regression is covered by `server/static-serving.test.ts`; Vitest, TypeScript validation, and the production build pass.

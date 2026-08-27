@@ -34,3 +34,7 @@
 - [x] Redesign the slab content with a clear outcome, process cues, and one deliberate action without changing the scroll interaction.
 - [x] Verify the refined slab content at desktop and mobile widths.
 - [x] Save and deliver the refined slab-content checkpoint.
+
+- [x] Inspect the production build and server entry configuration for the root response serving JavaScript instead of HTML.
+- [x] Fix static-file ordering and SPA fallback behavior so `/` and client routes serve the built HTML entry.
+- [x] Build and smoke-test production response headers and bodies, then save a deployment-ready checkpoint.
