@@ -99,3 +99,7 @@ The revised artwork is commissioned through GPT Image for three specific jobs: a
 ## Reference-Driven Placement Correction
 
 The user-provided Anthropic screenshot is the ground-truth specification for the opening composition. VisionFX will not use a competing split image hero. It will begin on a quiet warm-cream canvas with a modest cream navigation bar, one two-column editorial argument, and a single wide near-black slab below. The hero's visual focal point is typography and whitespace; original VisionFX imagery moves to later supporting sections.
+
+## Scroll Transition Contract
+
+The dark statement slab is not a static panel. On desktop, it begins as a contained rounded window within the cream page, then expands with the reader’s scroll until it fills the viewport edge-to-edge. The dark field remains pinned long enough for the statement to land and then releases into the following content. The expansion uses `clip-path` because it preserves the fixed content scale while revealing the full surface; it does not animate layout dimensions. Mobile and reduced-motion contexts receive a static, readable contained alternative.

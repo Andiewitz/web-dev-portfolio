@@ -42,3 +42,9 @@ The revised desktop and mobile audits confirm that VisionFX no longer reads as o
 At the user-provided 1366×768 viewport, the revised VisionFX opening now follows the requested hierarchy: a quiet cream header and canvas, an editorial two-column argument with a bold left statement and narrow right serif paragraph, then a single near-black full-width slab. The original competing split-image hero has been removed from the opening. A second pass tightened the left statement into three intentional lines and aligned the right column lower to create the same editorial cadence without copying Anthropic’s wording or identity.
 
 At 375×812, the two-column argument resolves into a legible single-column sequence, followed immediately by the dark statement slab. The mobile header remains compact and the change does not introduce horizontal overflow. TypeScript validation and the production build both pass after the placement correction.
+
+## Scroll-driven slab verification — 2026-08-27
+
+The dark statement surface now lives in a dedicated scroll region rather than behaving as a static panel. At 1366×768 it begins as a contained rounded window within the cream canvas. The implementation pins the stage while scroll progress transitions the slab from `inset(10vh 7vw 10vh 7vw round 22px)` to edge-to-edge through `clip-path`, then releases to the following page content. Content position and opacity transition with the same scroll progress; reduced-motion and mobile variants intentionally use a static, readable slab.
+
+At 375×812, the scroll-specific desktop treatment resolves to a static near-black statement surface immediately below the opening argument. The small-screen fallback preserves the reading order and strong visual transition without introducing a sticky scroll trap or positioning movement on a touch-first screen.

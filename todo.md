@@ -14,3 +14,5 @@
 - [x] Rebalance VisionFX surfaces so the homepage is no longer overwhelmingly pale, then verify desktop and mobile color rhythm before delivery.
 - [x] Replace the unrelated split-image hero with the user-provided Anthropic-inspired two-column editorial opening and a single dark content slab below.
 - [x] Validate the corrected placement at 1366×768 and mobile widths, then save and deliver the reference-driven update.
+- [x] Replace the static dark statement slab with a scroll-driven contained-to-viewport expansion that releases smoothly into the following section.
+- [x] Provide a motion-reduced/static fallback and verify the effect across desktop and mobile viewports before delivery.
