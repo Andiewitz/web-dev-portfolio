@@ -55,3 +55,19 @@ The replacement image endpoints now return HTTP 200 with image/webp content and 
 ## Final image integrity and text choreography QA
 
 The desktop full-page capture shows the new generated editorial still lifes rendering cleanly in the Projects and Studio sections. The slab headline now reveals by line, with the orange accent phrase receiving character-level stagger. Service and project titles use character spans while preserving natural word wrapping. The mobile capture shows the same imagery loading correctly and keeps the touch-safe static section fallback; the DOM text remains readable and the character spans do not clip or break the layout.
+
+## Transform timing and asset integrity correction
+
+The final live browser check confirms all four visual assets decode successfully with non-zero dimensions: 1920×1280, 1920×1920, 1280×1920, and 1920×1920. At the Services section, the line choreography reports `visionfx-line-reveal` at 0.3s and the character choreography reports `visionfx-char-reveal` at 0.22s. The active character has a live transform matrix during the reveal, confirming the motion is transform-led rather than a static opacity-only effect.
+
+## Final transform-only correction QA
+
+The live desktop browser decodes the distinct final image set successfully with non-zero dimensions for all four visuals. The slab now reports `will-change: transform` and a live matrix transform at the start of the scroll sequence; no clip-path runtime reset remains. The fast text choreography is 0.3s per line and 0.22s per character. The mobile full-page capture shows the new images rendering cleanly and the static touch fallback remains readable.
+
+## Mobile-targeted final check
+
+The 390×844 mobile preview renders the distinct final editorial images without broken-image artifacts. The slab is static on the touch breakpoint, section content remains immediately readable, and the fast line/character choreography does not introduce overflow or clipped words. Desktop runtime evidence separately confirms the slab uses a live transform matrix and `will-change: transform`; the mobile stylesheet explicitly resets the slab transform and preserves the static fallback.
+
+## True mobile browser runtime check
+
+A real Chromium mobile context at 390×844 with touch enabled confirmed all four final images decoded successfully with their expected non-zero dimensions. The slab computed transform is `none` on the touch breakpoint, the slab content opacity is `1`, and text animation is `none`, confirming the intended immediate readable fallback while image assets remain intact.

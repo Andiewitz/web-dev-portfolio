@@ -22,6 +22,8 @@ describe("VisionFX motion contract", () => {
     expect(css).toContain(".motion-char");
     expect(css).toContain("@keyframes visionfx-char-reveal");
     expect(css).toContain(".project-lead__visual img");
+    expect(css).toContain("transform: scale3d(0.86, 1, 1)");
+    expect(css).not.toContain("will-change: clip-path");
     expect(css).toContain(".mobile-nav { position: absolute");
     expect(css).toContain("transition: opacity 180ms var(--ease-out), transform 180ms var(--ease-out)");
   });
@@ -32,12 +34,15 @@ describe("VisionFX motion contract", () => {
 
     expect(home).toContain("const start = window.innerHeight * 0.96");
     expect(home).toContain("const end = -window.innerHeight * 0.12");
-    expect(home).toContain("slab.style.clipPath");
+    expect(home).toContain("slab.style.transform");
+    expect(home).not.toContain("slab.style.clipPath");
     expect(home).toContain("requestAnimationFrame(updateSections)");
     expect(home).toContain("window.addEventListener(\"scroll\", requestUpdate");
     expect(home).toContain("data-reveal");
     expect(home).toContain("function CharacterText");
-    expect(home).toContain("visionfx-project-launch-v2_aa9f09a1.jpg");
+    expect(home).toContain("visionfx-paper-architecture-final_544f85b5.jpg");
+    expect(home).toContain("visionfx-fold-detail-final_2d166ab8.jpg");
+    expect(home).toContain("visionfx-worktable-final_9bf25587.jpg");
     expect(home).toContain('loading="eager"');
     expect(home).not.toContain("editorial-reveal");
     expect(notFound).not.toContain("animate-pulse");

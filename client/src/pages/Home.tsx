@@ -104,7 +104,7 @@ export default function Home() {
     const updateSlab = () => {
       frame = 0;
       if (window.innerWidth < 768 || reducedMotion.matches) {
-        slab.style.clipPath = "";
+        slab.style.transform = "";
         if (slabInner) {
           slabInner.style.transform = "";
           slabInner.style.opacity = "";
@@ -116,9 +116,8 @@ export default function Home() {
       const start = window.innerHeight * 0.96;
       const end = -window.innerHeight * 0.12;
       const progress = Math.min(1, Math.max(0, (start - regionTop) / (start - end)));
-      const inset = (7 * (1 - progress)).toFixed(3);
-      const radius = (22 * (1 - progress)).toFixed(2);
-      slab.style.clipPath = `inset(0 ${inset}vw 0 ${inset}vw round ${radius}px)`;
+      const slabScale = (0.86 + (progress * 0.14)).toFixed(4);
+      slab.style.transform = `scale3d(${slabScale}, 1, 1)`;
       slab.querySelector(".hero-slab__content")?.classList.toggle("is-in-view", progress > 0.12);
       if (slabInner) {
         const lift = ((1 - progress) * 32).toFixed(2);
@@ -315,7 +314,7 @@ export default function Home() {
             <div className="project-ledger">
               <article className="project-lead" data-reveal>
                 <figure className="project-lead__visual">
-                  <img data-motion-image src="/manus-storage/visionfx-project-launch-v2_aa9f09a1.jpg" alt="A folded ivory paper maquette, charcoal plane, and orange object arranged in an editorial studio still life" loading="eager" />
+                  <img data-motion-image src="/manus-storage/visionfx-paper-architecture-final_544f85b5.jpg" alt="Folded cream paper architecture on a charcoal table with a small orange geometric tab" loading="eager" />
                   <figcaption>Visual study / from brief to built form</figcaption>
                 </figure>
                 <div className="project-lead__copy">
@@ -328,7 +327,7 @@ export default function Home() {
               <div className="project-index" data-reveal>
                 <article className="project-entry">
                   <div className="project-entry__visual">
-                    <img src="/manus-storage/visionfx-detail-study-v2_1a217749.jpg" alt="Layered paper and a charcoal fold with an orange thread in a close editorial study" loading="eager" />
+                    <img src="/manus-storage/visionfx-fold-detail-final_2d166ab8.jpg" alt="Layered matte paper planes and a dark folded form crossed by a fine orange thread" loading="eager" />
                   </div>
                   <div className="project-entry__copy">
                     <p className="project-card__type">{projects[1].type}</p>
@@ -353,8 +352,8 @@ export default function Home() {
         <section id="studio" className="studio-section">
           <div className="content-frame studio-layout">
             <figure className="studio-art" data-reveal>
-              <img data-motion-image src="/manus-storage/visionfx-studio-process-v2_b607d8d5.jpg"
-                alt="A studio worktable with blank paper, ruler, pencil, charcoal card, and an orange tab"
+              <img data-motion-image src="/manus-storage/visionfx-worktable-final_9bf25587.jpg"
+                alt="A top-down studio worktable with blank paper, pencil, ruler, charcoal card, and orange tab"
                 loading="eager"
               />
               <figcaption>Connected work / planning, design, build</figcaption>

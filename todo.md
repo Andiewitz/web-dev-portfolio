@@ -82,3 +82,17 @@
 - [x] Implement line-by-line choreography for major headlines and selective character-by-character emphasis for short labels or accent words.
 - [x] Add staggered row choreography for services, projects, and contact content while preserving readable DOM text and reduced-motion fallbacks.
 - [x] Verify asset loading and actual motion states at desktop/mobile scroll positions, then save and deliver the corrected checkpoint.
+
+## Image Serving and Transform Motion Fix
+
+- [x] Audit why the current replacement image URLs still appear corrupted in the rendered preview and identify a reliable serving format/path.
+- [x] Replace failing image references with verified assets that decode and render correctly in the browser.
+- [x] Reduce motion durations and remove layout/property animation so visible choreography uses fast transform/opacity transitions only.
+- [x] Verify rendered image dimensions and computed transforms at desktop/mobile positions, then save and deliver the correction checkpoint.
+
+## Final Correction Follow-up
+
+- [x] Replace the disputed v2 image URLs with a distinct verified asset set and re-check the live rendered visuals after reload.
+- [x] Make the slab motion contract explicit by converting its continuity to transform-only.
+- [x] Run post-fix desktop and mobile runtime checks for decoded images and computed transforms before the next checkpoint.
+- [x] Run a mobile-targeted runtime check confirming image decode state and transform/animation fallback values, then close the correction checkpoint.
