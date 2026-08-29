@@ -8,66 +8,27 @@ import { Menu, X } from "lucide-react";
 import Wordmark from "@/components/Wordmark";
 
 const navItems = [
-  { href: "#services", label: "Services" },
-  { href: "#approach", label: "Approach" },
   { href: "#projects", label: "Projects" },
-  { href: "#studio", label: "Studio" },
-];
-
-const services = [
-  {
-    title: "Plan your website",
-    text: "We work out what your website needs to say, what pages it needs, and what each page needs to help a visitor do.",
-    detail: "Website strategy and content planning",
-    proof: "Audience focus · page plan · content priorities",
-  },
-  {
-    title: "Design the experience",
-    text: "We create a visual system and responsive page designs that make your offer easy to understand on every screen size.",
-    detail: "Website design and responsive page systems",
-    proof: "Visual direction · page designs · reusable components",
-  },
-  {
-    title: "Build and launch it",
-    text: "We develop the site, test it across devices, and hand it over in a way your team can confidently use and update.",
-    detail: "Frontend development, testing, and launch",
-    proof: "Responsive build · device testing · handoff support",
-  },
-];
-
-const principles = [
-  {
-    title: "Get clear before we design",
-    text: "We agree on the audience, the offer, and what the website needs to achieve before designing a page.",
-  },
-  {
-    title: "Keep design and development together",
-    text: "The people planning the site stay involved through design and build, so the result remains consistent.",
-  },
-  {
-    title: "Launch with a usable system",
-    text: "You receive a responsive site and clear foundations your team can continue to work with.",
-  },
 ];
 
 const projects = [
   {
-    title: "Launch a new product or service",
-    type: "For a new offer",
-    context: "Help people understand what is new, who it is for, and why they should care.",
-    deliverables: "Messaging · page design · responsive build",
+    title: "Project Name",
+    type: "Featured work",
+    context: "A short description of what this project is and what it achieves.",
+    deliverables: "React · Node.js · Postgres",
   },
   {
-    title: "Replace a website that no longer fits",
-    type: "For a growing business",
-    context: "Turn an outdated or confusing site into a clearer introduction to your business.",
-    deliverables: "Website plan · design system · development",
+    title: "Project Name Two",
+    type: "Side project",
+    context: "A short description of what this project is and why I built it.",
+    deliverables: "TypeScript · Next.js · API",
   },
   {
-    title: "Make a complex offer easier to explain",
-    type: "For a complex product",
-    context: "Give customers a simpler path through a product, service, or platform with a lot to say.",
-    deliverables: "Content structure · reusable pages · team handoff",
+    title: "Project Name Three",
+    type: "Open source",
+    context: "A short description of a tool or library that others can use.",
+    deliverables: "Library · CI · Docs",
   },
 ];
 
@@ -142,11 +103,7 @@ function useNavbarTheme() {
     const sections: { id: string; theme: 'dark' | 'light' }[] = [
       { id: 'top', theme: 'dark' },
       { id: 'slab-region', theme: 'light' },
-      { id: 'approach', theme: 'dark' },
-      { id: 'services', theme: 'dark' },
-      { id: 'projects', theme: 'light' },
-      { id: 'studio', theme: 'dark' },
-      { id: 'contact', theme: 'light' },
+      { id: 'projects', theme: 'dark' },
       { id: 'footer', theme: 'light' },
     ];
     const probe = 37;
@@ -259,7 +216,7 @@ export default function Home() {
           <nav className="desktop-nav" aria-label="Primary navigation">
             {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
           </nav>
-          <a href="#contact" className="header-cta">Start a project</a>
+          <a href="mailto:hello@visionfx.studio" className="header-cta">Start a conversation</a>
           <button
             type="button"
             className="menu-toggle"
@@ -283,7 +240,7 @@ export default function Home() {
             >
               <nav aria-label="Mobile navigation">
                 {navItems.map((item) => <a key={item.href} href={item.href} onClick={closeNav}>{item.label}</a>)}
-                <a href="#contact" onClick={closeNav}>Start a project</a>
+                <a href="mailto:hello@visionfx.studio" onClick={closeNav}>Start a conversation</a>
               </nav>
             </motion.div>
           )}
@@ -322,7 +279,7 @@ export default function Home() {
                 Whether you need a team member or someone to own it solo — I build things that work.
               </p>
               <p className="opening-proof">Full-stack · Frontend · Open to work</p>
-              <a className="opening-cta" href="#contact">Start a conversation</a>
+              <a className="opening-cta" href="mailto:hello@visionfx.studio">Start a conversation</a>
             </motion.div>
           </div>
         </section>
@@ -363,58 +320,14 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="approach" className="approach-section">
-          <div className="content-frame approach-layout">
-            <RevealBlock className="approach-heading" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <p className="eyebrow">How we work</p>
-              <h2 aria-label="One partner from website strategy to launch.">
-                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>One partner from</motion.span>{" "}
-                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>website strategy to launch.</motion.span>
-              </h2>
-              <p>You do not have to manage a strategist, a designer, and a developer separately. VisionFX takes the website through each stage as one connected project.</p>
-            </RevealBlock>
-            <div className="principle-list">
-              {principles.map((principle) => (
-                <RevealBlock className="principle" key={principle.title} reducedMotion={!!reducedMotion} variants={revealVariants}>
-                  <h3>{principle.title}</h3>
-                  <p>{principle.text}</p>
-                </RevealBlock>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        <section id="services" className="services-section">
-          <div className="content-frame services-layout">
-            <RevealBlock className="services-intro" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <p className="eyebrow">Services</p>
-              <h2 aria-label="Three parts of a website project.">
-                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>Three parts of a</motion.span>{" "}
-                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>website project.</motion.span>
-              </h2>
-              <p>Choose the support you need. Most projects include all three so the website is clear, well-designed, and ready to launch.</p>
-            </RevealBlock>
-            <div className="service-list">
-              {services.map((service) => (
-                <RevealBlock className="service" key={service.title} reducedMotion={!!reducedMotion} variants={revealVariants}>
-                  <p className="service__detail">{service.detail}</p>
-                  <MotionTitle text={service.title} />
-                  <p>{service.text}</p>
-                  <p className="service__proof">{service.proof}</p>
-                </RevealBlock>
-              ))}
-            </div>
-          </div>
-        </section>
-
         <section id="projects" className="projects-section">
           <div className="content-frame">
             <RevealBlock className="projects-heading" reducedMotion={!!reducedMotion} variants={revealVariants}>
               <div>
                 <p className="eyebrow">Projects</p>
-                <h2>Types of website projects we take on.</h2>
+                <h2>Selected work, built to hold up.</h2>
               </div>
-              <p>These are common project types, not made-up case studies. Each one starts with a business goal and ends with a live, responsive website your team can use.</p>
+              <p>A few things I have designed and shipped — from production web apps to tools that make life easier for the people using them.</p>
             </RevealBlock>
             <div className="project-ledger">
               <RevealBlock className="project-lead" reducedMotion={!!reducedMotion} variants={revealVariants}>
@@ -429,7 +342,7 @@ export default function Home() {
                     viewport={{ once: true, margin: "0px 0px -10% 0px" }}
                     transition={{ duration: 0.6, ease: easeOut }}
                   />
-                  <figcaption>Visual study / from brief to built form</figcaption>
+                  <figcaption>Featured / {projects[0].type}</figcaption>
                 </figure>
                 <div className="project-lead__copy">
                   <p className="project-card__type">{projects[0].type}</p>
@@ -463,60 +376,15 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="studio" className="studio-section">
-          <div className="content-frame studio-layout">
-            <RevealBlock className="studio-art" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <motion.img
-                data-motion-image
-                src="/manus-storage/visionfx-worktable-final_9bf25587.jpg"
-                alt="A top-down studio worktable with blank paper, pencil, ruler, charcoal card, and orange tab"
-                loading="eager"
-                initial={reducedMotion ? false : { scale: 1.08, y: 42 }}
-                whileInView={reducedMotion ? undefined : { scale: 1, y: 0 }}
-                viewport={{ once: true, margin: "0px 0px -10% 0px" }}
-                transition={{ duration: 0.6, ease: easeOut }}
-              />
-              <figcaption>Connected work / planning, design, build</figcaption>
-            </RevealBlock>
-            <RevealBlock className="studio-copy" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <p className="eyebrow">Inside the studio</p>
-              <h2 aria-label="Work directly with the people building your website.">
-                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>Work directly with</motion.span>{" "}
-                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>the people building</motion.span>{" "}
-                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>your website.</motion.span>
-              </h2>
-              <p>We plan, design, and develop the site in the same small team. That means fewer handoffs, quicker answers, and a website that works the way it was designed to.</p>
-              <p className="production-note">Responsive pages · accessible markup · performance checks · practical handoff</p>
-              <a className="quiet-link" href="#contact">Ask about a project</a>
-            </RevealBlock>
-            <figure className="study-art" aria-hidden="true">
-              <img src="/manus-storage/visionfx-graphic-study_6fe48003.jpg" alt="" loading="eager" />
-            </figure>
-          </div>
-        </section>
-
-        <section id="contact" className="contact-section">
-          <div className="content-frame contact-layout">
-            <p className="eyebrow eyebrow--ember">Start a project</p>
-            <RevealBlock reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <h2 aria-label="Tell us what needs to change.">
-                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>Tell us what</motion.span>{" "}
-                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>needs to change.</motion.span>
-              </h2>
-              <p>Send a short overview of your website, your timeline, and what you need it to do. We will reply with whether we are a fit, an initial scope, and a practical next step.</p>
-            </RevealBlock>
-            <a className="contact-button" href="mailto:hello@visionfx.studio?subject=VisionFX%20website%20project">Email VisionFX</a>
-          </div>
-        </section>
       </main>
 
       <footer id="footer" className="site-footer">
         <RevealBlock className="content-frame footer-layout" reducedMotion={!!reducedMotion} variants={revealVariants}>
           <Wordmark inverse />
-          <p>Websites planned, designed, and built for businesses ready to grow.</p>
+          <p>Software engineer building clear, dependable things for the web.</p>
           <div className="footer-links">
             {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
-            <a href="#contact">Contact</a>
+            <a href="mailto:hello@visionfx.studio">Contact</a>
           </div>
         </RevealBlock>
       </footer>
