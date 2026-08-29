@@ -5,7 +5,7 @@
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
-import VisionMark from "@/components/VisionMark";
+import Wordmark from "@/components/Wordmark";
 
 const navItems = [
   { href: "#services", label: "Services" },
@@ -209,7 +209,7 @@ export default function Home() {
         <a className="skip-link" href="#main">Skip to content</a>
         <div className="site-header__inner">
           <a href="#top" className="brand-link" aria-label="VisionFX home" onClick={closeNav}>
-            <VisionMark />
+            <Wordmark />
           </a>
           <nav className="desktop-nav" aria-label="Primary navigation">
             {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
@@ -481,7 +481,7 @@ export default function Home() {
 
       <footer className="site-footer">
         <RevealBlock className="content-frame footer-layout" reducedMotion={!!reducedMotion} variants={revealVariants}>
-          <VisionMark inverse />
+          <Wordmark inverse />
           <p>Websites planned, designed, and built for businesses ready to grow.</p>
           <div className="footer-links">
             {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}

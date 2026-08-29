@@ -58,15 +58,9 @@ button { border: 0; }
 .site-header { position: sticky; z-index: 20; top: 0; background: rgba(240,238,230,0.98); border-bottom: 0.5px solid var(--hairline); color: var(--ink); }
 .site-header__inner { width: min(1280px, calc(100% - 48px)); min-height: 74px; margin-inline: auto; display: flex; align-items: center; gap: 28px; }
 .brand-link { display: inline-flex; text-decoration: none; }
-.vision-wordmark { display: inline-flex; align-items: center; gap: 1px; color: var(--ink); font-family: var(--font-display); font-size: 22px; font-weight: 800; letter-spacing: -0.075em; line-height: 1; }
-.vision-wordmark__mark { position: relative; display: grid; width: 23px; height: 23px; margin-right: 8px; border-radius: 6px; background: var(--orange); place-items: center; }
-.vision-wordmark__mark::before { width: 11px; height: 11px; border: 3px solid var(--canvas); border-radius: 50%; content: ""; }
-.vision-wordmark__mark i { position: absolute; width: 3px; height: 3px; right: 4px; top: 4px; border-radius: 50%; background: var(--canvas); }
-.vision-wordmark__name { color: currentColor; }
-.vision-wordmark__fx { color: var(--orange); letter-spacing: -0.11em; transform: skewX(-8deg); }
-.vision-wordmark--inverse { color: #fff; }
-.vision-wordmark--inverse .vision-wordmark__mark::before { border-color: var(--charcoal); }
-.vision-wordmark--inverse .vision-wordmark__mark i { background: var(--charcoal); }
+.wordmark { display: inline-flex; align-items: baseline; color: var(--ink); font-family: var(--font-display); font-size: 22px; font-weight: 600; letter-spacing: -0.06em; line-height: 1; }
+.wordmark__i { display: inline-block; color: var(--orange); font-style: italic; transform: skewX(-10deg); transform-origin: 50% 100%; }
+.wordmark--inverse { color: #fff; }
 .desktop-nav { display: flex; align-items: center; gap: 28px; margin-left: auto; }
 .desktop-nav a, .footer-links a { color: var(--ink-soft); font-size: 13px; font-weight: 500; text-decoration: none; transition: color 150ms var(--ease-out); }
 .header-cta { border-radius: 8px; padding: 9px 16px; background: var(--charcoal); color: var(--paper); font-size: 13px; font-weight: 600; text-decoration: none; transition: background-color 150ms var(--ease-out), color 150ms var(--ease-out), transform 150ms var(--ease-out); }
