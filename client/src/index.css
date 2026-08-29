@@ -81,39 +81,11 @@ button { border: 0; }
 .hero-line { display: inline-block; }
 .opening-eyebrow { margin-bottom: 22px; }
 
-@keyframes visionfx-hero-enter {
-  from { opacity: 0; transform: translate3d(0, 22px, 0); }
-  to { opacity: 1; transform: translate3d(0, 0, 0); }
-}
-@media (prefers-reduced-motion: no-preference) {
-  .opening-eyebrow { animation: visionfx-hero-enter 560ms var(--ease-out) both; }
-  .opening-grid h1 .hero-line { animation: visionfx-hero-enter 320ms var(--ease-out) both; }
-  .opening-grid h1 .hero-line--design { animation-delay: 45ms; }
-  .opening-side { animation: visionfx-hero-enter 320ms var(--ease-out) 100ms both; }
-}
-
-.has-motion [data-reveal] { opacity: 0; transform: translate3d(0, 64px, 0) scale(0.985); will-change: opacity, transform; }
-.has-motion [data-reveal].is-visible { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
-.has-motion [data-reveal] .motion-line { display: block; }
-.has-motion [data-reveal].is-visible .motion-line { animation: visionfx-line-reveal 300ms var(--ease-out) both; }
-.has-motion [data-reveal] .motion-char, .hero-slab .motion-char { display: inline-block; opacity: 0; transform: translate3d(0, 0.72em, 0) rotate(2deg); }
-.has-motion [data-reveal].is-visible .motion-char { animation: visionfx-char-reveal 220ms var(--ease-out) both; animation-delay: calc(var(--char-index) * 8ms); }
-.hero-slab__content .motion-line { display: block; }
-.hero-slab__content.is-in-view .motion-line { animation: visionfx-line-reveal 360ms var(--ease-out) 20ms both; }
-.hero-slab__content.is-in-view .motion-char { animation: visionfx-char-reveal 240ms var(--ease-out) both; animation-delay: calc(80ms + (var(--char-index) * 8ms)); }
-.has-motion .project-lead__visual img, .has-motion .studio-art img { will-change: transform; }
-
-@keyframes visionfx-line-reveal {
-  from { opacity: 0; transform: translate3d(0, 0.3em, 0); }
-  to { opacity: 1; transform: translate3d(0, 0, 0); }
-}
-@keyframes visionfx-char-reveal {
-  from { opacity: 0; transform: translate3d(0, 0.72em, 0) rotate(2deg); }
-  to { opacity: 1; transform: translate3d(0, 0, 0) rotate(0); }
-}
-
-
-.opening-statement { max-width: 370px; margin: clamp(40px, 5vw, 68px) 0 0; font-family: var(--font-editorial); font-size: clamp(22px, 2vw, 28px); line-height: 1.1; }
+/* Animations are driven by Framer Motion. Reduced-motion users skip transforms and opacity. */
+.motion-line { display: block; }
+.motion-char { display: inline-block; }
+.hero-slab { transform-origin: center center; will-change: transform; }
+.hero-slab__inner { will-change: transform, opacity; }.opening-statement { max-width: 370px; margin: clamp(40px, 5vw, 68px) 0 0; font-family: var(--font-editorial); font-size: clamp(22px, 2vw, 28px); line-height: 1.1; }
 .opening-proof { margin: 24px 0 0; color: var(--ink-muted); font-family: var(--font-mono); font-size: 10px; line-height: 1.6; text-transform: uppercase; }
 .opening-cta { display: inline-block; margin-top: 28px; border-radius: 8px; padding: 11px 16px; background: var(--charcoal); color: var(--paper); font-size: 14px; font-weight: 600; text-decoration: none; transition: background-color 150ms var(--ease-out), transform 150ms var(--ease-out); }
 .opening-cta:active { transform: scale(0.97); transition-duration: 100ms; }
@@ -222,12 +194,9 @@ button { border: 0; }
 .footer-links { display: flex; justify-content: flex-end; gap: 18px; flex-wrap: wrap; }
 .footer-links a { color: rgba(255,255,255,0.7); }
 
-/* Motion is reserved for spatial continuity (the slab), direct feedback (press), and intentional hover states. */
+/* Motion is driven by Framer Motion, which respects prefers-reduced-motion internally. */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; scroll-behavior: auto !important; transition-duration: 0.01ms !important; }
-  .mobile-nav { transition-delay: 0s !important; }
-  [data-reveal] { opacity: 1 !important; transform: none !important; }
-  .motion-char { opacity: 1 !important; transform: none !important; animation: none !important; }
+  html { scroll-behavior: auto; }
 }
 @media (max-width: 920px) {
   .desktop-nav, .header-cta { display: none; }

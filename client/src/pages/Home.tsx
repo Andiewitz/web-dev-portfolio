@@ -2,7 +2,8 @@
  * VisionFX design reminder: reference-driven editorial placement with original VisionFX content.
  * Begin with a cream two-column argument and a single dark slab; use imagery only in later supporting sections.
  */
-import { useEffect, useRef, useState, type CSSProperties } from "react";
+import { useEffect, useRef, useState, type ReactNode } from "react";
+import { AnimatePresence, motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import VisionMark from "@/components/VisionMark";
 
@@ -49,22 +50,6 @@ const principles = [
   },
 ];
 
-function CharacterText({ text, className = "" }: { text: string; className?: string }) {
-  return (
-    <span className={className} aria-hidden="true">
-      {Array.from(text).map((character, index) => (
-        <span className="motion-char" style={{ "--char-index": index } as CSSProperties} key={`${character}-${index}`}>
-          {character}
-        </span>
-      ))}
-    </span>
-  );
-}
-
-function MotionTitle({ text, as: Tag = "h3" }: { text: string; as?: "h2" | "h3" }) {
-  return <Tag aria-label={text}><CharacterText text={text} /></Tag>;
-}
-
 const projects = [
   {
     title: "Launch a new product or service",
@@ -86,112 +71,135 @@ const projects = [
   },
 ];
 
+const easeOut = [0.23, 1, 0.32, 1] as const;
+
+const charContainer = {
+  hidden: { opacity: 1 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.008, delayChildren: 0.08 },
+  },
+};
+
+const charItem = {
+  hidden: { opacity: 0, y: "0.72em", rotate: 2 },
+  show: { opacity: 1, y: 0, rotate: 0, transition: { duration: 0.22, ease: easeOut } },
+};
+
+const lineContainer = {
+  hidden: { opacity: 1 },
+  show: {
+    opacity: 1,
+    transition: { staggerChildren: 0.04, delayChildren: 0.02 },
+  },
+};
+
+const lineItem = {
+  hidden: { opacity: 0, y: "0.3em" },
+  show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: easeOut } },
+};
+
+const sectionReveal = {
+  hidden: { opacity: 0, y: 64, scale: 0.985 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: easeOut } },
+};
+
+const sectionRevealMobile = {
+  hidden: { opacity: 0, y: 18, scale: 1 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, ease: easeOut } },
+};
+
+const heroLineReveal = {
+  hidden: { opacity: 0, y: 22 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.32, ease: easeOut } },
+};
+
+const heroSideReveal = {
+  hidden: { opacity: 0, y: 22 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.32, ease: easeOut, delay: 0.1 } },
+};
+
+const heroEyebrowReveal = {
+  hidden: { opacity: 0, y: 22 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.56, ease: easeOut } },
+};
+
+function useResponsiveVariant() {
+  const [isMobile, setIsMobile] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.innerWidth < 768;
+    }
+    return false;
+  });
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const mql = window.matchMedia("(max-width: 767px)");
+    const onChange = () => setIsMobile(mql.matches);
+    mql.addEventListener("change", onChange);
+    return () => mql.removeEventListener("change", onChange);
+  }, []);
+  return isMobile;
+}
+
+function CharacterText({ text, className = "" }: { text: string; className?: string }) {
+  return (
+    <motion.span className={className} aria-hidden="true" variants={charContainer} initial="hidden" animate="show">
+      {Array.from(text).map((character, index) => (
+        <motion.span variants={charItem} key={`${character}-${index}`} style={{ display: "inline-block" }}>
+          {character}
+        </motion.span>
+      ))}
+    </motion.span>
+  );
+}
+
+function MotionTitle({ text, as: Tag = "h3" }: { text: string; as?: "h2" | "h3" }) {
+  return <Tag aria-label={text}><CharacterText text={text} /></Tag>;
+}
+
+function RevealBlock({
+  children,
+  className,
+  reducedMotion,
+  variants,
+}: {
+  children: ReactNode;
+  className?: string;
+  reducedMotion: boolean;
+  variants: typeof sectionReveal;
+}) {
+  return (
+    <motion.div
+      className={className}
+      initial={reducedMotion ? false : "hidden"}
+      whileInView={reducedMotion ? undefined : "show"}
+      viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+      variants={variants}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
 export default function Home() {
   const [navOpen, setNavOpen] = useState(false);
   const slabRegionRef = useRef<HTMLElement>(null);
   const slabRef = useRef<HTMLDivElement>(null);
-  const slabInnerRef = useRef<HTMLDivElement>(null);
+  const slabContentRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
+  const isMobile = useResponsiveVariant();
+  const revealVariants = isMobile ? sectionRevealMobile : sectionReveal;
 
-  useEffect(() => {
-    const region = slabRegionRef.current;
-    const slab = slabRef.current;
-    const slabInner = slabInnerRef.current;
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+  const { scrollYProgress } = useScroll({
+    target: slabRegionRef,
+    offset: ["start 96vh", "start -12vh"],
+  });
 
-    if (!region || !slab) return;
+  const slabScaleX = useTransform(scrollYProgress, [0, 1], [0.86, 1]);
+  const innerY = useTransform(scrollYProgress, [0, 1], [32, 0]);
+  const innerOpacity = useTransform(scrollYProgress, [0, 1], [0.76, 1]);
 
-    let frame = 0;
-    const updateSlab = () => {
-      frame = 0;
-      if (window.innerWidth < 768 || reducedMotion.matches) {
-        slab.style.transform = "";
-        if (slabInner) {
-          slabInner.style.transform = "";
-          slabInner.style.opacity = "";
-        }
-        return;
-      }
-
-      const regionTop = region.getBoundingClientRect().top;
-      const start = window.innerHeight * 0.96;
-      const end = -window.innerHeight * 0.12;
-      const progress = Math.min(1, Math.max(0, (start - regionTop) / (start - end)));
-      const slabScale = (0.86 + (progress * 0.14)).toFixed(4);
-      slab.style.transform = `scale3d(${slabScale}, 1, 1)`;
-      slab.querySelector(".hero-slab__content")?.classList.toggle("is-in-view", progress > 0.12);
-      if (slabInner) {
-        const lift = ((1 - progress) * 32).toFixed(2);
-        slabInner.style.transform = `translate3d(0, ${lift}px, 0)`;
-        slabInner.style.opacity = (0.76 + (progress * 0.24)).toFixed(3);
-      }
-    };
-
-    const requestUpdate = () => {
-      if (!frame) frame = window.requestAnimationFrame(updateSlab);
-    };
-
-    updateSlab();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
-    reducedMotion.addEventListener("change", requestUpdate);
-
-    return () => {
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-      reducedMotion.removeEventListener("change", requestUpdate);
-      if (frame) window.cancelAnimationFrame(frame);
-    };
-  }, []);
-
-  useEffect(() => {
-    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
-    const targets = Array.from(document.querySelectorAll<HTMLElement>("[data-reveal]"));
-
-    if (reducedMotion.matches || targets.length === 0) return;
-
-    document.documentElement.classList.add("has-motion");
-    let frame = 0;
-
-    const updateSections = () => {
-      frame = 0;
-      targets.forEach((target, index) => {
-        const rect = target.getBoundingClientRect();
-        const start = window.innerHeight * 1.08;
-        const end = window.innerHeight * 0.16;
-        const progress = Math.min(1, Math.max(0, (start - rect.top) / (start - end)));
-        const eased = progress * progress * (3 - 2 * progress);
-        const offset = (1 - eased) * (window.innerWidth < 768 ? 18 : 64);
-        const scale = 0.985 + eased * 0.015;
-        target.style.opacity = eased.toFixed(3);
-        target.style.transform = `translate3d(0, ${offset.toFixed(2)}px, 0) scale(${scale.toFixed(4)})`;
-        target.style.transitionDelay = `${Math.min(index * 24, 120)}ms`;
-        target.classList.toggle("is-visible", progress > 0.24);
-
-        const image = target.querySelector<HTMLElement>("img[data-motion-image]");
-        if (image) {
-          const imageOffset = (1 - eased) * (window.innerWidth < 768 ? 10 : 42);
-          image.style.transform = `translate3d(0, ${imageOffset.toFixed(2)}px, 0) scale(${(1.08 - eased * 0.08).toFixed(4)})`;
-        }
-      });
-    };
-
-    const requestUpdate = () => {
-      if (!frame) frame = window.requestAnimationFrame(updateSections);
-    };
-
-    updateSections();
-    window.addEventListener("scroll", requestUpdate, { passive: true });
-    window.addEventListener("resize", requestUpdate);
-    reducedMotion.addEventListener("change", requestUpdate);
-
-    return () => {
-      window.removeEventListener("scroll", requestUpdate);
-      window.removeEventListener("resize", requestUpdate);
-      reducedMotion.removeEventListener("change", requestUpdate);
-      if (frame) window.cancelAnimationFrame(frame);
-      document.documentElement.classList.remove("has-motion");
-    };
-  }, []);
+  const slabContentInView = useInView(slabContentRef, { once: true, margin: "0px 0px -15% 0px" });
 
   const closeNav = () => setNavOpen(false);
 
@@ -218,65 +226,128 @@ export default function Home() {
             {navOpen ? <X aria-hidden="true" size={21} /> : <Menu aria-hidden="true" size={21} />}
           </button>
         </div>
-        <div id="mobile-navigation" className={`mobile-nav ${navOpen ? "mobile-nav--open" : ""}`}>
-          <nav aria-label="Mobile navigation">
-            {navItems.map((item) => <a key={item.href} href={item.href} onClick={closeNav}>{item.label}</a>)}
-            <a href="#contact" onClick={closeNav}>Start a project</a>
-          </nav>
-        </div>
+        <AnimatePresence>
+          {navOpen && (
+            <motion.div
+              id="mobile-navigation"
+              className="mobile-nav mobile-nav--open"
+              initial={{ opacity: 0, y: -8 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8 }}
+              transition={{ duration: 0.18, ease: easeOut }}
+            >
+              <nav aria-label="Mobile navigation">
+                {navItems.map((item) => <a key={item.href} href={item.href} onClick={closeNav}>{item.label}</a>)}
+                <a href="#contact" onClick={closeNav}>Start a project</a>
+              </nav>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
       <main id="main">
         <section id="top" className="hero-section">
           <div className="content-frame opening-grid">
             <div>
-              <p className="eyebrow opening-eyebrow">VisionFX — web development studio</p>
-              <h1><span className="hero-line">Plan it.</span><br /><span className="hero-line hero-line--design">Design it.</span><br /><span className="hero-line">Build it.</span></h1>
+              <motion.p
+                className="eyebrow opening-eyebrow"
+                initial={reducedMotion ? false : "hidden"}
+                animate="show"
+                variants={heroEyebrowReveal}
+              >
+                VisionFX — web development studio
+              </motion.p>
+              <h1>
+                <motion.span
+                  className="hero-line"
+                  initial={reducedMotion ? false : "hidden"}
+                  animate="show"
+                  variants={heroLineReveal}
+                  style={{ display: "inline-block" }}
+                >Plan it.</motion.span><br />
+                <motion.span
+                  className="hero-line hero-line--design"
+                  initial={reducedMotion ? false : "hidden"}
+                  animate="show"
+                  variants={heroLineReveal}
+                  transition={{ duration: 0.32, ease: easeOut, delay: 0.045 }}
+                  style={{ display: "inline-block" }}
+                >Design it.</motion.span><br />
+                <motion.span
+                  className="hero-line"
+                  initial={reducedMotion ? false : "hidden"}
+                  animate="show"
+                  variants={heroLineReveal}
+                  transition={{ duration: 0.32, ease: easeOut, delay: 0.09 }}
+                  style={{ display: "inline-block" }}
+                >Build it.</motion.span>
+              </h1>
             </div>
-            <div className="opening-side">
+            <motion.div
+              className="opening-side"
+              initial={reducedMotion ? false : "hidden"}
+              animate="show"
+              variants={heroSideReveal}
+            >
               <p className="opening-statement">
                 VisionFX helps businesses launch a new website, replace an old one, or make a complicated offer easier to understand.
               </p>
               <p className="opening-proof">Website strategy · Design · Frontend development</p>
               <a className="opening-cta" href="#contact">Tell us about your website</a>
-            </div>
+            </motion.div>
           </div>
         </section>
 
         <section ref={slabRegionRef} className="hero-slab-scroll-region" aria-label="VisionFX statement">
           <div className="hero-slab-stage">
-            <div ref={slabRef} className="hero-slab">
-              <div ref={slabInnerRef} className="hero-slab__inner">
+            <motion.div
+              ref={slabRef}
+              className="hero-slab"
+              style={reducedMotion || isMobile ? undefined : { scaleX: slabScaleX }}
+            >
+              <motion.div
+                className="hero-slab__inner"
+                style={reducedMotion || isMobile ? undefined : { y: innerY, opacity: innerOpacity }}
+              >
                 <p className="hero-slab__eyebrow">The whole website, handled together.</p>
-                <div className="hero-slab__content">
+                <motion.div
+                  ref={slabContentRef}
+                  className="hero-slab__content"
+                  initial={reducedMotion ? false : "hidden"}
+                  animate={slabContentInView || reducedMotion ? "show" : "hidden"}
+                  variants={lineContainer}
+                >
                   <h2 aria-label="Make the website the easy part.">
-                <span className="motion-line">Make the website</span>{" "}
-                <span className="motion-line">the <em><CharacterText text="easy part." /></em></span>
-              </h2>
+                    <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>Make the website</motion.span>{" "}
+                    <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>the <em><CharacterText text="easy part." /></em></motion.span>
+                  </h2>
                   <p>We turn a clear brief into a useful, responsive website — then stay close through design, development, testing, and launch.</p>
                   <div className="hero-slab__details" aria-label="Project stages">
                     <span>Plan</span><span>Design</span><span>Build</span><span>Launch</span>
                   </div>
                   <a className="hero-slab__cta" href="#services">See what you get</a>
-                </div>
-              </div>
-            </div>
+                </motion.div>
+              </motion.div>
+            </motion.div>
           </div>
         </section>
 
         <section id="approach" className="approach-section">
           <div className="content-frame approach-layout">
-            <div className="approach-heading" data-reveal>
+            <RevealBlock className="approach-heading" reducedMotion={!!reducedMotion} variants={revealVariants}>
               <p className="eyebrow">How we work</p>
-                <h2 aria-label="One partner from website strategy to launch."><span className="motion-line">One partner from</span>{" "}<span className="motion-line">website strategy to launch.</span></h2>
+              <h2 aria-label="One partner from website strategy to launch.">
+                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>One partner from</motion.span>{" "}
+                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>website strategy to launch.</motion.span>
+              </h2>
               <p>You do not have to manage a strategist, a designer, and a developer separately. VisionFX takes the website through each stage as one connected project.</p>
-            </div>
+            </RevealBlock>
             <div className="principle-list">
               {principles.map((principle) => (
-                <article className="principle" data-reveal key={principle.title}>
+                <RevealBlock className="principle" key={principle.title} reducedMotion={!!reducedMotion} variants={revealVariants}>
                   <h3>{principle.title}</h3>
                   <p>{principle.text}</p>
-                </article>
+                </RevealBlock>
               ))}
             </div>
           </div>
@@ -284,19 +355,22 @@ export default function Home() {
 
         <section id="services" className="services-section">
           <div className="content-frame services-layout">
-            <div className="services-intro" data-reveal>
+            <RevealBlock className="services-intro" reducedMotion={!!reducedMotion} variants={revealVariants}>
               <p className="eyebrow">Services</p>
-              <h2 aria-label="Three parts of a website project."><span className="motion-line">Three parts of a</span>{" "}<span className="motion-line">website project.</span></h2>
+              <h2 aria-label="Three parts of a website project.">
+                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>Three parts of a</motion.span>{" "}
+                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>website project.</motion.span>
+              </h2>
               <p>Choose the support you need. Most projects include all three so the website is clear, well-designed, and ready to launch.</p>
-            </div>
+            </RevealBlock>
             <div className="service-list">
               {services.map((service) => (
-                <article className="service" data-reveal key={service.title}>
+                <RevealBlock className="service" key={service.title} reducedMotion={!!reducedMotion} variants={revealVariants}>
                   <p className="service__detail">{service.detail}</p>
                   <MotionTitle text={service.title} />
                   <p>{service.text}</p>
                   <p className="service__proof">{service.proof}</p>
-                </article>
+                </RevealBlock>
               ))}
             </div>
           </div>
@@ -304,17 +378,26 @@ export default function Home() {
 
         <section id="projects" className="projects-section">
           <div className="content-frame">
-            <div className="projects-heading" data-reveal>
+            <RevealBlock className="projects-heading" reducedMotion={!!reducedMotion} variants={revealVariants}>
               <div>
                 <p className="eyebrow">Projects</p>
                 <h2>Types of website projects we take on.</h2>
               </div>
               <p>These are common project types, not made-up case studies. Each one starts with a business goal and ends with a live, responsive website your team can use.</p>
-            </div>
+            </RevealBlock>
             <div className="project-ledger">
-              <article className="project-lead" data-reveal>
+              <RevealBlock className="project-lead" reducedMotion={!!reducedMotion} variants={revealVariants}>
                 <figure className="project-lead__visual">
-                  <img data-motion-image src="/manus-storage/visionfx-paper-architecture-final_544f85b5.jpg" alt="Folded cream paper architecture on a charcoal table with a small orange geometric tab" loading="eager" />
+                  <motion.img
+                    data-motion-image
+                    src="/manus-storage/visionfx-paper-architecture-final_544f85b5.jpg"
+                    alt="Folded cream paper architecture on a charcoal table with a small orange geometric tab"
+                    loading="eager"
+                    initial={reducedMotion ? false : { scale: 1.08, y: 42 }}
+                    whileInView={reducedMotion ? undefined : { scale: 1, y: 0 }}
+                    viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+                    transition={{ duration: 0.6, ease: easeOut }}
+                  />
                   <figcaption>Visual study / from brief to built form</figcaption>
                 </figure>
                 <div className="project-lead__copy">
@@ -323,8 +406,8 @@ export default function Home() {
                   <p className="project-card__context">{projects[0].context}</p>
                   <p className="project-card__deliverables">{projects[0].deliverables}</p>
                 </div>
-              </article>
-              <div className="project-index" data-reveal>
+              </RevealBlock>
+              <RevealBlock className="project-index" reducedMotion={!!reducedMotion} variants={revealVariants}>
                 <article className="project-entry">
                   <div className="project-entry__visual">
                     <img src="/manus-storage/visionfx-fold-detail-final_2d166ab8.jpg" alt="Layered matte paper planes and a dark folded form crossed by a fine orange thread" loading="eager" />
@@ -344,27 +427,37 @@ export default function Home() {
                     <p className="project-card__deliverables">{projects[2].deliverables}</p>
                   </div>
                 </article>
-              </div>
+              </RevealBlock>
             </div>
           </div>
         </section>
 
         <section id="studio" className="studio-section">
           <div className="content-frame studio-layout">
-            <figure className="studio-art" data-reveal>
-              <img data-motion-image src="/manus-storage/visionfx-worktable-final_9bf25587.jpg"
+            <RevealBlock className="studio-art" reducedMotion={!!reducedMotion} variants={revealVariants}>
+              <motion.img
+                data-motion-image
+                src="/manus-storage/visionfx-worktable-final_9bf25587.jpg"
                 alt="A top-down studio worktable with blank paper, pencil, ruler, charcoal card, and orange tab"
                 loading="eager"
+                initial={reducedMotion ? false : { scale: 1.08, y: 42 }}
+                whileInView={reducedMotion ? undefined : { scale: 1, y: 0 }}
+                viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+                transition={{ duration: 0.6, ease: easeOut }}
               />
               <figcaption>Connected work / planning, design, build</figcaption>
-            </figure>
-            <div className="studio-copy" data-reveal>
+            </RevealBlock>
+            <RevealBlock className="studio-copy" reducedMotion={!!reducedMotion} variants={revealVariants}>
               <p className="eyebrow">Inside the studio</p>
-                <h2 aria-label="Work directly with the people building your website."><span className="motion-line">Work directly with</span>{" "}<span className="motion-line">the people building</span>{" "}<span className="motion-line">your website.</span></h2>
+              <h2 aria-label="Work directly with the people building your website.">
+                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>Work directly with</motion.span>{" "}
+                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>the people building</motion.span>{" "}
+                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>your website.</motion.span>
+              </h2>
               <p>We plan, design, and develop the site in the same small team. That means fewer handoffs, quicker answers, and a website that works the way it was designed to.</p>
               <p className="production-note">Responsive pages · accessible markup · performance checks · practical handoff</p>
               <a className="quiet-link" href="#contact">Ask about a project</a>
-            </div>
+            </RevealBlock>
             <figure className="study-art" aria-hidden="true">
               <img src="/manus-storage/visionfx-graphic-study_6fe48003.jpg" alt="" loading="eager" />
             </figure>
@@ -372,26 +465,29 @@ export default function Home() {
         </section>
 
         <section id="contact" className="contact-section">
-          <div className="content-frame contact-layout" data-reveal>
+          <div className="content-frame contact-layout">
             <p className="eyebrow eyebrow--ember">Start a project</p>
-            <div>
-              <h2 aria-label="Tell us what needs to change."><span className="motion-line">Tell us what</span>{" "}<span className="motion-line">needs to change.</span></h2>
+            <RevealBlock reducedMotion={!!reducedMotion} variants={revealVariants}>
+              <h2 aria-label="Tell us what needs to change.">
+                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>Tell us what</motion.span>{" "}
+                <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>needs to change.</motion.span>
+              </h2>
               <p>Send a short overview of your website, your timeline, and what you need it to do. We will reply with whether we are a fit, an initial scope, and a practical next step.</p>
-            </div>
+            </RevealBlock>
             <a className="contact-button" href="mailto:hello@visionfx.studio?subject=VisionFX%20website%20project">Email VisionFX</a>
           </div>
         </section>
       </main>
 
       <footer className="site-footer">
-        <div className="content-frame footer-layout" data-reveal>
+        <RevealBlock className="content-frame footer-layout" reducedMotion={!!reducedMotion} variants={revealVariants}>
           <VisionMark inverse />
           <p>Websites planned, designed, and built for businesses ready to grow.</p>
           <div className="footer-links">
             {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
             <a href="#contact">Contact</a>
           </div>
-        </div>
+        </RevealBlock>
       </footer>
     </div>
   );
