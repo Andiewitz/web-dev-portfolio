@@ -141,6 +141,49 @@ function useResponsiveVariant() {
   return isMobile;
 }
 
+function useNavbarTheme() {
+  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  useEffect(() => {
+    const sections: { id: string; theme: 'dark' | 'light' }[] = [
+      { id: 'top', theme: 'dark' },
+      { id: 'slab-region', theme: 'light' },
+      { id: 'approach', theme: 'dark' },
+      { id: 'services', theme: 'dark' },
+      { id: 'projects', theme: 'light' },
+      { id: 'studio', theme: 'dark' },
+      { id: 'contact', theme: 'light' },
+      { id: 'footer', theme: 'light' },
+    ];
+    const probe = 37;
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      let active: 'dark' | 'light' = 'dark';
+      for (const section of sections) {
+        const el = document.getElementById(section.id);
+        if (!el) continue;
+        const rect = el.getBoundingClientRect();
+        if (rect.top <= probe) {
+          active = section.theme;
+        }
+      }
+      setTheme(active);
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    return () => {
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+  return theme;
+}
+
 function CharacterText({ text, className = "" }: { text: string; className?: string }) {
   return (
     <motion.span className={className} aria-hidden="true" variants={charContainer} initial="hidden" animate="show">
@@ -189,6 +232,7 @@ export default function Home() {
   const reducedMotion = useReducedMotion();
   const isMobile = useResponsiveVariant();
   const revealVariants = isMobile ? sectionRevealMobile : sectionReveal;
+  const navTheme = useNavbarTheme();
 
   const { scrollYProgress } = useScroll({
     target: slabRegionRef,
@@ -205,10 +249,10 @@ export default function Home() {
 
   return (
     <div className="site-shell">
-      <header className="site-header">
+      <header className="site-header" data-theme={navTheme}>
         <a className="skip-link" href="#main">Skip to content</a>
         <div className="site-header__inner">
-          <a href="#top" className="brand-link" aria-label="VisionFX home" onClick={closeNav}>
+          <a href="#top" className="brand-link" aria-label="Andrei home" onClick={closeNav}>
             <Wordmark />
           </a>
           <nav className="desktop-nav" aria-label="Primary navigation">
@@ -298,7 +342,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section ref={slabRegionRef} className="hero-slab-scroll-region" aria-label="VisionFX statement">
+        <section ref={slabRegionRef} id="slab-region" className="hero-slab-scroll-region" aria-label="VisionFX statement">
           <div className="hero-slab-stage">
             <motion.div
               ref={slabRef}
@@ -479,7 +523,7 @@ export default function Home() {
         </section>
       </main>
 
-      <footer className="site-footer">
+      <footer id="footer" className="site-footer">
         <RevealBlock className="content-frame footer-layout" reducedMotion={!!reducedMotion} variants={revealVariants}>
           <Wordmark inverse />
           <p>Websites planned, designed, and built for businesses ready to grow.</p>
