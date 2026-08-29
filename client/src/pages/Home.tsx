@@ -119,11 +119,6 @@ const heroSideReveal = {
   show: { opacity: 1, y: 0, transition: { duration: 0.32, ease: easeOut, delay: 0.1 } },
 };
 
-const heroEyebrowReveal = {
-  hidden: { opacity: 0, y: 22 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.56, ease: easeOut } },
-};
-
 function useResponsiveVariant() {
   const [isMobile, setIsMobile] = useState(() => {
     if (typeof window !== "undefined") {
@@ -299,14 +294,6 @@ export default function Home() {
         <section id="top" className="hero-section">
           <div className="content-frame opening-grid">
             <div>
-              <motion.p
-                className="eyebrow opening-eyebrow"
-                initial={reducedMotion ? false : "hidden"}
-                animate="show"
-                variants={heroEyebrowReveal}
-              >
-                VisionFX — web development studio
-              </motion.p>
               <h1>
                 <motion.span
                   className="hero-line"
@@ -314,7 +301,7 @@ export default function Home() {
                   animate="show"
                   variants={heroLineReveal}
                   style={{ display: "inline-block" }}
-                >Plan it.</motion.span><br />
+                >Hello, I&apos;m Andrei.</motion.span><br />
                 <motion.span
                   className="hero-line hero-line--design"
                   initial={reducedMotion ? false : "hidden"}
@@ -322,15 +309,7 @@ export default function Home() {
                   variants={heroLineReveal}
                   transition={{ duration: 0.32, ease: easeOut, delay: 0.045 }}
                   style={{ display: "inline-block" }}
-                >Design it.</motion.span><br />
-                <motion.span
-                  className="hero-line"
-                  initial={reducedMotion ? false : "hidden"}
-                  animate="show"
-                  variants={heroLineReveal}
-                  transition={{ duration: 0.32, ease: easeOut, delay: 0.09 }}
-                  style={{ display: "inline-block" }}
-                >Build it.</motion.span>
+                >A <em>Software Engineer.</em></motion.span>
               </h1>
             </div>
             <motion.div
@@ -340,10 +319,10 @@ export default function Home() {
               variants={heroSideReveal}
             >
               <p className="opening-statement">
-                VisionFX helps businesses launch a new website, replace an old one, or make a complicated offer easier to understand.
+                Whether you need a team member or someone to own it solo — I build things that work.
               </p>
-              <p className="opening-proof">Website strategy · Design · Frontend development</p>
-              <a className="opening-cta" href="#contact">Tell us about your website</a>
+              <p className="opening-proof">Full-stack · Frontend · Open to work</p>
+              <a className="opening-cta" href="#contact">Start a conversation</a>
             </motion.div>
           </div>
         </section>
