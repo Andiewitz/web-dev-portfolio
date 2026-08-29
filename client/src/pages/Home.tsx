@@ -236,7 +236,7 @@ export default function Home() {
 
   const { scrollYProgress } = useScroll({
     target: slabRegionRef,
-    offset: ["start 96vh", "start -12vh"],
+    offset: ["start 75vh", "start -10vh"],
   });
 
   const slabScaleX = useTransform(scrollYProgress, [0, 1], [0.86, 1]);
