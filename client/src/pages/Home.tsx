@@ -3,7 +3,7 @@
  * Begin with a cream two-column argument and a single dark slab; use imagery only in later supporting sections.
  */
 import { useEffect, useRef, useState, type ReactNode } from "react";
-import { AnimatePresence, motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Wordmark from "@/components/Wordmark";
 
@@ -228,7 +228,6 @@ export default function Home() {
   const [navOpen, setNavOpen] = useState(false);
   const slabRegionRef = useRef<HTMLElement>(null);
   const slabRef = useRef<HTMLDivElement>(null);
-  const slabContentRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
   const isMobile = useResponsiveVariant();
   const revealVariants = isMobile ? sectionRevealMobile : sectionReveal;
@@ -243,7 +242,14 @@ export default function Home() {
   const innerY = useTransform(scrollYProgress, [0, 1], [32, 0]);
   const innerOpacity = useTransform(scrollYProgress, [0, 1], [0.76, 1]);
 
-  const slabContentInView = useInView(slabContentRef, { once: true, margin: "0px 0px -15% 0px" });
+  const floatY = (from: number, to: number) =>
+    useTransform(scrollYProgress, [0, 1], [from, to]);
+  const q1Y = floatY(60, -60);
+  const q2Y = floatY(-40, 80);
+  const q3Y = floatY(40, -100);
+  const q4Y = floatY(-80, 50);
+  const q5Y = floatY(80, -40);
+  const q6Y = floatY(-30, 100);
 
   const closeNav = () => setNavOpen(false);
 
@@ -342,7 +348,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section ref={slabRegionRef} id="slab-region" className="hero-slab-scroll-region" aria-label="VisionFX statement">
+        <section ref={slabRegionRef} id="slab-region" className="hero-slab-scroll-region" aria-label="Most of software engineering happens before you open your editor">
           <div className="hero-slab-stage">
             <motion.div
               ref={slabRef}
@@ -353,26 +359,28 @@ export default function Home() {
                 className="hero-slab__inner"
                 style={reducedMotion || isMobile ? undefined : { y: innerY, opacity: innerOpacity }}
               >
-                <p className="hero-slab__eyebrow">The whole website, handled together.</p>
                 <motion.div
-                  ref={slabContentRef}
-                  className="hero-slab__content"
+                  className="questions-statement"
                   initial={reducedMotion ? false : "hidden"}
-                  animate={slabContentInView || reducedMotion ? "show" : "hidden"}
-                  variants={lineContainer}
+                  whileInView={reducedMotion ? undefined : "show"}
+                  viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+                  variants={sectionReveal}
                 >
-                  <h2 aria-label="Make the website the easy part.">
-                    <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>Make the website</motion.span>{" "}
-                    <motion.span className="motion-line" variants={lineItem} style={{ display: "block" }}>the <em><CharacterText text="easy part." /></em></motion.span>
+                  <h2 className="questions-headline">
+                    Most of software engineering happens before you open your editor.
                   </h2>
-                  <p>We turn a clear brief into a useful, responsive website — then stay close through design, development, testing, and launch.</p>
-                  <div className="hero-slab__details" aria-label="Project stages">
-                    <span>Plan</span><span>Design</span><span>Build</span><span>Launch</span>
-                  </div>
-                  <a className="hero-slab__cta" href="#services">See what you get</a>
+                  <p className="questions-sub">
+                    It's the questions — about scale, about tradeoffs, about what you're even building — that determine whether the code is worth writing.
+                  </p>
                 </motion.div>
               </motion.div>
             </motion.div>
+            <motion.span className="float-q float-q--1" style={reducedMotion || isMobile ? undefined : { y: q1Y }}>how do we scale this?</motion.span>
+            <motion.span className="float-q float-q--2" style={reducedMotion || isMobile ? undefined : { y: q2Y }}>what are we even building?</motion.span>
+            <motion.span className="float-q float-q--3" style={reducedMotion || isMobile ? undefined : { y: q3Y }}>where does this break first?</motion.span>
+            <motion.span className="float-q float-q--4" style={reducedMotion || isMobile ? undefined : { y: q4Y }}>who maintains it later?</motion.span>
+            <motion.span className="float-q float-q--5" style={reducedMotion || isMobile ? undefined : { y: q5Y }}>what's the tradeoff?</motion.span>
+            <motion.span className="float-q float-q--6" style={reducedMotion || isMobile ? undefined : { y: q6Y }}>is this even worth shipping?</motion.span>
           </div>
         </section>
 
