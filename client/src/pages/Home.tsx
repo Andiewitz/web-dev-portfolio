@@ -14,27 +14,30 @@ const navItems = [
 
 const projects = [
   {
-    title: "Atlas Notes",
-    description: "A local-first writing tool for engineers who think in folders. Markdown, full-text search, and a sync engine that never gets in your way.",
+    title: "Meshwork Studio",
+    titleFont: "'Geomini', system-ui, sans-serif",
+    description: "A visual diagramming environment built for software architects. Draw distributed systems, service boundaries, and data flows the way you actually think about them — with live annotations and component-level detail that keeps pace with your codebase.",
     cta: "Read case study",
     date: "2026",
-    category: "Web app",
+    category: "Developer tools",
     buttonLabel: "Open project",
   },
   {
-    title: "Field Manual",
-    description: "An interactive field guide for design systems. Browse tokens, components, and rules with live previews and copy-ready snippets.",
+    title: "Inkbase",
+    titleFont: "'Lora', Georgia, serif",
+    description: "A prose editor that puts the paragraph first. No blocks, no slash commands — just a clean writing surface with a typesetting engine that handles layout, rhythm, and readability so you can focus on the words.",
     cta: "Read case study",
-    date: "2025",
-    category: "Design systems",
+    date: "2026",
+    category: "Writing tools",
     buttonLabel: "Open project",
   },
   {
-    title: "Quietcast",
-    description: "A self-hostable podcast platform built around listening, not metrics. RSS-first, no tracking, and a player that respects your bandwidth.",
+    title: "Metsie",
+    titleFont: "'Poppins', system-ui, sans-serif",
+    description: "A competitive edtech platform where students race through ranked challenges and real-time quizzes. Learning through stakes — leaderboards, streaks, and structured competition that actually keeps students coming back.",
     cta: "Read case study",
     date: "2025",
-    category: "Open source",
+    category: "Edtech",
     buttonLabel: "Open project",
   },
 ];
@@ -346,7 +349,7 @@ export default function Home() {
               {projects.map((project) => (
                 <RevealBlock className="project-card" key={project.title} reducedMotion={!!reducedMotion} variants={revealVariants}>
                   <div className="project-card__body">
-                    <h3 className="project-card__title">{project.title}</h3>
+                    <h3 className="project-card__title" style={{ fontFamily: project.titleFont }}>{project.title}</h3>
                     <p className="project-card__description">{project.description}</p>
                     <a className="project-card__link" href="#projects">
                       <span>{project.cta}</span>
