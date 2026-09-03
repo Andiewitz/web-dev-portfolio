@@ -9,27 +9,42 @@ import Wordmark from "@/components/Wordmark";
 
 const navItems = [
   { href: "#projects", label: "Projects" },
+  { href: "/writing", label: "Writing" },
 ];
 
 const projects = [
   {
-    title: "Project Name",
-    type: "Featured work",
-    context: "A short description of what this project is and what it achieves.",
-    deliverables: "React · Node.js · Postgres",
+    title: "Atlas Notes",
+    description: "A local-first writing tool for engineers who think in folders. Markdown, full-text search, and a sync engine that never gets in your way.",
+    cta: "Read case study",
+    date: "2026",
+    category: "Web app",
+    buttonLabel: "Open project",
   },
   {
-    title: "Project Name Two",
-    type: "Side project",
-    context: "A short description of what this project is and why I built it.",
-    deliverables: "TypeScript · Next.js · API",
+    title: "Field Manual",
+    description: "An interactive field guide for design systems. Browse tokens, components, and rules with live previews and copy-ready snippets.",
+    cta: "Read case study",
+    date: "2025",
+    category: "Design systems",
+    buttonLabel: "Open project",
   },
   {
-    title: "Project Name Three",
-    type: "Open source",
-    context: "A short description of a tool or library that others can use.",
-    deliverables: "Library · CI · Docs",
+    title: "Quietcast",
+    description: "A self-hostable podcast platform built around listening, not metrics. RSS-first, no tracking, and a player that respects your bandwidth.",
+    cta: "Read case study",
+    date: "2025",
+    category: "Open source",
+    buttonLabel: "Open project",
   },
+];
+
+const writingEntries = [
+  { title: "Why your React app feels slow — and where to actually look", topic: "Frontend", date: "Aug 2026" },
+  { title: "Designing systems that survive their second maintainer", topic: "Systems", date: "Jul 2026" },
+  { title: "Postgres indexes I keep reaching for (and a few I never do)", topic: "Databases", date: "Jul 2026" },
+  { title: "The case for boring infrastructure in a world of shiny tools", topic: "Engineering", date: "Jun 2026" },
+  { title: "What a senior frontend review actually looks for", topic: "Discussion", date: "Jun 2026" },
 ];
 
 const easeOut = [0.23, 1, 0.32, 1] as const;
@@ -104,6 +119,7 @@ function useNavbarTheme() {
       { id: 'top', theme: 'dark' },
       { id: 'slab-region', theme: 'light' },
       { id: 'projects', theme: 'dark' },
+      { id: 'writing', theme: 'dark' },
       { id: 'footer', theme: 'light' },
     ];
     const probe = 37;
@@ -323,70 +339,109 @@ export default function Home() {
         <section id="projects" className="projects-section">
           <div className="content-frame">
             <RevealBlock className="projects-heading" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <div>
-                <p className="eyebrow">Projects</p>
-                <h2>Selected work, built to hold up.</h2>
-              </div>
-              <p>A few things I have designed and shipped — from production web apps to tools that make life easier for the people using them.</p>
+              <p className="eyebrow">Projects</p>
+              <h2>Latest work</h2>
             </RevealBlock>
-            <div className="project-ledger">
-              <RevealBlock className="project-lead" reducedMotion={!!reducedMotion} variants={revealVariants}>
-                <figure className="project-lead__visual">
-                  <motion.img
-                    data-motion-image
-                    src="/manus-storage/visionfx-paper-architecture-final_544f85b5.jpg"
-                    alt="Folded cream paper architecture on a charcoal table with a small orange geometric tab"
-                    loading="eager"
-                    initial={reducedMotion ? false : { scale: 1.08, y: 42 }}
-                    whileInView={reducedMotion ? undefined : { scale: 1, y: 0 }}
-                    viewport={{ once: true, margin: "0px 0px -10% 0px" }}
-                    transition={{ duration: 0.6, ease: easeOut }}
-                  />
-                  <figcaption>Featured / {projects[0].type}</figcaption>
-                </figure>
-                <div className="project-lead__copy">
-                  <p className="project-card__type">{projects[0].type}</p>
-                  <MotionTitle text={projects[0].title} />
-                  <p className="project-card__context">{projects[0].context}</p>
-                  <p className="project-card__deliverables">{projects[0].deliverables}</p>
-                </div>
-              </RevealBlock>
-              <RevealBlock className="project-index" reducedMotion={!!reducedMotion} variants={revealVariants}>
-                <article className="project-entry">
-                  <div className="project-entry__visual">
-                    <img src="/manus-storage/visionfx-fold-detail-final_2d166ab8.jpg" alt="Layered matte paper planes and a dark folded form crossed by a fine orange thread" loading="eager" />
+            <div className="project-grid">
+              {projects.map((project) => (
+                <RevealBlock className="project-card" key={project.title} reducedMotion={!!reducedMotion} variants={revealVariants}>
+                  <div className="project-card__body">
+                    <h3 className="project-card__title">{project.title}</h3>
+                    <p className="project-card__description">{project.description}</p>
+                    <a className="project-card__link" href="#projects">
+                      <span>{project.cta}</span>
+                      <span aria-hidden="true">→</span>
+                    </a>
                   </div>
-                  <div className="project-entry__copy">
-                    <p className="project-card__type">{projects[1].type}</p>
-                    <MotionTitle text={projects[1].title} />
-                    <p className="project-card__context">{projects[1].context}</p>
-                    <p className="project-card__deliverables">{projects[1].deliverables}</p>
+                  <div className="project-card__meta">
+                    <div className="project-card__meta-row">
+                      <span className="project-card__meta-key">Date</span>
+                      <span className="project-card__meta-value">{project.date}</span>
+                    </div>
+                    <div className="project-card__meta-row">
+                      <span className="project-card__meta-key">Category</span>
+                      <span className="project-card__meta-value">{project.category}</span>
+                    </div>
                   </div>
-                </article>
-                <article className="project-entry project-entry--text-only">
-                  <div className="project-entry__copy">
-                    <p className="project-card__type">{projects[2].type}</p>
-                    <MotionTitle text={projects[2].title} />
-                    <p className="project-card__context">{projects[2].context}</p>
-                    <p className="project-card__deliverables">{projects[2].deliverables}</p>
-                  </div>
-                </article>
-              </RevealBlock>
+                  <a className="project-card__button" href="#projects">
+                    <span>{project.buttonLabel}</span>
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </RevealBlock>
+              ))}
             </div>
+          </div>
+        </section>
+
+        <section id="writing" className="writing-section">
+          <div className="content-frame writing-layout">
+            <RevealBlock className="writing-headline" reducedMotion={!!reducedMotion} variants={revealVariants}>
+              <p className="eyebrow">Writing &amp; Discussion</p>
+              <h2>
+                Notes on the craft of building software — performance, systems, and the tradeoffs in between.
+              </h2>
+              <a className="writing-cta" href="/writing">
+                <span>Read all posts</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            </RevealBlock>
+            <RevealBlock className="writing-list" reducedMotion={!!reducedMotion} variants={revealVariants}>
+              {writingEntries.map((entry) => (
+                <a key={entry.title} className="writing-row" href="/writing">
+                  <span className="writing-row__title">{entry.title}</span>
+                  <span className="writing-row__topic">{entry.topic}</span>
+                </a>
+              ))}
+            </RevealBlock>
           </div>
         </section>
 
       </main>
 
       <footer id="footer" className="site-footer">
-        <RevealBlock className="content-frame footer-layout" reducedMotion={!!reducedMotion} variants={revealVariants}>
-          <Wordmark inverse />
-          <p>Software engineer building clear, dependable things for the web.</p>
-          <div className="footer-links">
-            {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
-            <a href="mailto:hello@visionfx.studio">Contact</a>
+        <div className="content-frame">
+          <RevealBlock className="footer-layout" reducedMotion={!!reducedMotion} variants={revealVariants}>
+            <div className="footer-col footer-brand">
+              <Wordmark />
+              <p className="footer-tagline">
+                Software engineer building clear, dependable things for the web. Full-stack TypeScript, React, and frontend craft.
+              </p>
+              <a className="footer-email" href="mailto:hello@visionfx.studio">hello@visionfx.studio</a>
+            </div>
+            <nav className="footer-col" aria-label="Sitemap">
+              <h4 className="footer-heading">Sitemap</h4>
+              <ul>
+                <li><a href="#top">Home</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#writing">Writing</a></li>
+                <li><a href="mailto:hello@visionfx.studio">Contact</a></li>
+              </ul>
+            </nav>
+            <nav className="footer-col" aria-label="Expertise">
+              <h4 className="footer-heading">Expertise</h4>
+              <ul>
+                <li>Full-stack TypeScript</li>
+                <li>React &amp; frontend craft</li>
+                <li>Performance &amp; DX</li>
+                <li>Design systems</li>
+              </ul>
+            </nav>
+            <nav className="footer-col" aria-label="Social">
+              <h4 className="footer-heading">Elsewhere</h4>
+              <ul>
+                <li><a href="https://github.com/" rel="noopener noreferrer" target="_blank">GitHub</a></li>
+                <li><a href="https://www.linkedin.com/" rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
+                <li><a href="https://twitter.com/" rel="noopener noreferrer" target="_blank">Twitter</a></li>
+                <li><a href="/rss.xml">RSS</a></li>
+              </ul>
+            </nav>
+          </RevealBlock>
+          <div className="footer-base">
+            <p>&copy; {new Date().getFullYear()} Andrei. All rights reserved.</p>
+            <p className="footer-meta">Built with care · Last updated <time dateTime="2026-08">August 2026</time></p>
           </div>
-        </RevealBlock>
+        </div>
+        <div className="footer-wordmark" aria-hidden="true">ANDREI</div>
       </footer>
     </div>
   );
