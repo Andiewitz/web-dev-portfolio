@@ -10,7 +10,7 @@ export const posts = [
     title: "Why your React app feels slow — and where to actually look",
     date: "Aug 12, 2026",
     excerpt:
-      "Profiling is a skill. Most performance issues hide in unexpected places — not where you first reach for the DevTools.",
+      "The instinct is to reach for React.memo and useMemo. That's almost never the fix. The real issue is usually upstream — unstable references, context misuse, or unvirtualized lists.",
     readTime: "8 min read",
     palette: ["#6B9FBF", "#A8C5D8", "#2C4A6E", "#8BA8C4", "#D4E5F0", "#4A7A9B"],
   },
@@ -20,7 +20,7 @@ export const posts = [
     title: "Designing systems that survive their second maintainer",
     date: "Jul 29, 2026",
     excerpt:
-      "The hardest part of software design isn't the first pass — it's building something the next person can reason about without you in the room.",
+      "ADRs, machine-checkable constraints, and names that communicate intent. The things that keep a codebase navigable when you're no longer around to explain it.",
     readTime: "6 min read",
     palette: ["#C4956B", "#8B6E47", "#DDB896", "#6B4F35", "#E8D4B8", "#A07B56"],
   },
@@ -30,7 +30,7 @@ export const posts = [
     title: "Postgres indexes I keep reaching for (and a few I never do)",
     date: "Jul 14, 2026",
     excerpt:
-      "A practical guide to the index types I use daily, the ones I've abandoned, and the queries that finally made them click.",
+      "Foreign key indexes, partial indexes, expression indexes, covering indexes with INCLUDE. What I've learned about when each one earns its write overhead.",
     readTime: "10 min read",
     palette: ["#7A9E7E", "#4A7A56", "#B8D4BA", "#2E5E38", "#9EC4A2", "#5C8C64"],
   },
@@ -40,7 +40,7 @@ export const posts = [
     title: "The case for boring infrastructure in a world of shiny tools",
     date: "Jun 22, 2026",
     excerpt:
-      "Every team eventually learns this lesson. The question is how much production downtime it takes to get there.",
+      "Novel technology fails in novel ways. Boring technology fails in known ways, with Stack Overflow answers, runbooks, and teammates who've seen it before.",
     readTime: "5 min read",
     palette: ["#9B7BB8", "#6B4F8C", "#C4A8D8", "#4A2E6B", "#D8C4E8", "#7B5A9E"],
   },
@@ -50,7 +50,7 @@ export const posts = [
     title: "What a senior frontend review actually looks for",
     date: "Jun 8, 2026",
     excerpt:
-      "It's not the things most junior devs think. Correctness is table stakes. Reviews are really about communication and future maintenance.",
+      "Component contracts, failure states, bundle impact, and whether abstractions are earning their complexity. The questions I ask on every PR.",
     readTime: "7 min read",
     palette: ["#BF9B6B", "#8C6B4A", "#D8BC96", "#6B4F2E", "#E8D4B8", "#A07855"],
   },
