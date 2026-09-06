@@ -6,7 +6,7 @@ import Wordmark from "@/components/Wordmark";
 export const posts = [
   {
     slug: "why-react-feels-slow",
-    category: "Frontend",
+    category: "Web Performance",
     title: "Why your React app feels slow — and where to actually look",
     date: "Aug 12, 2026",
     excerpt:
@@ -16,41 +16,41 @@ export const posts = [
   },
   {
     slug: "designing-systems-second-maintainer",
-    category: "Systems",
-    title: "Designing systems that survive their second maintainer",
+    category: "Architecture",
+    title: "Designing web applications that survive their second maintainer",
     date: "Jul 29, 2026",
     excerpt:
-      "ADRs, machine-checkable constraints, and names that communicate intent. The things that keep a codebase navigable when you're no longer around to explain it.",
+      "Clean component boundaries, machine-checkable contracts, and state patterns that communicate intent without needing an archaeologist.",
     readTime: "6 min read",
     palette: ["#C4956B", "#8B6E47", "#DDB896", "#6B4F35", "#E8D4B8", "#A07B56"],
   },
   {
     slug: "postgres-indexes",
-    category: "Databases",
-    title: "Postgres indexes I keep reaching for (and a few I never do)",
+    category: "Full-Stack",
+    title: "Postgres indexes & queries for full-stack developers",
     date: "Jul 14, 2026",
     excerpt:
-      "Foreign key indexes, partial indexes, expression indexes, covering indexes with INCLUDE. What I've learned about when each one earns its write overhead.",
+      "Foreign key indexes, partial indexes, expression indexes, and covering indexes with INCLUDE. When each one earns its write overhead in a web app.",
     readTime: "10 min read",
     palette: ["#7A9E7E", "#4A7A56", "#B8D4BA", "#2E5E38", "#9EC4A2", "#5C8C64"],
   },
   {
     slug: "boring-infrastructure",
-    category: "Engineering",
-    title: "The case for boring infrastructure in a world of shiny tools",
+    category: "DevOps & Cloud",
+    title: "The case for boring infrastructure in modern web deployments",
     date: "Jun 22, 2026",
     excerpt:
-      "Novel technology fails in novel ways. Boring technology fails in known ways, with Stack Overflow answers, runbooks, and teammates who've seen it before.",
+      "Novel edge runtimes fail in novel ways. Solid, well-documented web infrastructure fails in predictable ways with battle-tested solutions.",
     readTime: "5 min read",
     palette: ["#9B7BB8", "#6B4F8C", "#C4A8D8", "#4A2E6B", "#D8C4E8", "#7B5A9E"],
   },
   {
     slug: "senior-frontend-review",
-    category: "Discussion",
-    title: "What a senior frontend review actually looks for",
+    category: "UI Engineering",
+    title: "What a senior web dev code review actually looks for",
     date: "Jun 8, 2026",
     excerpt:
-      "Component contracts, failure states, bundle impact, and whether abstractions are earning their complexity. The questions I ask on every PR.",
+      "Component contracts, keyboard accessibility, bundle size impact, and layout stability. The checklist I run through on every web PR.",
     readTime: "7 min read",
     palette: ["#BF9B6B", "#8C6B4A", "#D8BC96", "#6B4F2E", "#E8D4B8", "#A07855"],
   },
@@ -126,7 +126,7 @@ export default function BlogIndex() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.38, ease: easeOut, delay: 0.06 }}
             >
-              Notes on the craft of building software
+              Notes on modern web development &amp; engineering
             </motion.h1>
             <motion.p
               className="blog-index-sub"
@@ -134,7 +134,7 @@ export default function BlogIndex() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.32, ease: easeOut, delay: 0.12 }}
             >
-              Performance, systems, databases, and the tradeoffs that matter.
+              Frontend architecture, performance, reactive state, and full-stack craft.
             </motion.p>
           </div>
         </div>

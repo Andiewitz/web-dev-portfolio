@@ -16,38 +16,38 @@ const projects = [
   {
     title: "Meshwork Studio",
     titleFont: "'Geomini', system-ui, sans-serif",
-    description: "A visual diagramming environment built for software architects. Draw distributed systems, service boundaries, and data flows the way you actually think about them — with live annotations and component-level detail that keeps pace with your codebase.",
-    cta: "Read case study",
+    description: "A high-performance browser diagramming platform built for distributed systems architects. Features real-time state sync, 60fps canvas panning, and fluid SVG rendering that keeps pace with complex system topographies.",
+    cta: "Read architecture breakdown",
     date: "2026",
-    category: "Developer tools",
-    buttonLabel: "Open project",
+    category: "Web Application",
+    buttonLabel: "View project",
   },
   {
     title: "Inkbase",
     titleFont: "'Lora', Georgia, serif",
-    description: "A prose editor that puts the paragraph first. No blocks, no slash commands — just a clean writing surface with a typesetting engine that handles layout, rhythm, and readability so you can focus on the words.",
-    cta: "Read case study",
+    description: "A distraction-free web publishing editor built around native DOM contenteditable primitives and typographic rhythm. Features offline-first local storage, zero layout shifts, and seamless markdown exports.",
+    cta: "Read engineering notes",
     date: "2026",
-    category: "Writing tools",
-    buttonLabel: "Open project",
+    category: "Frontend & PWA",
+    buttonLabel: "View project",
   },
   {
     title: "Metsie",
     titleFont: "'Poppins', system-ui, sans-serif",
-    description: "A competitive edtech platform where students race through ranked challenges and real-time quizzes. Learning through stakes — leaderboards, streaks, and structured competition that actually keeps students coming back.",
-    cta: "Read case study",
+    description: "A gamified interactive learning platform with real-time WebSocket matchmaking, live leaderboards, and sub-50ms reactive quiz interactions built with Next.js, Node.js, and Redis.",
+    cta: "Read technical case study",
     date: "2025",
-    category: "Edtech",
-    buttonLabel: "Open project",
+    category: "Full-Stack Web App",
+    buttonLabel: "View project",
   },
 ];
 
 const writingEntries = [
-  { title: "Why your React app feels slow — and where to actually look", topic: "Frontend", date: "Aug 2026" },
-  { title: "Designing systems that survive their second maintainer", topic: "Systems", date: "Jul 2026" },
-  { title: "Postgres indexes I keep reaching for (and a few I never do)", topic: "Databases", date: "Jul 2026" },
-  { title: "The case for boring infrastructure in a world of shiny tools", topic: "Engineering", date: "Jun 2026" },
-  { title: "What a senior frontend review actually looks for", topic: "Discussion", date: "Jun 2026" },
+  { title: "Why your React app feels slow — and where to actually look", topic: "Web Performance", date: "Aug 2026" },
+  { title: "Designing web applications that survive their second maintainer", topic: "Architecture", date: "Jul 2026" },
+  { title: "Postgres indexes & queries for full-stack developers", topic: "Full-Stack", date: "Jul 2026" },
+  { title: "The case for boring infrastructure in modern web deployments", topic: "DevOps & Cloud", date: "Jun 2026" },
+  { title: "What a senior web dev code review actually looks for", topic: "UI Engineering", date: "Jun 2026" },
 ];
 
 const easeOut = [0.23, 1, 0.32, 1] as const;
@@ -285,7 +285,7 @@ export default function Home() {
                   variants={heroLineReveal}
                   transition={{ duration: 0.32, ease: easeOut, delay: 0.045 }}
                   style={{ display: "inline-block" }}
-                >A <em>Software Engineer.</em></motion.span>
+                >A <em>Web Developer.</em></motion.span>
               </h1>
             </div>
             <motion.div
@@ -295,15 +295,15 @@ export default function Home() {
               variants={heroSideReveal}
             >
               <p className="opening-statement">
-                Whether you need a team member or someone to own it solo — I build things that work.
+                I build responsive, high-performance web applications and fluid browser experiences with clean architecture, accessible interfaces, and modern full-stack TypeScript.
               </p>
-              <p className="opening-proof">Full-stack · Frontend · Open to work</p>
+              <p className="opening-proof">Full-Stack Web Dev · UI Engineering · Open to work</p>
               <a className="opening-cta" href="mailto:hello@visionfx.studio">Start a conversation</a>
             </motion.div>
           </div>
         </section>
 
-        <section ref={slabRegionRef} id="slab-region" className="hero-slab-scroll-region" aria-label="Most of software engineering happens before you open your editor">
+        <section ref={slabRegionRef} id="slab-region" className="hero-slab-scroll-region" aria-label="Most of great web development happens before you write a single component">
           <div className="hero-slab-stage">
             <motion.div
               ref={slabRef}
@@ -322,20 +322,20 @@ export default function Home() {
                   variants={sectionReveal}
                 >
                   <h2 className="questions-headline">
-                    Most of software engineering happens before you open your editor.
+                    Most of great web development happens before you write a single component.
                   </h2>
                   <p className="questions-sub">
-                    It's the questions — about scale, about tradeoffs, about what you're even building — that determine whether the code is worth writing.
+                    It's the questions — about latency, interaction models, bundle budgets, and real user journeys — that turn code into an exceptional web experience.
                   </p>
                 </motion.div>
               </motion.div>
             </motion.div>
-            <motion.span className="float-q float-q--1" style={reducedMotion || isMobile ? undefined : { y: q1Y }}>how do we scale this?</motion.span>
-            <motion.span className="float-q float-q--2" style={reducedMotion || isMobile ? undefined : { y: q2Y }}>what are we even building?</motion.span>
-            <motion.span className="float-q float-q--3" style={reducedMotion || isMobile ? undefined : { y: q3Y }}>where does this break first?</motion.span>
-            <motion.span className="float-q float-q--4" style={reducedMotion || isMobile ? undefined : { y: q4Y }}>who maintains it later?</motion.span>
-            <motion.span className="float-q float-q--5" style={reducedMotion || isMobile ? undefined : { y: q5Y }}>what's the tradeoff?</motion.span>
-            <motion.span className="float-q float-q--6" style={reducedMotion || isMobile ? undefined : { y: q6Y }}>is this even worth shipping?</motion.span>
+            <motion.span className="float-q float-q--1" style={reducedMotion || isMobile ? undefined : { y: q1Y }}>how fast is the first paint?</motion.span>
+            <motion.span className="float-q float-q--2" style={reducedMotion || isMobile ? undefined : { y: q2Y }}>does it feel native on mobile?</motion.span>
+            <motion.span className="float-q float-q--3" style={reducedMotion || isMobile ? undefined : { y: q3Y }}>where does state get tangled?</motion.span>
+            <motion.span className="float-q float-q--4" style={reducedMotion || isMobile ? undefined : { y: q4Y }}>is this accessible to everyone?</motion.span>
+            <motion.span className="float-q float-q--5" style={reducedMotion || isMobile ? undefined : { y: q5Y }}>what's the bundle budget?</motion.span>
+            <motion.span className="float-q float-q--6" style={reducedMotion || isMobile ? undefined : { y: q6Y }}>does it work on spotty networks?</motion.span>
           </div>
         </section>
 
@@ -381,7 +381,7 @@ export default function Home() {
             <RevealBlock className="writing-headline" reducedMotion={!!reducedMotion} variants={revealVariants}>
               <p className="eyebrow">Writing &amp; Discussion</p>
               <h2>
-                Notes on the craft of building software — performance, systems, and the tradeoffs in between.
+                Notes on modern web engineering — frontend architecture, reactive systems, and Core Web Vitals.
               </h2>
               <a className="writing-cta" href="/writing">
                 <span>Read all posts</span>
@@ -407,7 +407,7 @@ export default function Home() {
             <div className="footer-col footer-brand">
               <Wordmark />
               <p className="footer-tagline">
-                Software engineer building clear, dependable things for the web. Full-stack TypeScript, React, and frontend craft.
+                Web developer building fast, responsive, and accessible digital products. Full-stack TypeScript, React, Next.js, and modern UI engineering.
               </p>
               <a className="footer-email" href="mailto:hello@visionfx.studio">hello@visionfx.studio</a>
             </div>
@@ -423,10 +423,10 @@ export default function Home() {
             <nav className="footer-col" aria-label="Expertise">
               <h4 className="footer-heading">Expertise</h4>
               <ul>
-                <li>Full-stack TypeScript</li>
-                <li>React &amp; frontend craft</li>
-                <li>Performance &amp; DX</li>
-                <li>Design systems</li>
+                <li>Full-Stack Web Apps</li>
+                <li>React, Next.js &amp; TypeScript</li>
+                <li>Web Performance &amp; Vitals</li>
+                <li>UI Systems &amp; Accessibility</li>
               </ul>
             </nav>
             <nav className="footer-col" aria-label="Social">
