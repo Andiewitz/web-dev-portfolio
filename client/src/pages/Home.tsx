@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Wordmark from "@/components/Wordmark";
+import WebsiteMockup from "@/components/WebsiteMockup";
 
 const navItems = [
   { href: "#projects", label: "Projects" },
@@ -16,29 +17,44 @@ const projects = [
   {
     title: "Meshwork Studio",
     titleFont: "'Geomini', system-ui, sans-serif",
+    url: "meshwork.studio",
+    urlPath: "/architecture/canvas",
+    badge: "Canvas UI",
     description: "A high-performance browser diagramming platform built for distributed systems architects. Features real-time state sync, 60fps canvas panning, and fluid SVG rendering that keeps pace with complex system topographies.",
-    cta: "Read architecture breakdown",
+    cta: "Architecture notes",
     date: "2026",
     category: "Web Application",
+    tags: ["React", "Canvas API", "TypeScript", "Tailwind"],
     buttonLabel: "View project",
+    type: "canvas" as const,
   },
   {
     title: "Inkbase",
     titleFont: "'Lora', Georgia, serif",
+    url: "inkbase.app",
+    urlPath: "/draft/typography-craft",
+    badge: "PWA & Offline",
     description: "A distraction-free web publishing editor built around native DOM contenteditable primitives and typographic rhythm. Features offline-first local storage, zero layout shifts, and seamless markdown exports.",
-    cta: "Read engineering notes",
+    cta: "Engineering notes",
     date: "2026",
     category: "Frontend & PWA",
+    tags: ["TypeScript", "ContentEditable", "PWA", "IndexedDB"],
     buttonLabel: "View project",
+    type: "editor" as const,
   },
   {
     title: "Metsie",
     titleFont: "'Poppins', system-ui, sans-serif",
+    url: "metsie.app",
+    urlPath: "/arena/live-race",
+    badge: "Full-Stack Realtime",
     description: "A gamified interactive learning platform with real-time WebSocket matchmaking, live leaderboards, and sub-50ms reactive quiz interactions built with Next.js, Node.js, and Redis.",
-    cta: "Read technical case study",
+    cta: "Technical study",
     date: "2025",
     category: "Full-Stack Web App",
+    tags: ["Next.js", "WebSocket", "Redis", "Node.js"],
     buttonLabel: "View project",
+    type: "arena" as const,
   },
 ];
 
@@ -348,28 +364,40 @@ export default function Home() {
             <div className="project-grid">
               {projects.map((project) => (
                 <RevealBlock className="project-card" key={project.title} reducedMotion={!!reducedMotion} variants={revealVariants}>
+                  <WebsiteMockup
+                    type={project.type}
+                    url={project.url}
+                    urlPath={project.urlPath}
+                    badge={project.badge}
+                  />
+
                   <div className="project-card__body">
-                    <h3 className="project-card__title" style={{ fontFamily: project.titleFont }}>{project.title}</h3>
+                    <div className="project-card__header-row">
+                      <h3 className="project-card__title" style={{ fontFamily: project.titleFont }}>
+                        {project.title}
+                      </h3>
+                      <span className="project-card__category-tag">{project.category}</span>
+                    </div>
+
                     <p className="project-card__description">{project.description}</p>
-                    <a className="project-card__link" href="#projects">
-                      <span>{project.cta}</span>
-                      <span aria-hidden="true">→</span>
-                    </a>
-                  </div>
-                  <div className="project-card__meta">
-                    <div className="project-card__meta-row">
-                      <span className="project-card__meta-key">Date</span>
-                      <span className="project-card__meta-value">{project.date}</span>
+
+                    <div className="project-card__tags">
+                      {project.tags.map((tag) => (
+                        <span key={tag} className="project-tag">{tag}</span>
+                      ))}
                     </div>
-                    <div className="project-card__meta-row">
-                      <span className="project-card__meta-key">Category</span>
-                      <span className="project-card__meta-value">{project.category}</span>
+
+                    <div className="project-card__actions">
+                      <a className="project-card__link" href="#projects">
+                        <span>{project.cta}</span>
+                        <span aria-hidden="true">→</span>
+                      </a>
+                      <a className="project-card__button" href="#projects">
+                        <span>{project.buttonLabel}</span>
+                        <span aria-hidden="true">↗</span>
+                      </a>
                     </div>
                   </div>
-                  <a className="project-card__button" href="#projects">
-                    <span>{project.buttonLabel}</span>
-                    <span aria-hidden="true">→</span>
-                  </a>
                 </RevealBlock>
               ))}
             </div>
