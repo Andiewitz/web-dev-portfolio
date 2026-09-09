@@ -6,7 +6,11 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Wordmark from "@/components/Wordmark";
-import WebsiteMockup from "@/components/WebsiteMockup";
+import meshworkImg from "@/assets/Meshwork Studio.png";
+import hefestusImg from "@/assets/Festus.png";
+import morrowImg from "@/assets/Morrow Architecture.png";
+import matchaImg from "@/assets/Matcha.png";
+import cafeLibreImg from "@/assets/Cafe Libre.png";
 
 const navItems = [
   { href: "#projects", label: "Projects" },
@@ -17,44 +21,57 @@ const projects = [
   {
     title: "Meshwork Studio",
     titleFont: "'Geomini', system-ui, sans-serif",
-    url: "meshwork.studio",
-    urlPath: "/architecture/canvas",
-    badge: "Canvas UI",
     description: "A high-performance browser diagramming platform built for distributed systems architects. Features real-time state sync, 60fps canvas panning, and fluid SVG rendering that keeps pace with complex system topographies.",
-    cta: "Architecture notes",
+    cta: "View live site",
+    href: "https://meshwork-studiocom.vercel.app/",
     date: "2026",
     category: "Web Application",
-    tags: ["React", "Canvas API", "TypeScript", "Tailwind"],
     buttonLabel: "View project",
-    type: "canvas" as const,
+    image: meshworkImg,
   },
   {
-    title: "Inkbase",
+    title: "Hefestus",
     titleFont: "'Lora', Georgia, serif",
-    url: "inkbase.app",
-    urlPath: "/draft/typography-craft",
-    badge: "PWA & Offline",
-    description: "A distraction-free web publishing editor built around native DOM contenteditable primitives and typographic rhythm. Features offline-first local storage, zero layout shifts, and seamless markdown exports.",
-    cta: "Engineering notes",
+    description: "An operating system for modern retail commerce. Consolidates sub-second point-of-sale checkout, multi-location inventory ledgering, and reactive analytics into a unified platform.",
+    cta: "View live site",
+    href: "https://festus-five.vercel.app/",
     date: "2026",
-    category: "Frontend & PWA",
-    tags: ["TypeScript", "ContentEditable", "PWA", "IndexedDB"],
+    category: "Full-Stack SaaS",
     buttonLabel: "View project",
-    type: "editor" as const,
+    image: hefestusImg,
   },
   {
-    title: "Metsie",
-    titleFont: "'Poppins', system-ui, sans-serif",
-    url: "metsie.app",
-    urlPath: "/arena/live-race",
-    badge: "Full-Stack Realtime",
-    description: "A gamified interactive learning platform with real-time WebSocket matchmaking, live leaderboards, and sub-50ms reactive quiz interactions built with Next.js, Node.js, and Redis.",
-    cta: "Technical study",
-    date: "2025",
-    category: "Full-Stack Web App",
-    tags: ["Next.js", "WebSocket", "Redis", "Node.js"],
+    title: "Morrow Bureau",
+    titleFont: "'DM Serif Display', Georgia, serif",
+    description: "A digital archive and spatial showcase for an architectural practice, employing brutalist typographic rhythms, smooth transitions, and high-dynamic-range imagery optimization.",
+    cta: "View live site",
+    href: "https://kononenko-recreation.vercel.app/",
+    date: "2026",
+    category: "Digital Archive",
     buttonLabel: "View project",
-    type: "arena" as const,
+    image: morrowImg,
+  },
+  {
+    title: "Matcha",
+    titleFont: "'DM Serif Display', Georgia, serif",
+    description: "A calm, sensory-driven web store for ceremonial single-origin matcha. Built around deliberate micro-rituals, typographic pacing, and a frictionless headless checkout flow.",
+    cta: "View live site",
+    href: "https://matcha-haven.vercel.app/",
+    date: "2025",
+    category: "E-Commerce",
+    buttonLabel: "View project",
+    image: matchaImg,
+  },
+  {
+    title: "Café Libre",
+    titleFont: "'Bricolage Grotesque', system-ui, sans-serif",
+    description: "An artisanal coffee house web destination featuring rich ambient roast visuals, sustainable farm origin storytelling, and interactive table-side mobile ordering.",
+    cta: "View live site",
+    href: "https://cafe-libre.vercel.app/",
+    date: "2025",
+    category: "Web Experience",
+    buttonLabel: "View project",
+    image: cafeLibreImg,
   },
 ];
 
@@ -358,45 +375,27 @@ export default function Home() {
         <section id="projects" className="projects-section">
           <div className="content-frame">
             <RevealBlock className="projects-heading" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <p className="eyebrow">Projects</p>
               <h2>Latest work</h2>
             </RevealBlock>
             <div className="project-grid">
               {projects.map((project) => (
                 <RevealBlock className="project-card" key={project.title} reducedMotion={!!reducedMotion} variants={revealVariants}>
-                  <WebsiteMockup
-                    type={project.type}
-                    url={project.url}
-                    urlPath={project.urlPath}
-                    badge={project.badge}
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    loading="lazy"
+                    className="project-card__image"
                   />
-
-                  <div className="project-card__body">
-                    <div className="project-card__header-row">
-                      <h3 className="project-card__title" style={{ fontFamily: project.titleFont }}>
-                        {project.title}
-                      </h3>
-                      <span className="project-card__category-tag">{project.category}</span>
-                    </div>
-
-                    <p className="project-card__description">{project.description}</p>
-
-                    <div className="project-card__tags">
-                      {project.tags.map((tag) => (
-                        <span key={tag} className="project-tag">{tag}</span>
-                      ))}
-                    </div>
-
-                    <div className="project-card__actions">
-                      <a className="project-card__link" href="#projects">
-                        <span>{project.cta}</span>
-                        <span aria-hidden="true">→</span>
-                      </a>
-                      <a className="project-card__button" href="#projects">
-                        <span>{project.buttonLabel}</span>
-                        <span aria-hidden="true">↗</span>
-                      </a>
-                    </div>
+                  <div className="project-card__name">
+                    <span style={{ fontFamily: project.titleFont }}>{project.title}</span>
+                  </div>
+                  <div className="project-card__overlay">
+                    <h3 className="project-card__overlay-title" style={{ fontFamily: project.titleFont }}>{project.title}</h3>
+                    <p className="project-card__overlay-desc">{project.description}</p>
+                    <a className="project-card__overlay-cta" href={project.href ?? "#projects"} {...(project.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+                      <span>{project.cta}</span>
+                      <span aria-hidden="true">→</span>
+                    </a>
                   </div>
                 </RevealBlock>
               ))}
@@ -407,7 +406,6 @@ export default function Home() {
         <section id="writing" className="writing-section">
           <div className="content-frame writing-layout">
             <RevealBlock className="writing-headline" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <p className="eyebrow">Writing &amp; Discussion</p>
               <h2>
                 Notes on modern web engineering — frontend architecture, reactive systems, and Core Web Vitals.
               </h2>
