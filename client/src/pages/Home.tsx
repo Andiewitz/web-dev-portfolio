@@ -6,9 +6,6 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Wordmark from "@/components/Wordmark";
-import ProjectCard from "@/components/ProjectCard";
-import ProjectLightboxModal, { type ProjectModalData } from "@/components/ProjectLightboxModal";
-
 import meshworkImg from "@/assets/Meshwork Studio.png";
 import hefestusImg from "@/assets/Festus.png";
 import morrowImg from "@/assets/Morrow Architecture.png";
@@ -20,101 +17,60 @@ const navItems = [
   { href: "/writing", label: "Writing" },
 ];
 
-const projects: (ProjectModalData & { isFlagship?: boolean })[] = [
+const projects = [
   {
-    id: "meshwork-studio",
-    number: "01",
     title: "Meshwork Studio",
     titleFont: "'Geomini', system-ui, sans-serif",
-    subtitle: "Generative AI Cloud Infrastructure Diagramming & Real-Time Canvas",
-    category: "Web Application & AI Systems",
-    url: "meshwork.studio",
-    urlPath: "/app/canvas-live",
-    badge: "Live Web App",
+    description: "A high-performance browser diagramming platform built for distributed systems architects. Features real-time state sync, 60fps canvas panning, and fluid SVG rendering that keeps pace with complex system topographies.",
+    cta: "View live site",
+    href: "https://meshwork-studiocom.vercel.app/",
     date: "2026",
-    description:
-      "A high-performance browser architecture platform where natural language infrastructure prompts generate interactive, production-ready cloud topologies. Built with high-framerate HTML5 Canvas panning, multi-agent AI pipeline, and real-time state synchronization.",
-    longDescription:
-      "Meshwork Studio transforms complex distributed infrastructure definitions into real-time interactive system maps. By pairing an intelligent Gemini generative pipeline with custom-optimized HTML5 Canvas rendering, the platform delivers fluid 60 FPS panning across thousands of nodes with instant reactive state persistence and zero layout jitter.",
-    highlight: "60 FPS Canvas Engine · Sub-50ms Reactive State Sync · Multi-region Topology AI",
-    tags: ["React 19", "TypeScript", "HTML5 Canvas", "Gemini 2.5", "WebSockets", "Tailwind CSS"],
+    category: "Web Application",
+    buttonLabel: "View project",
     image: meshworkImg,
-    isFlagship: true,
   },
   {
-    id: "hefestus",
-    number: "02",
     title: "Hefestus",
     titleFont: "'Lora', Georgia, serif",
-    subtitle: "Enterprise Retail Operating System, High-Volume POS & Analytics",
-    category: "Full-Stack SaaS Platform",
-    url: "hefestus.io",
-    urlPath: "/pos/overview",
-    badge: "Enterprise SaaS",
+    description: "An operating system for modern retail commerce. Consolidates sub-second point-of-sale checkout, multi-location inventory ledgering, and reactive analytics into a unified platform.",
+    cta: "View live site",
+    href: "https://festus-five.vercel.app/",
     date: "2026",
-    description:
-      "A consolidated operating system for multi-location retail commerce. Pairs an ultra-responsive touch POS interface with real-time inventory ledgering, analytics dashboards, and barcode scanning.",
-    longDescription:
-      "Engineered to replace sluggish legacy retail systems, Hefestus delivers a modern web-based operating system capable of executing transactions in under 120ms. Features offline-first service worker sync for cash registers during network dropouts, automated stock replenishment triggers, and real-time ledger consistency across distributed brick-and-mortar stores.",
-    highlight: "<120ms Transaction Latency · Offline-First POS Engine · Distributed Inventory Ledger",
-    tags: ["Next.js", "PostgreSQL", "Tailwind CSS", "Redis", "Service Workers", "Zod"],
+    category: "Full-Stack SaaS",
+    buttonLabel: "View project",
     image: hefestusImg,
   },
   {
-    id: "morrow-bureau",
-    number: "03",
     title: "Morrow Bureau",
     titleFont: "'DM Serif Display', Georgia, serif",
-    subtitle: "Minimalist Architectural Practice & Monumental Digital Archive",
-    category: "Creative Engineering & Archive",
-    url: "morrow.archi",
-    urlPath: "/work/monuments",
-    badge: "Digital Archive",
+    description: "A digital archive and spatial showcase for an architectural practice, employing brutalist typographic rhythms, smooth transitions, and high-dynamic-range imagery optimization.",
+    cta: "View live site",
+    href: "https://kononenko-recreation.vercel.app/",
     date: "2026",
-    description:
-      "An editorial digital showcase for an international architectural studio. Employs brutalist spatial layouts, seamless fluid page choreography, and high-dynamic-range imagery optimization with zero cumulative layout shift.",
-    longDescription:
-      "Morrow Architectural Bureau's portfolio demands the same spatial rigor and restraint as physical monoliths. The site implements custom inertia-based smooth scrolling, adaptive resolution-aware image decoding, and typographic baseline alignment that stays razor-sharp from ultra-wide studio monitors to mobile screens.",
-    highlight: "Zero Cumulative Layout Shift (CLS) · Adaptive HDR Image Pipeline · Custom Smooth Scrolling",
-    tags: ["React", "Framer Motion", "Lenis Smooth Scroll", "Modern CSS Grid", "Vite"],
+    category: "Digital Archive",
+    buttonLabel: "View project",
     image: morrowImg,
   },
   {
-    id: "matcha",
-    number: "04",
-    title: "Matcha Atelier",
+    title: "Matcha",
     titleFont: "'DM Serif Display', Georgia, serif",
-    subtitle: "Sensory Direct-to-Consumer Commerce & Ceremonial Rituals",
-    category: "E-Commerce & Brand Experience",
-    url: "matcha.studio",
-    urlPath: "/selection/ceremonial",
-    badge: "Direct-to-Consumer",
+    description: "A calm, sensory-driven web store for ceremonial single-origin matcha. Built around deliberate micro-rituals, typographic pacing, and a frictionless headless checkout flow.",
+    cta: "View live site",
+    href: "https://matcha-haven.vercel.app/",
     date: "2025",
-    description:
-      "A calm, sensory-driven web store for ceremonial-grade single-origin matcha. Crafted around deliberate micro-interactions, responsive typographic rhythm, and an instant frictionless bag-to-checkout flow.",
-    longDescription:
-      "Designed to evoke the tactile serenity of traditional tea preparation, Matcha Atelier trades standard aggressive e-commerce banners for quiet pacing, fluid card micro-rituals, and instant headless cart transitions. Achieves top-tier Core Web Vitals with 99+ Lighthouse performance.",
-    highlight: "99+ Lighthouse Performance · Sub-80ms Headless Cart Updates · Micro-Ritual UI",
-    tags: ["React", "Shopify Storefront API", "Tailwind CSS", "Radix UI", "Web Vitals 99+"],
+    category: "E-Commerce",
+    buttonLabel: "View project",
     image: matchaImg,
   },
   {
-    id: "cafe-libre",
-    number: "05",
     title: "Café Libre",
     titleFont: "'Bricolage Grotesque', system-ui, sans-serif",
-    subtitle: "Artisanal Coffee House, Dynamic Roast Profiles & Table Ordering",
-    category: "Hospitality Web Experience",
-    url: "cafelibre.coffee",
-    urlPath: "/menu/hand-roasted",
-    badge: "Hospitality Web App",
+    description: "An artisanal coffee house web destination featuring rich ambient roast visuals, sustainable farm origin storytelling, and interactive table-side mobile ordering.",
+    cta: "View live site",
+    href: "https://cafe-libre.vercel.app/",
     date: "2025",
-    description:
-      "An immersive specialty coffee web experience featuring rich ambient roasting visuals, sustainable farm origin storytelling, interactive flavor wheel exploration, and table-side digital ordering.",
-    longDescription:
-      "Café Libre brings the warmth of hand-roasted coffee to the digital realm. Visitors explore single-origin beans through interactive roast profile dials and aroma graphs, locate sustainable farm cooperatives on an interactive terrain map, and place zero-wait table orders directly from their mobile browser.",
-    highlight: "Interactive Flavor Matrix · Ambient Fluid Visuals · Instant Mobile Table Ordering",
-    tags: ["React", "TypeScript", "Framer Motion", "Tailwind CSS", "Stripe API"],
+    category: "Web Experience",
+    buttonLabel: "View project",
     image: cafeLibreImg,
   },
 ];
@@ -274,14 +230,7 @@ function RevealBlock({
 
 export default function Home() {
   const [navOpen, setNavOpen] = useState(false);
-  const [selectedProject, setSelectedProject] = useState<ProjectModalData | null>(null);
-  const [lightboxOpen, setLightboxOpen] = useState(false);
   const slabRegionRef = useRef<HTMLElement>(null);
-
-  const handleOpenLightbox = (project: ProjectModalData) => {
-    setSelectedProject(project);
-    setLightboxOpen(true);
-  };
   const slabRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
   const isMobile = useResponsiveVariant();
@@ -426,60 +375,37 @@ export default function Home() {
         <section id="projects" className="projects-section">
           <div className="content-frame">
             <RevealBlock className="projects-heading" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <div className="projects-heading-row">
-                <div>
-                  <p className="eyebrow">Portfolio // Selected Works</p>
-                  <h2>Featured Projects</h2>
-                </div>
-                <div className="projects-counter-badge">
-                  <span className="counter-number">05</span>
-                  <span className="counter-label">Production &amp; Flagship Builds</span>
-                </div>
-              </div>
-              <p className="projects-lead">
-                A curated showcase of high-performance web applications, SaaS operating systems, and sensory editorial digital experiences engineered with modern TypeScript, React, and performance-first architecture.
-              </p>
+              <h2>Latest work</h2>
             </RevealBlock>
-
-            <div className="projects-layout">
-              {/* Flagship Hero Card */}
-              <div className="projects-flagship-slot">
-                <RevealBlock reducedMotion={!!reducedMotion} variants={revealVariants}>
-                  <ProjectCard
-                    project={projects[0]}
-                    isFlagship={true}
-                    onOpenLightbox={handleOpenLightbox}
+            <div className="project-grid">
+              {projects.map((project) => (
+                <RevealBlock className="project-card" key={project.title} reducedMotion={!!reducedMotion} variants={revealVariants}>
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    loading="lazy"
+                    className="project-card__image"
                   />
+                  <div className="project-card__name">
+                    <span style={{ fontFamily: project.titleFont }}>{project.title}</span>
+                  </div>
+                  <div className="project-card__overlay">
+                    <h3 className="project-card__overlay-title" style={{ fontFamily: project.titleFont }}>{project.title}</h3>
+                    <p className="project-card__overlay-desc">{project.description}</p>
+                    <a className="project-card__overlay-cta" href={project.href ?? "#projects"} {...(project.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+                      <span>{project.cta}</span>
+                      <span aria-hidden="true">→</span>
+                    </a>
+                  </div>
                 </RevealBlock>
-              </div>
-
-              {/* 2x2 Grid for the remaining 4 projects */}
-              <div className="projects-dual-grid">
-                {projects.slice(1).map((project) => (
-                  <RevealBlock key={project.id} reducedMotion={!!reducedMotion} variants={revealVariants}>
-                    <ProjectCard
-                      project={project}
-                      isFlagship={false}
-                      onOpenLightbox={handleOpenLightbox}
-                    />
-                  </RevealBlock>
-                ))}
-              </div>
+              ))}
             </div>
           </div>
         </section>
 
-        {/* Fullscreen Lightbox Modal */}
-        <ProjectLightboxModal
-          project={selectedProject}
-          open={lightboxOpen}
-          onOpenChange={setLightboxOpen}
-        />
-
         <section id="writing" className="writing-section">
           <div className="content-frame writing-layout">
             <RevealBlock className="writing-headline" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <p className="eyebrow">Writing &amp; Discussion</p>
               <h2>
                 Notes on modern web engineering — frontend architecture, reactive systems, and Core Web Vitals.
               </h2>
