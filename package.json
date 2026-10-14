@@ -5,10 +5,12 @@
   "license": "MIT",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
+    "build": "vite build && tsx scripts/prerender-writing.tsx && esbuild server/index.ts --platform=node --packages=external --bundle --format=esm --outdir=dist",
     "start": "NODE_ENV=production node dist/index.js",
     "preview": "vite preview --host",
     "check": "tsc --noEmit",
+    "check:writing": "tsx scripts/check-writing.mjs",
+    "check:writing:browser": "tsx scripts/check-writing-browser.mjs",
     "test": "vitest run",
     "format": "prettier --write ."
   },

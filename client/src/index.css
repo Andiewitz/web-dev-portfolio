@@ -369,6 +369,30 @@ button { border: 0; }
 .blog-post__body code { font-family: var(--font-mono); font-size: 0.88em; background: rgba(37,99,235,0.08); border-radius: 4px; padding: 1px 6px; color: #1D4ED8; }
 .blog-post__body a { color: #2563EB; text-decoration: underline; text-decoration-thickness: 0.5px; text-underline-offset: 3px; }
 .blog-post__footer-nav { padding: 0 0 64px; }
+.writing-deck { margin: 24px 0 0; color: var(--ink-soft); font-size: 17px; line-height: 1.65; }
+.writing-header { background: var(--canvas); border-bottom: .5px solid var(--hairline); }
+@media (max-width: 700px) { .writing-header .desktop-nav { display: flex; margin-left: auto; gap: 16px; } .writing-header .header-cta { display: none; } }
+.writing-updated { margin-top: 10px; }
+.writing-result-count { margin: -20px 0 24px; color: var(--ink-muted); font-size: 13px; }
+.writing-takeaways { padding: 24px; background: var(--canvas); border-left: 3px solid #2563EB; margin-block: 36px; }
+.blog-post__body .writing-takeaways h2 { margin-top: 0; font-size: 23px; }
+.blog-post__body ul, .blog-post__body ol { padding-left: 1.4em; margin-bottom: 1.5em; }
+.blog-post__body li { margin-bottom: .5em; }
+.writing-takeaways ul { margin-bottom: 0; }
+.writing-toc { padding-block: 24px; border-block: 1px solid var(--hairline); margin-block: 36px; font-family: var(--font-body); font-size: 15px; }
+.writing-toc > p { font-weight: 600; }
+.writing-toc ol { margin-bottom: 0; }
+.blog-post__body h2 { scroll-margin-top: 110px; }
+.writing-code { margin: 28px 0; max-width: 100%; }
+.writing-code figcaption { font-family: var(--font-mono); font-size: 11px; padding: 10px 16px; border: 1px solid var(--hairline); border-bottom: 0; border-radius: 8px 8px 0 0; }
+.writing-code pre { margin: 0; overflow-x: auto; background: #151B26; padding: 20px; border-radius: 0 0 8px 8px; line-height: 1.65; }
+.writing-code pre code { background: none; color: #E0E9F5; padding: 0; border-radius: 0; font-size: 13px; white-space: pre; }
+.writing-code pre:focus-visible { outline: 3px solid #2563EB; outline-offset: 3px; }
+.writing-sources { border-top: 1px solid var(--hairline); margin-top: 44px; font-size: 15px; overflow-wrap: anywhere; }
+.writing-related { padding-bottom: 64px; }
+.writing-related > h2 { font-family: var(--font-display); font-size: 32px; font-weight: 400; margin: 0 0 26px; }
+.writing-related .blog-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 600px) { .writing-related .blog-grid { grid-template-columns: 1fr; } .writing-takeaways { padding: 20px; } }
 
 @media (max-width: 600px) {
   .blog-post__header { padding: 36px 0 32px; }

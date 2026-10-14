@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#f0eee6"/>
+  <g fill="#201d17" font-family="Arial, sans-serif">
+    <text x="70" y="100" font-size="30" font-weight="700">ANDREI</text>
+    <text x="70" y="230" font-size="18" letter-spacing="4" fill="#776957">WRITING &amp; DEVELOPMENT NOTES</text>
+    <text x="70" y="320" font-size="66" font-weight="700">Build better websites.</text>
+    <text x="70" y="390" font-size="27" fill="#584e40">Practical guides. Real projects. Clear decisions.</text>
+    <text x="70" y="552" font-size="19" fill="#584e40">React · TypeScript · Accessibility · Full-stack development</text>
+  </g>
+  <g transform="translate(895 54)"><rect width="110" height="84" fill="#6b9fbf"/><rect x="118" width="110" height="84" fill="#284550"/><rect y="92" width="110" height="84" fill="#a8c5d8"/><rect x="118" y="92" width="110" height="84" fill="#b6352d"/></g>
+  <path d="M70 468H1130" stroke="#a88f6e"/>
+</svg>

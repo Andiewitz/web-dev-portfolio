@@ -13,6 +13,7 @@ import matchaImg from "@/assets/Matcha.png";
 import cafeLibreImg from "@/assets/Cafe Libre.png";
 import comfortProPreviewImg from "@/assets/Comfort Pro Preview.png";
 import elevateHealthPreviewImg from "@/assets/Elevate Health Preview.png";
+import { posts as writingPosts, postPath, formatDate } from "@/data/writing";
 
 const navItems = [
   { href: "#projects", label: "Projects" },
@@ -99,13 +100,7 @@ const projects = [
   },
 ];
 
-const writingEntries = [
-  { title: "Why your React app feels slow — and where to actually look", topic: "Web Performance", date: "Aug 2026" },
-  { title: "Designing web applications that survive their second maintainer", topic: "Architecture", date: "Jul 2026" },
-  { title: "Postgres indexes & queries for full-stack developers", topic: "Full-Stack", date: "Jul 2026" },
-  { title: "The case for boring infrastructure in modern web deployments", topic: "DevOps & Cloud", date: "Jun 2026" },
-  { title: "What a senior web dev code review actually looks for", topic: "UI Engineering", date: "Jun 2026" },
-];
+const writingEntries = writingPosts.slice(0, 5).map(post => ({ title: post.title, topic: post.category, date: formatDate(post.published), href: postPath(post) }));
 
 const easeOut = [0.23, 1, 0.32, 1] as const;
 
@@ -440,7 +435,7 @@ export default function Home() {
             </RevealBlock>
             <RevealBlock className="writing-list" reducedMotion={!!reducedMotion} variants={revealVariants}>
               {writingEntries.map((entry) => (
-                <a key={entry.title} className="writing-row" href="/writing">
+                <a key={entry.title} className="writing-row" href={entry.href}>
                   <span className="writing-row__title">{entry.title}</span>
                   <span className="writing-row__topic">{entry.topic}</span>
                 </a>
