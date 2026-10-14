@@ -11,6 +11,8 @@ import hefestusImg from "@/assets/Festus.png";
 import morrowImg from "@/assets/Morrow Architecture.png";
 import matchaImg from "@/assets/Matcha.png";
 import cafeLibreImg from "@/assets/Cafe Libre.png";
+import comfortProPreviewImg from "@/assets/Comfort Pro Preview.png";
+import elevateHealthPreviewImg from "@/assets/Elevate Health Preview.png";
 
 const navItems = [
   { href: "#projects", label: "Projects" },
@@ -18,6 +20,28 @@ const navItems = [
 ];
 
 const projects = [
+  {
+    title: "Comfort Pro",
+    titleFont: "'Bricolage Grotesque', system-ui, sans-serif",
+    description: "A warm, service-first digital experience for a family-owned Tampa Bay HVAC company—making repairs, new systems, and maintenance feel straightforward from the first visit.",
+    cta: "View live site",
+    href: "https://comfort-pro-nu.vercel.app/",
+    date: "2026",
+    category: "Service Website",
+    buttonLabel: "View project",
+    image: comfortProPreviewImg,
+  },
+  {
+    title: "Elevate Health",
+    titleFont: "'DM Serif Display', Georgia, serif",
+    description: "A reassuring, patient-centered chiropractic site for a South Burlington practice, with clear care pathways and an easy route to book a first visit.",
+    cta: "View live site",
+    href: "https://elevate-health-nu.vercel.app/",
+    date: "2026",
+    category: "Healthcare Website",
+    buttonLabel: "View project",
+    image: elevateHealthPreviewImg,
+  },
   {
     title: "Meshwork Studio",
     titleFont: "'Geomini', system-ui, sans-serif",
