@@ -25,6 +25,8 @@
   --ink-muted: #A8A296;
   --orange: #B4421C;
   --orange-hover: #B4421C;
+  --blue: #1D4ED8;
+  --blue-hover: #1637A3;
   --hairline: rgba(21, 20, 18, 0.16);
   --hairline-dark: rgba(251, 248, 241, 0.18);
   --font-display: 'Fraunces', Georgia, serif;
@@ -65,18 +67,18 @@ button { border: 0; }
 .desktop-nav { display: flex; align-items: center; gap: 28px; margin-left: auto; }
 .desktop-nav a, .footer-links a { color: var(--ink-soft); font-size: 13px; font-weight: 500; text-decoration: none; transition: color 220ms var(--ease-out); }
 .site-header[data-theme="light"] .desktop-nav a { color: rgba(248,243,232,0.7); }
-.header-cta { border-radius: 8px; padding: 9px 16px; background: var(--charcoal); color: var(--paper); font-size: 13px; font-weight: 600; text-decoration: none; transition: background-color 220ms var(--ease-out), color 220ms var(--ease-out), transform 150ms var(--ease-out); }
+.header-cta { border-radius: 999px; padding: 9px 16px; background: var(--charcoal); color: var(--paper); font-size: 13px; font-weight: 600; text-decoration: none; transition: background-color 220ms var(--ease-out), color 220ms var(--ease-out), transform 150ms var(--ease-out); }
 .site-header[data-theme="light"] .header-cta { background: var(--paper); color: var(--charcoal); }
 .header-cta:active { transform: scale(0.97); transition-duration: 100ms; }
 .menu-toggle { display: none; padding: 8px; background: transparent; color: inherit; }
 .mobile-nav { display: none; }
 
-.hero-section { position: relative; padding: clamp(120px, 17vh, 190px) 0 clamp(76px, 10vh, 120px); background: var(--canvas); color: var(--ink); }
-.hero-portrait { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); z-index: 0; width: clamp(280px, 32vw, 440px); margin: 0; }
-.opening-grid > div:first-child { align-self: start; }
+.hero-section { position: relative; display: flex; align-items: center; min-height: calc(92svh - 74px); padding: clamp(40px, 6svh, 88px) 0; background: var(--canvas); color: var(--ink); }
+.hero-portrait { position: absolute; left: 50%; bottom: 0; transform: translateX(-50%); z-index: 0; width: clamp(300px, 42vw, 600px); margin: 0; }
+@media (min-width: 921px) { .hero-section > .content-frame { width: min(1280px, calc(100% - 48px)); } }
 .hero-portrait img { display: block; width: 100%; height: auto; }
 .opening-grid { position: relative; z-index: 1; display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(260px, 0.6fr); gap: clamp(64px, 12vw, 175px); align-items: center; }
-.opening-grid h1 { max-width: 710px; margin: 0; font-family: var(--font-display); font-size: clamp(52px, 5.75vw, 82px); font-weight: 400; letter-spacing: -0.055em; line-height: 0.98; }
+.opening-grid h1 { max-width: 710px; margin: 0; font-family: var(--font-display); font-size: clamp(46px, 5.2vw, 74px); font-weight: 400; letter-spacing: -0.055em; line-height: 0.98; }
 .opening-grid h1 em { font-style: normal; text-decoration: underline; text-decoration-thickness: 0.07em; text-underline-offset: 0.09em; }
 .hero-line { display: inline-block; }
 .opening-eyebrow { margin-bottom: 22px; }
@@ -85,10 +87,17 @@ button { border: 0; }
 .motion-line { display: block; }
 .motion-char { display: inline-block; }
 .hero-slab__inner { will-change: transform, opacity; }
-.opening-statement { max-width: 370px; margin: clamp(40px, 5vw, 68px) 0 0; font-family: var(--font-editorial); font-size: clamp(22px, 2vw, 28px); line-height: 1.1; }
+.opening-statement { max-width: 370px; margin: clamp(40px, 5vw, 68px) 0 0; font-family: var(--font-editorial); font-size: clamp(17px, 1.55vw, 21px); line-height: 1.2; }
 .opening-proof { margin: 24px 0 0; color: var(--ink-muted); font-family: var(--font-mono); font-size: 10px; line-height: 1.6; text-transform: uppercase; }
 .opening-cta { display: inline-block; margin-top: 28px; border-radius: 8px; padding: 11px 16px; background: var(--charcoal); color: var(--paper); font-size: 14px; font-weight: 600; text-decoration: none; transition: background-color 150ms var(--ease-out), transform 150ms var(--ease-out); }
 .opening-cta:active { transform: scale(0.97); transition-duration: 100ms; }
+.hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(24px, 3.5svh, 32px); }
+.hero-action { display: inline-flex; align-items: center; justify-content: center; border: 0.5px solid transparent; border-radius: 999px; padding: 12px 20px; font-size: 14px; font-weight: 600; line-height: 1; text-decoration: none; transition: background-color 150ms var(--ease-out), border-color 150ms var(--ease-out), color 150ms var(--ease-out), transform 150ms var(--ease-out); }
+.hero-action:active { transform: scale(0.97); transition-duration: 100ms; }
+.hero-action--primary { background: var(--blue); color: var(--paper); }
+.hero-action--primary:hover { background: var(--blue-hover); }
+.hero-action--secondary { border-color: var(--hairline); background: transparent; color: var(--ink); }
+.hero-action--secondary:hover { border-color: var(--ink); }
 .hero-grid, .hero-copy { display: contents; }
 .hero-copy h1, .approach-heading h2, .services-intro h2, .studio-copy h2, .contact-layout h2 { margin: 0; font-family: var(--font-display); font-weight: 400; letter-spacing: -0.045em; line-height: 0.96; }
 .hero-copy h1 { max-width: 600px; font-size: clamp(52px, min(5.8vw, 10.4svh), 84px); }
@@ -275,7 +284,7 @@ button { border: 0; }
   .mobile-nav--open { opacity: 1; pointer-events: auto; transform: translateY(0); visibility: visible; transition-delay: 0s, 0s, 0s; }
   .mobile-nav nav { display: flex; flex-direction: column; width: min(1280px, calc(100% - 48px)); margin-inline: auto; padding: 12px 0 20px; }
   .mobile-nav a { padding: 12px 0; color: var(--ink); font-weight: 600; text-decoration: none; }
-  .hero-section { padding: 110px 0 78px; }
+  .hero-section { display: block; min-height: 0; padding: 110px 0 78px; }
   .opening-grid, .approach-layout, .services-layout, .studio-layout, .contact-layout { grid-template-columns: 1fr; }
   .opening-grid { gap: 34px; }
   .hero-portrait { position: relative; left: auto; bottom: auto; transform: none; width: clamp(200px, 46vw, 300px); margin: clamp(32px, 5vw, 48px) auto 0; }

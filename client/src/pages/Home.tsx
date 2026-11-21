@@ -348,6 +348,10 @@ export default function Home() {
                   style={{ display: "inline-block" }}
                 >A <em>Web Developer.</em></motion.span>
               </h1>
+              <div className="hero-actions">
+                <a className="hero-action hero-action--primary" href="mailto:hello@visionfx.studio">Start a conversation</a>
+                <a className="hero-action hero-action--secondary" href="#projects">See projects</a>
+              </div>
             </div>
             <motion.div
               className="opening-side"
@@ -359,7 +363,6 @@ export default function Home() {
                 I build responsive, high-performance web applications and fluid browser experiences with clean architecture, accessible interfaces, and modern full-stack TypeScript.
               </p>
               <p className="opening-proof">Full-Stack Web Dev · UI Engineering · Open to work</p>
-              <a className="opening-cta" href="mailto:hello@visionfx.studio">Start a conversation</a>
             </motion.div>
           </div>
           <figure className="hero-portrait">
