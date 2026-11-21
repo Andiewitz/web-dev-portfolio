@@ -1,5 +1,4 @@
-import { useReducedMotion } from "framer-motion";
-import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
+import { useId, useLayoutEffect, useRef } from "react";
 
 const VIEW_W = 1048;
 const VIEW_H = 200;
@@ -14,55 +13,73 @@ const FLOW_PATH =
 const CODE_UNIT =
   "const portfolio = await build({ canvas: '#F4EEE3', ink: '#151412', accent: '#1D4ED8', type: 'Fraunces' }); if (!portfolio.ready) return null; export default function Hero() { return <main className='canvas'>{sections.map((section) => <Scene key={section.id} {...section} />)}</main>; } // ship small, measure, iterate. ";
 
+/** Three repeats: enough to cover the loop offset plus the whole path. */
 const REPEATS = 3;
 const FLOW_TEXT = CODE_UNIT.repeat(REPEATS);
-/** Seconds for the code to travel exactly one repeat, so the loop is seamless. */
-const FLOW_DURATION = 26;
+/** How long the line takes to draw itself in from the left. */
+const INTRO_MS = 1600;
+/** Seconds per repeat once the loop is running. */
+const LOOP_SECONDS = 26;
 
 export default function CodeFlowBackground({
   className,
 }: {
   className?: string;
 }) {
-  const reduced = useReducedMotion();
   const rawId = useId();
-  const pathId = `flow-path-${rawId.replace(/[^a-zA-Z0-9_-]/g, "")}`;
-  const textRef = useRef<SVGTextElement>(null);
+  const uid = rawId.replace(/[^a-zA-Z0-9_-]/g, "");
+  const pathId = `flow-path-${uid}`;
+  const clipId = `flow-clip-${uid}`;
+
+  const pathRef = useRef<SVGPathElement>(null);
+  const unitRef = useRef<SVGTextElement>(null);
   const textPathRef = useRef<SVGTextPathElement>(null);
-  const [period, setPeriod] = useState(0);
+  const clipRectRef = useRef<SVGRectElement>(null);
 
   useLayoutEffect(() => {
-    const measure = () => {
-      const total = textRef.current?.getComputedTextLength() ?? 0;
-      if (total > 0) setPeriod(total / REPEATS);
-    };
-    measure();
-    if (typeof document !== "undefined" && document.fonts) {
-      document.fonts.ready.then(measure).catch(() => {});
-    }
-  }, []);
+    const path = pathRef.current;
+    const unit = unitRef.current;
+    const textPath = textPathRef.current;
+    const clipRect = clipRectRef.current;
+    if (!path || !unit || !textPath || !clipRect) return;
 
-  useEffect(() => {
-    const el = textPathRef.current;
-    if (!el || reduced) return;
-    if (period <= 0) {
-      el.setAttribute("startOffset", "0");
-      return;
+    const pathLength = path.getTotalLength();
+    let unitLength = unit.getComputedTextLength();
+    const remeasure = () => {
+      const measured = unit.getComputedTextLength();
+      if (measured > 0) unitLength = measured;
+    };
+    if (document.fonts) {
+      document.fonts.ready.then(remeasure).catch(() => {});
     }
+
+    // Draw the line in from the left before the loop takes over.
+    path.setAttribute("stroke-dasharray", `${pathLength} ${pathLength}`);
+    path.setAttribute("stroke-dashoffset", `${pathLength}`);
+    clipRect.setAttribute("width", "0");
 
     let frame = 0;
     const started = performance.now();
-    const speed = period / (FLOW_DURATION * 1000);
 
     const tick = (now: number) => {
-      const offset = ((now - started) * speed) % period;
-      el.setAttribute("startOffset", offset.toFixed(2));
+      const elapsed = now - started;
+      const intro = Math.min(1, elapsed / INTRO_MS);
+
+      path.setAttribute("stroke-dashoffset", (pathLength * (1 - intro)).toFixed(2));
+      clipRect.setAttribute("width", (VIEW_W * intro).toFixed(2));
+
+      // One repeat per LOOP_SECONDS, wrapped so the marquee never stops.
+      if (unitLength > 0) {
+        const speed = unitLength / (LOOP_SECONDS * 1000);
+        textPath.setAttribute("startOffset", ((elapsed * speed) % unitLength).toFixed(2));
+      }
+
       frame = requestAnimationFrame(tick);
     };
 
     frame = requestAnimationFrame(tick);
     return () => cancelAnimationFrame(frame);
-  }, [period, reduced]);
+  }, []);
 
   return (
     <div className={className} aria-hidden="true">
@@ -72,7 +89,14 @@ export default function CodeFlowBackground({
         xmlns="http://www.w3.org/2000/svg"
         style={{ display: "block", width: "100%", height: "100%" }}
       >
+        <defs>
+          <clipPath id={clipId}>
+            <rect ref={clipRectRef} x="0" y="0" width="0" height={VIEW_H} />
+          </clipPath>
+        </defs>
+
         <path
+          ref={pathRef}
           id={pathId}
           fill="transparent"
           stroke="rgba(21, 20, 18, 0.18)"
@@ -80,11 +104,23 @@ export default function CodeFlowBackground({
           d={FLOW_PATH}
         />
 
-        <text ref={textRef} x="0" xmlSpace="preserve" className="flow-text">
-          <textPath ref={textPathRef} href={`#${pathId}`} startOffset="0">
-            {FLOW_TEXT}
-          </textPath>
+        {/* Measured only, never painted: one repeat of the code, for the loop period. */}
+        <text
+          ref={unitRef}
+          className="flow-text"
+          xmlSpace="preserve"
+          style={{ visibility: "hidden" }}
+        >
+          {CODE_UNIT}
         </text>
+
+        <g clipPath={`url(#${clipId})`}>
+          <text className="flow-text" xmlSpace="preserve">
+            <textPath ref={textPathRef} href={`#${pathId}`} startOffset="0">
+              {FLOW_TEXT}
+            </textPath>
+          </text>
+        </g>
       </svg>
     </div>
   );
