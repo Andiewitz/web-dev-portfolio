@@ -1,5 +1,5 @@
 /* VisionFX design reminder: clarity first, then a local scroll-driven dark editorial surface that expands as it enters the reader’s view. */
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,400;12..96,600&family=DM+Mono:wght@400;500&family=DM+Serif+Display:ital@0;1&family=Geomini:wght@400;700&family=Inter:wght@400;500;600&family=Lora:ital,wght@0,400;0,500;1,400&family=Poppins:wght@400;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400..900&family=Open+Sans:wght@400;500;600;700&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
 
@@ -15,33 +15,33 @@
 }
 
 :root {
-  --canvas: #F0EEE6;
-  --canvas-linen: #C7B38F;
-  --paper: #F8F3E8;
-  --charcoal: #15140F;
-  --charcoal-soft: #2A261E;
-  --ink: #201D17;
-  --ink-soft: #584E40;
-  --ink-muted: #776957;
-  --orange: #FF5F1F;
-  --orange-hover: #E64E13;
-  --hairline: #A88F6E;
-  --hairline-dark: rgba(242,233,215,0.18);
-  --font-display: 'Bricolage Grotesque', system-ui, sans-serif;
-  --font-editorial: 'Lora', Georgia, serif;
-  --font-body: 'Inter', system-ui, sans-serif;
-  --font-mono: 'DM Mono', monospace;
+  --canvas: #F4EEE3;
+  --canvas-linen: #E9E1D1;
+  --paper: #FBF8F1;
+  --charcoal: #151412;
+  --charcoal-soft: #151412;
+  --ink: #151412;
+  --ink-soft: #5E5A52;
+  --ink-muted: #A8A296;
+  --orange: #B4421C;
+  --orange-hover: #B4421C;
+  --hairline: rgba(21, 20, 18, 0.16);
+  --hairline-dark: rgba(251, 248, 241, 0.18);
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-editorial: 'Fraunces', Georgia, serif;
+  --font-body: 'Open Sans', system-ui, sans-serif;
+  --font-mono: 'Open Sans', system-ui, sans-serif;
   --background: var(--canvas);
   --foreground: var(--ink);
   --border: var(--hairline);
   --primary: var(--orange);
-  --primary-foreground: #FFFFFF;
+  --primary-foreground: #FBF8F1;
   --ease-out: cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; min-width: 320px; background: var(--canvas); color: var(--ink); font-family: var(--font-body); font-size: 16px; line-height: 1.65; -webkit-font-smoothing: antialiased; }
+body { margin: 0; min-width: 320px; background: var(--canvas); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
 a, button { font: inherit; }
 a { color: inherit; }
 button { border: 0; }
@@ -143,10 +143,11 @@ button { border: 0; }
 .approach-layout { display: grid; grid-template-columns: minmax(0, 1fr) minmax(360px, 0.85fr); gap: clamp(64px, 10vw, 150px); align-items: start; }
 .approach-heading { max-width: 635px; }
 .approach-heading h2 { font-size: clamp(46px, 5vw, 72px); }
-.approach-heading > p:last-child { max-width: 510px; margin: 26px 0 0; color: var(--ink-soft); font-size: 17px; }
+.approach-heading > p:not(.eyebrow) { max-width: 510px; margin: 26px 0 0; color: var(--ink-soft); font-size: 17px; }
+.approach-heading .quiet-link { margin-top: 28px; }
 .principle-list { border-top: 0.5px solid var(--hairline); }
 .principle { padding: 26px 0 28px; border-bottom: 0.5px solid var(--hairline); }
-.principle h3 { margin: 0; font-family: var(--font-display); font-size: 26px; font-weight: 300; letter-spacing: -0.03em; line-height: 1.1; }
+.principle h3 { margin: 0; font-family: var(--font-display); font-size: 26px; font-weight: 500; letter-spacing: -0.03em; line-height: 1.1; }
 .principle p { margin: 11px 0 0; color: var(--ink-soft); font-size: 14px; }
 
 .services-section { padding: 136px 0; background: var(--paper); color: var(--ink); }
@@ -164,6 +165,7 @@ button { border: 0; }
 .projects-section { padding: 96px 0 128px; background: var(--paper); border-top: 0.5px solid var(--hairline); color: var(--ink); }
 .projects-heading { display: flex; flex-direction: column; gap: 14px; margin-bottom: 44px; }
 .projects-heading h2 { margin: 0; font-family: var(--font-display); font-size: clamp(36px, 4vw, 54px); font-weight: 400; letter-spacing: -0.04em; line-height: 1; }
+.projects-intro { max-width: 560px; margin: 0; color: var(--ink-soft); font-size: 17px; line-height: 1.5; }
 .project-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(520px, 1fr)); gap: 20px; }
 
 /* Image card — image fills, name badge always visible, overlay on hover */

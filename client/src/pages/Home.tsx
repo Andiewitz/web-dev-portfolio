@@ -24,7 +24,8 @@ const projects = [
   {
     title: "Comfort Pro",
     titleFont: "'Bricolage Grotesque', system-ui, sans-serif",
-    description: "A warm, service-first digital experience for a family-owned Tampa Bay HVAC company—making repairs, new systems, and maintenance feel straightforward from the first visit.",
+    description: "A family-owned HVAC company needed urgent repair searches to become booked jobs. Clear service paths, trust signals, and a fast mobile experience make the next step obvious.",
+    outcome: "More qualified service calls",
     cta: "View live site",
     href: "https://comfort-pro-nu.vercel.app/",
     date: "2026",
@@ -35,7 +36,8 @@ const projects = [
   {
     title: "Elevate Health",
     titleFont: "'DM Serif Display', Georgia, serif",
-    description: "A reassuring, patient-centered chiropractic site for a South Burlington practice, with clear care pathways and an easy route to book a first visit.",
+    description: "A chiropractic practice needed patients to understand their options and book with confidence. The site leads with clear care pathways and a simple route to a first visit.",
+    outcome: "More first-visit bookings",
     cta: "View live site",
     href: "https://elevate-health-nu.vercel.app/",
     date: "2026",
@@ -46,7 +48,8 @@ const projects = [
   {
     title: "Meshwork Studio",
     titleFont: "'Geomini', system-ui, sans-serif",
-    description: "A high-performance browser diagramming platform built for distributed systems architects. Features real-time state sync, 60fps canvas panning, and fluid SVG rendering that keeps pace with complex system topographies.",
+    description: "A diagramming platform for systems architects needed to stay smooth under complex diagrams. Real-time sync and a fast canvas make product demos feel instant and credible.",
+    outcome: "Smoother product demos",
     cta: "View live site",
     href: "https://meshwork-studiocom.vercel.app/",
     date: "2026",
@@ -57,7 +60,8 @@ const projects = [
   {
     title: "Hefestus",
     titleFont: "'Lora', Georgia, serif",
-    description: "An operating system for modern retail commerce. Consolidates sub-second point-of-sale checkout, multi-location inventory ledgering, and reactive analytics into a unified platform.",
+    description: "A retail platform with a powerful product needed a website that could explain it quickly. The site turns a complex offer into a clear, credible path to a demo.",
+    outcome: "Clearer path to demo",
     cta: "View live site",
     href: "https://festus-five.vercel.app/",
     date: "2026",
@@ -68,7 +72,8 @@ const projects = [
   {
     title: "Morrow Bureau",
     titleFont: "'DM Serif Display', Georgia, serif",
-    description: "A digital archive and spatial showcase for an architectural practice, employing brutalist typographic rhythms, smooth transitions, and high-dynamic-range imagery optimization.",
+    description: "An architecture practice needed a digital archive that matched the quality of its built work. Editorial pacing and strong imagery make the practice memorable.",
+    outcome: "Stronger project enquiries",
     cta: "View live site",
     href: "https://kononenko-recreation.vercel.app/",
     date: "2026",
@@ -79,7 +84,8 @@ const projects = [
   {
     title: "Matcha",
     titleFont: "'DM Serif Display', Georgia, serif",
-    description: "A calm, sensory-driven web store for ceremonial single-origin matcha. Built around deliberate micro-rituals, typographic pacing, and a frictionless headless checkout flow.",
+    description: "A ceremonial matcha store needed to sell a sensory product online. Origin story, ritual, and a frictionless checkout build trust before the first purchase.",
+    outcome: "Higher checkout confidence",
     cta: "View live site",
     href: "https://matcha-haven.vercel.app/",
     date: "2025",
@@ -90,7 +96,8 @@ const projects = [
   {
     title: "Café Libre",
     titleFont: "'Bricolage Grotesque', system-ui, sans-serif",
-    description: "An artisanal coffee house web destination featuring rich ambient roast visuals, sustainable farm origin storytelling, and interactive table-side mobile ordering.",
+    description: "An artisanal coffee house needed a web presence that felt as considered as its roast. Ambient visuals and mobile ordering turn interest into a visit.",
+    outcome: "More table-side orders",
     cta: "View live site",
     href: "https://cafe-libre.vercel.app/",
     date: "2025",
@@ -173,6 +180,7 @@ function useNavbarTheme() {
     const sections: { id: string; theme: 'dark' | 'light' }[] = [
       { id: 'top', theme: 'dark' },
       { id: 'slab-region', theme: 'light' },
+      { id: 'approach', theme: 'dark' },
       { id: 'projects', theme: 'dark' },
       { id: 'writing', theme: 'dark' },
       { id: 'footer', theme: 'light' },
@@ -355,7 +363,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section ref={slabRegionRef} id="slab-region" className="hero-slab-scroll-region" aria-label="Most of great web development happens before you write a single component">
+        <section ref={slabRegionRef} id="slab-region" className="hero-slab-scroll-region" aria-label="A website should earn its keep, not just look good">
           <div className="hero-slab-stage">
             <motion.div
               ref={slabRef}
@@ -374,20 +382,47 @@ export default function Home() {
                   variants={sectionReveal}
                 >
                   <h2 className="questions-headline">
-                    Most of great web development happens before you write a single component.
+                    A website should earn its keep. Not just look good.
                   </h2>
                   <p className="questions-sub">
-                    It's the questions — about latency, interaction models, bundle budgets, and real user journeys — that turn code into an exceptional web experience.
+                    Every screen is a salesperson. I design the path from first impression to enquiry, remove the friction that loses customers, and treat speed as a business metric — more qualified leads, fewer abandoned visits, and a site your team can run without calling a developer.
                   </p>
                 </motion.div>
               </motion.div>
             </motion.div>
-            <motion.span className="float-q float-q--1" style={reducedMotion || isMobile ? undefined : { y: q1Y }}>how fast is the first paint?</motion.span>
-            <motion.span className="float-q float-q--2" style={reducedMotion || isMobile ? undefined : { y: q2Y }}>does it feel native on mobile?</motion.span>
-            <motion.span className="float-q float-q--3" style={reducedMotion || isMobile ? undefined : { y: q3Y }}>where does state get tangled?</motion.span>
-            <motion.span className="float-q float-q--4" style={reducedMotion || isMobile ? undefined : { y: q4Y }}>is this accessible to everyone?</motion.span>
-            <motion.span className="float-q float-q--5" style={reducedMotion || isMobile ? undefined : { y: q5Y }}>what's the bundle budget?</motion.span>
-            <motion.span className="float-q float-q--6" style={reducedMotion || isMobile ? undefined : { y: q6Y }}>does it work on spotty networks?</motion.span>
+            <motion.span className="float-q float-q--1" style={reducedMotion || isMobile ? undefined : { y: q1Y }}>where are visitors dropping off?</motion.span>
+            <motion.span className="float-q float-q--2" style={reducedMotion || isMobile ? undefined : { y: q2Y }}>does this page turn interest into enquiries?</motion.span>
+            <motion.span className="float-q float-q--3" style={reducedMotion || isMobile ? undefined : { y: q3Y }}>how fast does it load on a phone?</motion.span>
+            <motion.span className="float-q float-q--4" style={reducedMotion || isMobile ? undefined : { y: q4Y }}>can customers find what they need in three clicks?</motion.span>
+            <motion.span className="float-q float-q--5" style={reducedMotion || isMobile ? undefined : { y: q5Y }}>what is a slow site costing you in lost sales?</motion.span>
+            <motion.span className="float-q float-q--6" style={reducedMotion || isMobile ? undefined : { y: q6Y }}>can your team update it without a developer?</motion.span>
+          </div>
+        </section>
+
+        <section id="approach" className="approach-section">
+          <div className="content-frame approach-layout">
+            <RevealBlock className="approach-heading" reducedMotion={!!reducedMotion} variants={revealVariants}>
+              <p className="eyebrow">How it works</p>
+              <h2>Most websites don't have a traffic problem. They have a conversion problem.</h2>
+              <p>
+                I find where visitors hesitate, remove the friction, and build the shortest path to the action that matters — a call, a booking, or a quote request.
+              </p>
+              <a className="quiet-link" href="#projects">See the work <span aria-hidden="true">→</span></a>
+            </RevealBlock>
+            <RevealBlock className="principle-list" reducedMotion={!!reducedMotion} variants={revealVariants}>
+              <div className="principle">
+                <h3>Find the leak</h3>
+                <p>Where visitors drop off, and what stops them from acting.</p>
+              </div>
+              <div className="principle">
+                <h3>Build the shortest path</h3>
+                <p>Clear pages, fast load times, and one obvious next step on every screen.</p>
+              </div>
+              <div className="principle">
+                <h3>Measure what matters</h3>
+                <p>Enquiries, bookings, and quote requests — not just visits.</p>
+              </div>
+            </RevealBlock>
           </div>
         </section>
 
@@ -395,6 +430,7 @@ export default function Home() {
           <div className="content-frame">
             <RevealBlock className="projects-heading" reducedMotion={!!reducedMotion} variants={revealVariants}>
               <h2>Latest work</h2>
+              <p className="projects-intro">Selected projects, with the problem, the work, and the result.</p>
             </RevealBlock>
             <div className="project-grid">
               {projects.map((project) => (
@@ -409,6 +445,7 @@ export default function Home() {
                     <span style={{ fontFamily: project.titleFont }}>{project.title}</span>
                   </div>
                   <div className="project-card__overlay">
+                    <p className="project-card__overlay-category">{project.outcome}</p>
                     <h3 className="project-card__overlay-title" style={{ fontFamily: project.titleFont }}>{project.title}</h3>
                     <p className="project-card__overlay-desc">{project.description}</p>
                     <a className="project-card__overlay-cta" href={project.href ?? "#projects"} {...(project.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
