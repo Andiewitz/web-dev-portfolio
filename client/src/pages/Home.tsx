@@ -6,6 +6,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Wordmark from "@/components/Wordmark";
+import CodeFlowBackground from "@/components/CodeFlowBackground";
 import meshworkImg from "@/assets/Meshwork Studio.png";
 import hefestusImg from "@/assets/Festus.png";
 import morrowImg from "@/assets/Morrow Architecture.png";
@@ -329,6 +330,7 @@ export default function Home() {
 
       <main id="main">
         <section id="top" className="hero-section">
+          <CodeFlowBackground className="hero-flow" />
           <div className="content-frame opening-grid">
             <div>
               <h1>
