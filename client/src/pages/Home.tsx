@@ -13,6 +13,7 @@ import matchaImg from "@/assets/Matcha.png";
 import cafeLibreImg from "@/assets/Cafe Libre.png";
 import comfortProPreviewImg from "@/assets/Comfort Pro Preview.png";
 import elevateHealthPreviewImg from "@/assets/Elevate Health Preview.png";
+import portraitImg from "@/assets/Torn Paper Halftone Portrait.webp";
 import { posts as writingPosts, postPath, formatDate } from "@/data/writing";
 
 const navItems = [
@@ -361,6 +362,9 @@ export default function Home() {
               <a className="opening-cta" href="mailto:hello@visionfx.studio">Start a conversation</a>
             </motion.div>
           </div>
+          <figure className="hero-portrait">
+            <img src={portraitImg} alt="Halftone portrait of Andrei on torn paper" />
+          </figure>
         </section>
 
         <section ref={slabRegionRef} id="slab-region" className="hero-slab-scroll-region" aria-label="A website should earn its keep, not just look good">
@@ -402,7 +406,6 @@ export default function Home() {
         <section id="approach" className="approach-section">
           <div className="content-frame approach-layout">
             <RevealBlock className="approach-heading" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <p className="eyebrow">How it works</p>
               <h2>Most websites don't have a traffic problem. They have a conversion problem.</h2>
               <p>
                 I find where visitors hesitate, remove the friction, and build the shortest path to the action that matters — a call, a booking, or a quote request.
