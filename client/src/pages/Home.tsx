@@ -158,15 +158,15 @@ const sectionRevealMobile = {
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, ease: easeOut } },
 };
 
-/** The hero side copy sweeps in from the left, one paragraph after the other. */
+/** The hero side copy sweeps in from the left as the headline finishes typing. */
 const heroSideReveal: Variants = {
   hidden: {},
-  show: { transition: { delayChildren: 1.75, staggerChildren: 0.16 } },
+  show: { transition: { delayChildren: 1.42, staggerChildren: 0.12 } },
 };
 
 const heroSideLine: Variants = {
-  hidden: { opacity: 0, x: -56 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.85, ease: easeOut } },
+  hidden: { opacity: 0, x: -44 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.9, ease: easeOut } },
 };
 
 /** Parent that hands the entrance of its children to the variants below. */
@@ -203,7 +203,7 @@ const footerColIn: Variants = {
 /** The two hero CTAs drop in a beat after the headline finishes typing. */
 const actionsIn: Variants = {
   hidden: {},
-  show: { transition: { delayChildren: 1.5, staggerChildren: 0.09 } },
+  show: { transition: { delayChildren: 1.82, staggerChildren: 0.08 } },
 };
 
 const buttonIn: Variants = {
@@ -681,7 +681,7 @@ export default function Home() {
               variants={heroSideReveal}
             >
               <motion.p className="opening-statement" variants={heroSideLine}>
-                I build responsive, high-performance web applications and fluid browser experiences with clean architecture, accessible interfaces, and modern full-stack TypeScript.
+                Fast, accessible sites that make a good first impression in seconds, then turn that visit into an enquiry, a booking or a sale.
               </motion.p>
               <motion.p className="opening-proof" variants={heroSideLine}>
                 Full-Stack Web Dev · UI Engineering · Open to work
@@ -698,7 +698,7 @@ export default function Home() {
               transition={
                 reducedMotion
                   ? undefined
-                  : { type: "spring", stiffness: 46, damping: 16, mass: 1.15, delay: 0.42 }
+                  : { type: "spring", stiffness: 92, damping: 19, mass: 1.05, delay: 0.95 }
               }
             >
               <img src={portraitImg} alt="Halftone portrait of Andrei on torn paper" />
