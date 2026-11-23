@@ -158,9 +158,15 @@ const sectionRevealMobile = {
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, ease: easeOut } },
 };
 
-const heroSideReveal = {
-  hidden: { opacity: 0, y: 22 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: easeOut, delay: 1.9 } },
+/** The hero side copy sweeps in from the left, one paragraph after the other. */
+const heroSideReveal: Variants = {
+  hidden: {},
+  show: { transition: { delayChildren: 1.75, staggerChildren: 0.16 } },
+};
+
+const heroSideLine: Variants = {
+  hidden: { opacity: 0, x: -56 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.85, ease: easeOut } },
 };
 
 /** Parent that hands the entrance of its children to the variants below. */
@@ -208,6 +214,48 @@ const buttonIn: Variants = {
     y: 0,
     transition: { type: "spring", stiffness: 460, damping: 15, mass: 0.7 },
   },
+};
+
+/** Navbar entrance: brand, links and CTA arrive in sequence from the top edge. */
+const navStagger: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.085, delayChildren: 0.34 } },
+};
+
+const navLinkIn: Variants = {
+  hidden: { opacity: 0, y: -16, filter: "blur(5px)" },
+  show: {
+    opacity: 1,
+    y: 0,
+    filter: "blur(0px)",
+    transition: { duration: 0.62, ease: easeOut },
+  },
+};
+
+const brandIn: Variants = {
+  hidden: { opacity: 0, y: -18, rotate: -6 },
+  show: { opacity: 1, y: 0, rotate: 0, transition: { duration: 0.85, ease: easeOut, delay: 0.06 } },
+};
+
+const ctaIn: Variants = {
+  hidden: { opacity: 0, scale: 0.78, y: -12 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 380, damping: 21, mass: 0.8, delay: 0.58 },
+  },
+};
+
+const mobilePanelIn = {
+  initial: { clipPath: "inset(0% 0% 100% 0%)" },
+  animate: { clipPath: "inset(0% 0% 0% 0%)", transition: { duration: 0.46, ease: easeOut } },
+  exit: { clipPath: "inset(0% 0% 100% 0%)", transition: { duration: 0.28, ease: easeOut } },
+};
+
+const mobileLinkIn: Variants = {
+  hidden: { opacity: 0, y: 18 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.42, ease: easeOut } },
 };
 
 function useResponsiveVariant() {
@@ -442,6 +490,7 @@ function TypewriterLine({
 
 export default function Home() {
   const [navOpen, setNavOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
   const slabRegionRef = useRef<HTMLElement>(null);
   const slabRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
@@ -469,43 +518,116 @@ export default function Home() {
 
   const closeNav = () => setNavOpen(false);
 
+  useEffect(() => {
+    let frame = 0;
+    const read = () => {
+      frame = 0;
+      setScrolled(window.scrollY > 24);
+    };
+    const onScroll = () => {
+      if (!frame) frame = window.requestAnimationFrame(read);
+    };
+    read();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      if (frame) window.cancelAnimationFrame(frame);
+    };
+  }, []);
+
   return (
     <div className="site-shell">
-      <header className="site-header" data-theme={navTheme}>
+      <header className="site-header" data-theme={navTheme} data-scrolled={scrolled ? "true" : "false"}>
         <a className="skip-link" href="#main">Skip to content</a>
         <div className="site-header__inner">
-          <a href="#top" className="brand-link" aria-label="Andrei home" onClick={closeNav}>
+          <motion.a
+            href="#top"
+            className="brand-link"
+            aria-label="Andrei home"
+            onClick={closeNav}
+            initial={reducedMotion ? false : "hidden"}
+            animate="show"
+            variants={brandIn}
+            whileHover={reducedMotion ? undefined : { y: -1 }}
+            transition={{ type: "spring", stiffness: 320, damping: 24 }}
+          >
             <Wordmark />
-          </a>
-          <nav className="desktop-nav" aria-label="Primary navigation">
-            {navItems.map((item) => <a key={item.href} href={item.href}>{item.label}</a>)}
-          </nav>
-          <a href="mailto:hello@visionfx.studio" className="header-cta">Start a conversation</a>
-          <button
+          </motion.a>
+          <motion.nav
+            className="desktop-nav"
+            aria-label="Primary navigation"
+            initial={reducedMotion ? false : "hidden"}
+            animate="show"
+            variants={navStagger}
+          >
+            {navItems.map((item) => (
+              <motion.a key={item.href} href={item.href} variants={navLinkIn}>
+                <span>{item.label}</span>
+              </motion.a>
+            ))}
+          </motion.nav>
+          <motion.a
+            href="mailto:hello@visionfx.studio"
+            className="header-cta"
+            initial={reducedMotion ? false : "hidden"}
+            animate="show"
+            variants={ctaIn}
+            whileHover={reducedMotion ? undefined : { scale: 1.04 }}
+            whileTap={reducedMotion ? undefined : { scale: 0.96 }}
+            transition={{ type: "spring", stiffness: 420, damping: 22 }}
+          >
+            Start a conversation
+          </motion.a>
+          <motion.button
             type="button"
             className="menu-toggle"
             onClick={() => setNavOpen((open) => !open)}
             aria-expanded={navOpen}
             aria-controls="mobile-navigation"
             aria-label={navOpen ? "Close navigation" : "Open navigation"}
+            initial={reducedMotion ? false : { opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ type: "spring", stiffness: 400, damping: 22, delay: 0.4 }}
+            whileTap={reducedMotion ? undefined : { scale: 0.9, rotate: -8 }}
           >
-            {navOpen ? <X aria-hidden="true" size={21} /> : <Menu aria-hidden="true" size={21} />}
-          </button>
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.span
+                key={navOpen ? "close" : "open"}
+                initial={reducedMotion ? false : { rotate: -90, opacity: 0 }}
+                animate={{ rotate: 0, opacity: 1 }}
+                exit={{ rotate: 90, opacity: 0 }}
+                transition={{ duration: 0.22, ease: easeOut }}
+                style={{ display: "inline-flex" }}
+              >
+                {navOpen ? <X aria-hidden="true" size={21} /> : <Menu aria-hidden="true" size={21} />}
+              </motion.span>
+            </AnimatePresence>
+          </motion.button>
         </div>
         <AnimatePresence>
           {navOpen && (
             <motion.div
               id="mobile-navigation"
               className="mobile-nav mobile-nav--open"
-              initial={{ opacity: 0, y: -8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -8 }}
-              transition={{ duration: 0.18, ease: easeOut }}
+              initial={reducedMotion ? false : mobilePanelIn.initial}
+              animate={mobilePanelIn.animate}
+              exit={mobilePanelIn.exit}
             >
-              <nav aria-label="Mobile navigation">
-                {navItems.map((item) => <a key={item.href} href={item.href} onClick={closeNav}>{item.label}</a>)}
-                <a href="mailto:hello@visionfx.studio" onClick={closeNav}>Start a conversation</a>
-              </nav>
+              <motion.nav
+                aria-label="Mobile navigation"
+                initial={reducedMotion ? false : "hidden"}
+                animate="show"
+                variants={{ hidden: {}, show: { transition: { delayChildren: 0.1, staggerChildren: 0.06 } } }}
+              >
+                {navItems.map((item) => (
+                  <motion.a key={item.href} href={item.href} onClick={closeNav} variants={mobileLinkIn}>
+                    {item.label}
+                  </motion.a>
+                ))}
+                <motion.a href="mailto:hello@visionfx.studio" onClick={closeNav} variants={mobileLinkIn}>
+                  Start a conversation
+                </motion.a>
+              </motion.nav>
             </motion.div>
           )}
         </AnimatePresence>
@@ -558,24 +680,29 @@ export default function Home() {
               animate="show"
               variants={heroSideReveal}
             >
-              <p className="opening-statement">
+              <motion.p className="opening-statement" variants={heroSideLine}>
                 I build responsive, high-performance web applications and fluid browser experiences with clean architecture, accessible interfaces, and modern full-stack TypeScript.
-              </p>
-              <p className="opening-proof">Full-Stack Web Dev · UI Engineering · Open to work</p>
+              </motion.p>
+              <motion.p className="opening-proof" variants={heroSideLine}>
+                Full-Stack Web Dev · UI Engineering · Open to work
+              </motion.p>
             </motion.div>
           </div>
           <figure className="hero-portrait">
-            <motion.img
-              src={portraitImg}
-              alt="Halftone portrait of Andrei on torn paper"
-              initial={reducedMotion ? false : { y: 130, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+            {/* Clipped at the hero's bottom edge: the portrait is fully hidden behind the
+                slab below, then slides straight up out of it — no fade. */}
+            <motion.div
+              className="hero-portrait__reveal"
+              initial={reducedMotion ? false : { y: "104%" }}
+              animate={{ y: "0%" }}
               transition={
                 reducedMotion
                   ? undefined
-                  : { type: "spring", stiffness: 58, damping: 18, mass: 1.1, delay: 0.45 }
+                  : { type: "spring", stiffness: 46, damping: 16, mass: 1.15, delay: 0.42 }
               }
-            />
+            >
+              <img src={portraitImg} alt="Halftone portrait of Andrei on torn paper" />
+            </motion.div>
           </figure>
         </section>
 
