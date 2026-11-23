@@ -2,7 +2,7 @@
  * VisionFX design reminder: reference-driven editorial placement with original VisionFX content.
  * Begin with a cream two-column argument and a single dark slab; use imagery only in later supporting sections.
  */
-import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import {
   AnimatePresence,
   motion,
@@ -492,109 +492,190 @@ function TypewriterLine({
 type Project = (typeof projects)[number];
 
 /**
- * One screen of the work showcase. Every layer reads the same shared progress value
- * and moves at a different rate, so the blurred field, the screenshot and the copy
- * drift apart as the panel scrolls past.
+ * Size of the work column. `drag` multiplies the scroll runway without changing the
+ * layout, so one card takes ~118svh of page scroll instead of a single screen.
  */
-function WorkPanel({
+const WORK_DESKTOP = { card: 50, gap: 8, drag: 1.95 };
+const WORK_MOBILE = { card: 26, gap: 9, drag: 1.6 };
+
+/** Blurred, over-scaled copy of a screenshot that fills the stage behind the column. */
+function WorkBackdrop({
   project,
   order,
-  active,
-  progress,
+  index,
   reducedMotion,
 }: {
   project: Project;
   order: number;
-  active: boolean;
-  progress: MotionValue<number>;
+  index: MotionValue<number>;
   reducedMotion: boolean;
 }) {
-  const span = [order - 1, order, order + 1];
-  const opacity = useTransform(progress, span, [0, 1, 0]);
-  const backgroundY = useTransform(progress, span, [64, 0, -64]);
-  const backgroundScale = useTransform(progress, span, [1.18, 1.08, 1.02]);
-  const cardY = useTransform(progress, span, [96, 0, -96]);
-  const cardRotate = useTransform(progress, span, [-5, 0, 5]);
-  const titleX = useTransform(progress, span, [-52, 0, 52]);
-  const asideX = useTransform(progress, span, [52, 0, -52]);
+  const distance = useTransform(index, (value) => Math.abs(value - order));
+  const opacity = useTransform(distance, [0, 1.15], [1, 0]);
+  const drift = useTransform(index, (value) => (value - order) * -40);
+  const scale = useTransform(distance, (value) => 1.14 - Math.min(value, 1) * 0.08);
 
   return (
-    <motion.div className="work-panel" style={{ opacity }} inert={!active}>
-      <motion.div
-        className="work-panel__bg"
-        aria-hidden="true"
-        style={{
-          backgroundImage: `url(${project.image})`,
-          y: reducedMotion ? undefined : backgroundY,
-          scale: reducedMotion ? undefined : backgroundScale,
-        }}
-      />
-      <motion.figure
-        className="work-panel__card"
-        style={{
-          y: reducedMotion ? undefined : cardY,
-          rotate: reducedMotion ? undefined : cardRotate,
-        }}
-      >
-        <img src={project.image} alt={`${project.title} — ${project.category}`} loading="lazy" />
-      </motion.figure>
-      <motion.div
-        className="work-panel__title"
-        style={{ x: reducedMotion ? undefined : titleX }}
-      >
-        <p className="work-panel__eyebrow">{project.category} · {project.date}</p>
-        <h3 style={{ fontFamily: project.titleFont }}>{project.title}</h3>
-      </motion.div>
-      <motion.div
-        className="work-panel__aside"
-        style={{ x: reducedMotion ? undefined : asideX }}
-      >
-        <p className="work-panel__outcome">{project.outcome}</p>
-        <p className="work-panel__desc">{project.description}</p>
-        <a
-          className="work-panel__cta"
-          href={project.href ?? "#projects"}
-          {...(project.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-        >
-          {project.cta} <span aria-hidden="true">→</span>
-        </a>
-      </motion.div>
-    </motion.div>
+    <motion.div
+      className="work-backdrop"
+      aria-hidden="true"
+      style={{
+        backgroundImage: `url(${project.image})`,
+        opacity,
+        y: reducedMotion ? undefined : drift,
+        scale: reducedMotion ? undefined : scale,
+      }}
+    />
   );
 }
 
-/** Sticky full-height stage: scrolling walks the project list, one panel per screen. */
-function WorkShowcase({ reducedMotion }: { reducedMotion: boolean }) {
+/** One card in the column. It grows as it nears the viewport centre and settles again as it leaves. */
+function WorkCard({
+  project,
+  order,
+  index,
+  cardHeight,
+  reducedMotion,
+}: {
+  project: Project;
+  order: number;
+  index: MotionValue<number>;
+  cardHeight: number;
+  reducedMotion: boolean;
+}) {
+  const distance = useTransform(index, (value) => Math.abs(value - order));
+  const scale = useTransform(distance, (value) => 1 - Math.min(value, 1) * 0.18);
+  const opacity = useTransform(distance, (value) => 1 - Math.min(value, 1) * 0.55);
+
+  return (
+    <motion.a
+      className="work-card"
+      href={project.href ?? "#projects"}
+      {...(project.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+      style={{
+        height: `${cardHeight}svh`,
+        scale: reducedMotion ? undefined : scale,
+        opacity: reducedMotion ? undefined : opacity,
+      }}
+    >
+      <img src={project.image} alt={`${project.title} — ${project.category}`} loading="lazy" />
+      <span className="work-card__label" style={{ fontFamily: project.titleFont }}>
+        {project.title}
+      </span>
+    </motion.a>
+  );
+}
+
+/**
+ * Vertical column of cards inside a sticky stage. Scrolling slides the column past the
+ * viewport centre, where the nearest card is expanded; the backdrop crossfades over a
+ * full card step so the background turns slowly rather than snapping.
+ */
+function WorkShowcase({ reducedMotion, isMobile }: { reducedMotion: boolean; isMobile: boolean }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: stageRef,
     offset: ["start start", "end end"],
   });
-  const progress = useTransform(scrollYProgress, [0, 1], [0, projects.length - 1]);
+  const metrics = isMobile ? WORK_MOBILE : WORK_DESKTOP;
+  const step = metrics.card + metrics.gap;
+  const index = useTransform(scrollYProgress, [0, 1], [0, projects.length - 1]);
+  const trackY = useTransform(
+    scrollYProgress,
+    [0, 1],
+    ["0svh", `-${(projects.length - 1) * step}svh`],
+  );
   const [active, setActive] = useState(0);
 
-  useMotionValueEvent(progress, "change", (value) => {
+  useMotionValueEvent(index, "change", (value) => {
     const next = Math.min(projects.length - 1, Math.max(0, Math.round(value)));
     setActive((current) => (current === next ? current : next));
   });
 
+  if (reducedMotion) {
+    return (
+      <div className="work-static">
+        {projects.map((project) => (
+          <figure className="work-static__item" key={project.title}>
+            <img src={project.image} alt={`${project.title} — ${project.category}`} loading="lazy" />
+            <figcaption>
+              <span>{project.category} · {project.date}</span>
+              <strong style={{ fontFamily: project.titleFont }}>{project.title}</strong>
+              <a href={project.href ?? "#projects"} {...(project.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+                {project.cta} <span aria-hidden="true">→</span>
+              </a>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    );
+  }
+
+  const runway = (projects.length - 1) * step * metrics.drag;
+  const activeProject = projects[active];
+
   return (
-    <div
-      ref={stageRef}
-      className="work-stage"
-      style={{ "--panels": projects.length } as CSSProperties}
-    >
+    <div ref={stageRef} className="work-stage" style={{ height: `calc(${runway}svh + 100svh)` }}>
       <div className="work-sticky">
         {projects.map((project, order) => (
-          <WorkPanel
+          <WorkBackdrop
             key={project.title}
             project={project}
             order={order}
-            active={order === active}
-            progress={progress}
+            index={index}
             reducedMotion={reducedMotion}
           />
         ))}
+        <div className="work-scrim" aria-hidden="true" />
+        <motion.div
+          className="work-track"
+          style={{
+            gap: `${metrics.gap}svh`,
+            paddingBlock: `calc(50svh - ${metrics.card / 2}svh)`,
+            y: trackY,
+          }}
+        >
+          {projects.map((project, order) => (
+            <WorkCard
+              key={project.title}
+              project={project}
+              order={order}
+              index={index}
+              cardHeight={metrics.card}
+              reducedMotion={reducedMotion}
+            />
+          ))}
+        </motion.div>
+        <div className="work-info">
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.div
+              key={activeProject.title}
+              className="work-info__inner"
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -8, transition: { duration: 0.28, ease: easeOut } }}
+              transition={{ duration: 0.5, ease: easeOut }}
+            >
+              <div className="work-info__title">
+                <p className="work-info__eyebrow">
+                  {activeProject.category} · {activeProject.date}
+                </p>
+                <h3 style={{ fontFamily: activeProject.titleFont }}>{activeProject.title}</h3>
+              </div>
+              <div className="work-info__aside">
+                <p className="work-info__outcome">{activeProject.outcome}</p>
+                <p className="work-info__desc">{activeProject.description}</p>
+                <a
+                  className="work-info__cta"
+                  href={activeProject.href ?? "#projects"}
+                  {...(activeProject.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                >
+                  {activeProject.cta} <span aria-hidden="true">→</span>
+                </a>
+              </div>
+            </motion.div>
+          </AnimatePresence>
+        </div>
         <div className="work-counter" aria-hidden="true">
           <span>{String(active + 1).padStart(2, "0")}</span>
           <span className="work-counter__total">/ {String(projects.length).padStart(2, "0")}</span>
@@ -886,7 +967,7 @@ export default function Home() {
 
         <section id="projects" className="projects-section">
           <h2 className="sr-only">Latest work</h2>
-          <WorkShowcase reducedMotion={!!reducedMotion} />
+          <WorkShowcase reducedMotion={!!reducedMotion} isMobile={!!isMobile} />
         </section>
 
         <section id="writing" className="writing-section">
