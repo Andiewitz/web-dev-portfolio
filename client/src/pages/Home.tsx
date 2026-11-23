@@ -498,6 +498,13 @@ type Project = (typeof projects)[number];
 const WORK_DESKTOP = { card: 50, gap: 8, drag: 1.95 };
 const WORK_MOBILE = { card: 26, gap: 9, drag: 1.6 };
 
+/**
+ * Hero parallax in px over the hero's own scroll range. Each layer travels at its own
+ * rate so the portrait reads nearest and the code line farthest. `fadeStart` is the
+ * progress where the copy begins to leave, before the slab edge reaches it.
+ */
+const HERO_PARALLAX = { flow: 56, copy: 72, portrait: 120, fadeStart: 0.6 };
+
 /** Blurred, over-scaled copy of a screenshot that fills the stage behind the column. */
 function WorkBackdrop({
   project,
@@ -688,6 +695,7 @@ function WorkShowcase({ reducedMotion, isMobile }: { reducedMotion: boolean; isM
 export default function Home() {
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const heroRef = useRef<HTMLElement>(null);
   const slabRegionRef = useRef<HTMLElement>(null);
   const slabRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
@@ -699,6 +707,24 @@ export default function Home() {
     target: slabRegionRef,
     offset: ["start 75vh", "start -10vh"],
   });
+
+  // The hero runs from page load to the moment the slab region pins, so every layer
+  // starts at its resting value and only moves once the user scrolls.
+  const { scrollYProgress: heroProgress } = useScroll({
+    target: heroRef,
+    offset: ["start start", "end start"],
+  });
+  const heroFlowY = useTransform(heroProgress, [0, 1], [0, HERO_PARALLAX.flow]);
+  const heroFlowScale = useTransform(heroProgress, [0, 1], [1, 1.04]);
+  const heroCopyY = useTransform(heroProgress, [0, 1], [0, -HERO_PARALLAX.copy]);
+  const heroCopyOpacity = useTransform(
+    heroProgress,
+    [0, HERO_PARALLAX.fadeStart, 1],
+    [1, 1, 0],
+  );
+  const heroPortraitY = useTransform(heroProgress, [0, 1], [0, -HERO_PARALLAX.portrait]);
+  const heroPortraitScale = useTransform(heroProgress, [0, 1], [1, 1.06]);
+  const heroParallaxOff = reducedMotion || isMobile;
 
   const slabScaleX = useTransform(scrollYProgress, [0, 1], [0.86, 1]);
   const innerY = useTransform(scrollYProgress, [0, 1], [32, 0]);
@@ -831,8 +857,17 @@ export default function Home() {
       </header>
 
       <main id="main">
-        <section id="top" className="hero-section">
-          <CodeFlowBackground className="hero-flow" />
+        <section ref={heroRef} id="top" className="hero-section">
+          <motion.div
+            className="hero-flow-wrap"
+            style={heroParallaxOff ? undefined : { y: heroFlowY, scale: heroFlowScale }}
+          >
+            <CodeFlowBackground className="hero-flow" />
+          </motion.div>
+          <motion.div
+            className="hero-copy"
+            style={heroParallaxOff ? undefined : { y: heroCopyY, opacity: heroCopyOpacity }}
+          >
           <div className="content-frame opening-grid">
             <div>
               <h1 aria-label="Hello, I'm Andrei. A Web Developer.">
@@ -885,7 +920,13 @@ export default function Home() {
               </motion.p>
             </motion.div>
           </div>
-          <figure className="hero-portrait">
+          </motion.div>
+          <motion.figure
+            className="hero-portrait"
+            style={
+              heroParallaxOff ? undefined : { y: heroPortraitY, scale: heroPortraitScale }
+            }
+          >
             {/* Clipped at the hero's bottom edge: the portrait is fully hidden behind the
                 slab below, then slides straight up out of it — no fade. */}
             <motion.div
@@ -900,7 +941,7 @@ export default function Home() {
             >
               <img src={portraitImg} alt="Halftone portrait of Andrei on torn paper" />
             </motion.div>
-          </figure>
+          </motion.figure>
         </section>
 
         <section ref={slabRegionRef} id="slab-region" className="hero-slab-scroll-region" aria-label="A website should earn its keep, not just look good">
