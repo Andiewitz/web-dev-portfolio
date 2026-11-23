@@ -13,8 +13,14 @@ const FLOW_PATH =
 const CODE_UNIT =
   "const portfolio = await build({ canvas: '#F4EEE3', ink: '#151412', accent: '#1D4ED8', type: 'Fraunces' }); if (!portfolio.ready) return null; export default function Hero() { return <main className='canvas'>{sections.map((section) => <Scene key={section.id} {...section} />)}</main>; } // ship small, measure, iterate. ";
 
-/** Three repeats: enough to cover the loop offset plus the whole path. */
-const REPEATS = 3;
+/**
+ * Repeats of the code. The text length is pinned with `textLength`, so every
+ * repeat is exactly `REPEAT_LENGTH` long no matter which font ends up loaded:
+ * the wrap is then identical by construction instead of by measurement.
+ */
+const REPEATS = 4;
+const REPEAT_LENGTH = 2016;
+const TEXT_LENGTH = REPEAT_LENGTH * REPEATS;
 const FLOW_TEXT = CODE_UNIT.repeat(REPEATS);
 /** How long the line takes to draw itself in from the left. */
 const INTRO_MS = 1600;
@@ -32,26 +38,16 @@ export default function CodeFlowBackground({
   const clipId = `flow-clip-${uid}`;
 
   const pathRef = useRef<SVGPathElement>(null);
-  const unitRef = useRef<SVGTextElement>(null);
   const textPathRef = useRef<SVGTextPathElement>(null);
   const clipRectRef = useRef<SVGRectElement>(null);
 
   useLayoutEffect(() => {
     const path = pathRef.current;
-    const unit = unitRef.current;
     const textPath = textPathRef.current;
     const clipRect = clipRectRef.current;
-    if (!path || !unit || !textPath || !clipRect) return;
+    if (!path || !textPath || !clipRect) return;
 
     const pathLength = path.getTotalLength();
-    let unitLength = unit.getComputedTextLength();
-    const remeasure = () => {
-      const measured = unit.getComputedTextLength();
-      if (measured > 0) unitLength = measured;
-    };
-    if (document.fonts) {
-      document.fonts.ready.then(remeasure).catch(() => {});
-    }
 
     // Draw the line in from the left before the loop takes over.
     path.setAttribute("stroke-dasharray", `${pathLength} ${pathLength}`);
@@ -68,11 +64,13 @@ export default function CodeFlowBackground({
       path.setAttribute("stroke-dashoffset", (pathLength * (1 - intro)).toFixed(2));
       clipRect.setAttribute("width", (VIEW_W * intro).toFixed(2));
 
-      // One repeat per LOOP_SECONDS, wrapped so the marquee never stops.
-      if (unitLength > 0) {
-        const speed = unitLength / (LOOP_SECONDS * 1000);
-        textPath.setAttribute("startOffset", ((elapsed * speed) % unitLength).toFixed(2));
-      }
+      // Scroll backwards so the text always covers the whole path; the wrap lands
+      // exactly one repeat later, which renders identically — no visible reset.
+      const speed = REPEAT_LENGTH / (LOOP_SECONDS * 1000);
+      textPath.setAttribute(
+        "startOffset",
+        (-((elapsed * speed) % REPEAT_LENGTH)).toFixed(2),
+      );
 
       frame = requestAnimationFrame(tick);
     };
@@ -104,18 +102,13 @@ export default function CodeFlowBackground({
           d={FLOW_PATH}
         />
 
-        {/* Measured only, never painted: one repeat of the code, for the loop period. */}
-        <text
-          ref={unitRef}
-          className="flow-text"
-          xmlSpace="preserve"
-          style={{ visibility: "hidden" }}
-        >
-          {CODE_UNIT}
-        </text>
-
         <g clipPath={`url(#${clipId})`}>
-          <text className="flow-text" xmlSpace="preserve">
+          <text
+            className="flow-text"
+            xmlSpace="preserve"
+            textLength={TEXT_LENGTH}
+            lengthAdjust="spacingAndGlyphs"
+          >
             <textPath ref={textPathRef} href={`#${pathId}`} startOffset="0">
               {FLOW_TEXT}
             </textPath>
