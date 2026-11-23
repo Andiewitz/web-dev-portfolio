@@ -544,8 +544,8 @@ function WorkCard({
   reducedMotion: boolean;
 }) {
   const distance = useTransform(index, (value) => Math.abs(value - order));
-  const scale = useTransform(distance, (value) => 1 - Math.min(value, 1) * 0.18);
-  const opacity = useTransform(distance, (value) => 1 - Math.min(value, 1) * 0.55);
+  const scale = useTransform(distance, (value) => 1.1 - Math.min(value, 1) * 0.4);
+  const opacity = useTransform(distance, (value) => 1 - Math.min(value, 1) * 0.5);
 
   return (
     <motion.a
