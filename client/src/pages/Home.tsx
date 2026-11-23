@@ -2,11 +2,12 @@
  * VisionFX design reminder: reference-driven editorial placement with original VisionFX content.
  * Begin with a cream two-column argument and a single dark slab; use imagery only in later supporting sections.
  */
-import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type ReactNode } from "react";
 import {
   AnimatePresence,
   motion,
   useMotionValue,
+  useMotionValueEvent,
   useReducedMotion,
   useScroll,
   useTransform,
@@ -282,7 +283,7 @@ function useNavbarTheme() {
       { id: 'top', theme: 'dark' },
       { id: 'slab-region', theme: 'light' },
       { id: 'approach', theme: 'dark' },
-      { id: 'projects', theme: 'dark' },
+      { id: 'projects', theme: 'light' },
       { id: 'writing', theme: 'dark' },
       { id: 'footer', theme: 'light' },
     ];
@@ -485,6 +486,121 @@ function TypewriterLine({
         <span className="type-caret__blink" />
       </motion.span>
     </span>
+  );
+}
+
+type Project = (typeof projects)[number];
+
+/**
+ * One screen of the work showcase. Every layer reads the same shared progress value
+ * and moves at a different rate, so the blurred field, the screenshot and the copy
+ * drift apart as the panel scrolls past.
+ */
+function WorkPanel({
+  project,
+  order,
+  active,
+  progress,
+  reducedMotion,
+}: {
+  project: Project;
+  order: number;
+  active: boolean;
+  progress: MotionValue<number>;
+  reducedMotion: boolean;
+}) {
+  const span = [order - 1, order, order + 1];
+  const opacity = useTransform(progress, span, [0, 1, 0]);
+  const backgroundY = useTransform(progress, span, [64, 0, -64]);
+  const backgroundScale = useTransform(progress, span, [1.18, 1.08, 1.02]);
+  const cardY = useTransform(progress, span, [96, 0, -96]);
+  const cardRotate = useTransform(progress, span, [-5, 0, 5]);
+  const titleX = useTransform(progress, span, [-52, 0, 52]);
+  const asideX = useTransform(progress, span, [52, 0, -52]);
+
+  return (
+    <motion.div className="work-panel" style={{ opacity }} inert={!active}>
+      <motion.div
+        className="work-panel__bg"
+        aria-hidden="true"
+        style={{
+          backgroundImage: `url(${project.image})`,
+          y: reducedMotion ? undefined : backgroundY,
+          scale: reducedMotion ? undefined : backgroundScale,
+        }}
+      />
+      <motion.figure
+        className="work-panel__card"
+        style={{
+          y: reducedMotion ? undefined : cardY,
+          rotate: reducedMotion ? undefined : cardRotate,
+        }}
+      >
+        <img src={project.image} alt={`${project.title} — ${project.category}`} loading="lazy" />
+      </motion.figure>
+      <motion.div
+        className="work-panel__title"
+        style={{ x: reducedMotion ? undefined : titleX }}
+      >
+        <p className="work-panel__eyebrow">{project.category} · {project.date}</p>
+        <h3 style={{ fontFamily: project.titleFont }}>{project.title}</h3>
+      </motion.div>
+      <motion.div
+        className="work-panel__aside"
+        style={{ x: reducedMotion ? undefined : asideX }}
+      >
+        <p className="work-panel__outcome">{project.outcome}</p>
+        <p className="work-panel__desc">{project.description}</p>
+        <a
+          className="work-panel__cta"
+          href={project.href ?? "#projects"}
+          {...(project.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+        >
+          {project.cta} <span aria-hidden="true">→</span>
+        </a>
+      </motion.div>
+    </motion.div>
+  );
+}
+
+/** Sticky full-height stage: scrolling walks the project list, one panel per screen. */
+function WorkShowcase({ reducedMotion }: { reducedMotion: boolean }) {
+  const stageRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: stageRef,
+    offset: ["start start", "end end"],
+  });
+  const progress = useTransform(scrollYProgress, [0, 1], [0, projects.length - 1]);
+  const [active, setActive] = useState(0);
+
+  useMotionValueEvent(progress, "change", (value) => {
+    const next = Math.min(projects.length - 1, Math.max(0, Math.round(value)));
+    setActive((current) => (current === next ? current : next));
+  });
+
+  return (
+    <div
+      ref={stageRef}
+      className="work-stage"
+      style={{ "--panels": projects.length } as CSSProperties}
+    >
+      <div className="work-sticky">
+        {projects.map((project, order) => (
+          <WorkPanel
+            key={project.title}
+            project={project}
+            order={order}
+            active={order === active}
+            progress={progress}
+            reducedMotion={reducedMotion}
+          />
+        ))}
+        <div className="work-counter" aria-hidden="true">
+          <span>{String(active + 1).padStart(2, "0")}</span>
+          <span className="work-counter__total">/ {String(projects.length).padStart(2, "0")}</span>
+        </div>
+      </div>
+    </div>
   );
 }
 
@@ -769,36 +885,8 @@ export default function Home() {
         </section>
 
         <section id="projects" className="projects-section">
-          <div className="content-frame">
-            <RevealBlock className="projects-heading" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <h2>Latest work</h2>
-              <p className="projects-intro">Selected projects, with the problem, the work, and the result.</p>
-            </RevealBlock>
-            <RevealGroup className="project-grid" reducedMotion={!!reducedMotion} variants={groupStagger}>
-              {projects.map((project) => (
-                <motion.div className="project-card" key={project.title} variants={cardIn}>
-                  <img
-                    src={project.image}
-                    alt={project.title}
-                    loading="lazy"
-                    className="project-card__image"
-                  />
-                  <div className="project-card__name">
-                    <span style={{ fontFamily: project.titleFont }}>{project.title}</span>
-                  </div>
-                  <div className="project-card__overlay">
-                    <p className="project-card__overlay-category">{project.outcome}</p>
-                    <h3 className="project-card__overlay-title" style={{ fontFamily: project.titleFont }}>{project.title}</h3>
-                    <p className="project-card__overlay-desc">{project.description}</p>
-                    <a className="project-card__overlay-cta" href={project.href ?? "#projects"} {...(project.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
-                      <span>{project.cta}</span>
-                      <span aria-hidden="true">→</span>
-                    </a>
-                  </div>
-                </motion.div>
-              ))}
-            </RevealGroup>
-          </div>
+          <h2 className="sr-only">Latest work</h2>
+          <WorkShowcase reducedMotion={!!reducedMotion} />
         </section>
 
         <section id="writing" className="writing-section">
