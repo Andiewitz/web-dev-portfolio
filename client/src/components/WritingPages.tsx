@@ -1,5 +1,20 @@
-import React from "react";
+import React, { type ReactNode } from "react";
+import { motion, useReducedMotion } from "framer-motion";
 import { formatDate, postPath, posts, type Post } from "../data/writing";
+
+function FadeIn({ children, className }: { children: ReactNode; className?: string }) {
+  const reduce = useReducedMotion();
+  return (
+    <motion.div
+      className={className}
+      initial={reduce ? false : { opacity: 0, y: 18 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: [0.23, 1, 0.32, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
 export const categories = ["All", ...Array.from(new Set(posts.map(post => post.category)))];
 
@@ -24,13 +39,13 @@ export function WritingCard({ post }: { post: Post }) {
 
 export function WritingIndexPage({ active = "All", onCategoryChange }: { active?: string; onCategoryChange?: (category: string) => void }) {
   const filtered = active === "All" ? posts : posts.filter(post => post.category === active);
-  return <div className="site-shell"><WritingHeader /><main id="main" className="blog-index-main"><div className="blog-index-hero"><div className="content-frame"><p className="eyebrow">Writing &amp; development notes</p><h1 className="blog-index-title">Useful notes for building better websites.</h1><p className="blog-index-sub">Practical guides to React, TypeScript, accessibility, and deployment—plus a closer look at the projects behind this portfolio.</p></div></div><div className="content-frame"><div className="blog-filters" role="group" aria-label="Filter articles by topic">{categories.map(category => <button key={category} type="button" aria-pressed={active === category} className={`blog-filter-btn${active === category ? " blog-filter-btn--active" : ""}`} onClick={() => onCategoryChange?.(category)}>{category}</button>)}</div><p className="writing-result-count" role="status" aria-live="polite">{filtered.length} {filtered.length === 1 ? "article" : "articles"}</p><div className="blog-grid">{filtered.map(post => <WritingCard key={post.slug} post={post} />)}</div></div></main><WritingFooter /></div>;
+  return <div className="site-shell"><WritingHeader /><main id="main" className="blog-index-main"><div className="blog-index-hero"><FadeIn className="content-frame"><p className="eyebrow">Writing &amp; development notes</p><h1 className="blog-index-title">Useful notes for building better websites.</h1><p className="blog-index-sub">Practical guides to React, TypeScript, accessibility, and deployment—plus a closer look at the projects behind this portfolio.</p></FadeIn></div><div className="content-frame"><div className="blog-filters" role="group" aria-label="Filter articles by topic">{categories.map(category => <button key={category} type="button" aria-pressed={active === category} className={`blog-filter-btn${active === category ? " blog-filter-btn--active" : ""}`} onClick={() => onCategoryChange?.(category)}>{category}</button>)}</div><p className="writing-result-count" role="status" aria-live="polite">{filtered.length} {filtered.length === 1 ? "article" : "articles"}</p><div className="blog-grid">{filtered.map(post => <WritingCard key={post.slug} post={post} />)}</div></div></main><WritingFooter /></div>;
 }
 
 export function WritingArticlePage({ post }: { post: Post }) {
   const related = [...posts.filter(item => item.slug !== post.slug && item.category === post.category), ...posts.filter(item => item.slug !== post.slug && item.category !== post.category)].slice(0, 2);
   return <div className="site-shell"><WritingHeader /><main id="main" className="blog-post-main"><div className="content-frame"><a href="/writing" className="blog-post__back">← All writing</a></div><article>
-    <header className="blog-post__header"><div className="blog-post__header-inner"><p className="eyebrow">{post.category}</p><h1 className="blog-post__title">{post.title}</h1><p className="blog-post__date">By Andrei · <time dateTime={post.published}>{formatDate(post.published)}</time> · {post.readTime}</p>{post.updated !== post.published && <p className="blog-post__date writing-updated">Updated <time dateTime={post.updated}>{formatDate(post.updated)}</time></p>}<p className="writing-deck">{post.excerpt}</p></div></header>
+    <header className="blog-post__header"><FadeIn className="blog-post__header-inner"><p className="eyebrow">{post.category}</p><h1 className="blog-post__title">{post.title}</h1><p className="blog-post__date">By Andrei · <time dateTime={post.published}>{formatDate(post.published)}</time> · {post.readTime}</p>{post.updated !== post.published && <p className="blog-post__date writing-updated">Updated <time dateTime={post.updated}>{formatDate(post.updated)}</time></p>}<p className="writing-deck">{post.excerpt}</p></FadeIn></header>
     <div className="blog-post__mosaic-wrap"><Mosaic palette={post.palette} hero /></div><div className="blog-post__body">
       {post.intro.map(paragraph => <p key={paragraph}>{paragraph}</p>)}{post.project && <p><a href={post.project.href} target="_blank" rel="noopener noreferrer">Explore the {post.project.name} live project ↗</a></p>}
       <aside className="writing-takeaways" aria-labelledby="takeaways"><h2 id="takeaways">What to take away</h2><ul>{post.takeaways.map(item => <li key={item}>{item}</li>)}</ul></aside>

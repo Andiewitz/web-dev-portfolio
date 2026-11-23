@@ -1,15 +1,13 @@
 import { Toaster } from "@/components/ui/sonner";
-import { lazy, Suspense } from "react";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/NotFound";
 import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
-const Home = lazy(() => import("./pages/Home"));
+import Home from "./pages/Home";
 import BlogIndex from "./pages/BlogIndex";
 import BlogPost from "./pages/BlogPost";
 import RouteSeo from "./components/RouteSeo";
-
 
 function Router() {
   return (
@@ -39,9 +37,7 @@ function App() {
         <TooltipProvider>
           <Toaster />
           <RouteSeo />
-          <Suspense fallback={<main id="main" className="content-frame" style={{ paddingBlock: 100 }}><p role="status">Loading page…</p></main>}>
-            <Router />
-          </Suspense>
+          <Router />
         </TooltipProvider>
       </ThemeProvider>
     </ErrorBoundary>

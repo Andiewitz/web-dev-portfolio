@@ -2,8 +2,17 @@
  * VisionFX design reminder: reference-driven editorial placement with original VisionFX content.
  * Begin with a cream two-column argument and a single dark slab; use imagery only in later supporting sections.
  */
-import { useEffect, useRef, useState, type ReactNode } from "react";
-import { AnimatePresence, motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import {
+  AnimatePresence,
+  motion,
+  useMotionValue,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+  type Variants,
+} from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Wordmark from "@/components/Wordmark";
 import CodeFlowBackground from "@/components/CodeFlowBackground";
@@ -149,14 +158,56 @@ const sectionRevealMobile = {
   show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, ease: easeOut } },
 };
 
-const heroLineReveal = {
-  hidden: { opacity: 0, y: 22 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.32, ease: easeOut } },
-};
-
 const heroSideReveal = {
   hidden: { opacity: 0, y: 22 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.32, ease: easeOut, delay: 0.1 } },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: easeOut, delay: 1.9 } },
+};
+
+/** Parent that hands the entrance of its children to the variants below. */
+const groupStagger: Variants = {
+  hidden: {},
+  show: { transition: { staggerChildren: 0.07, delayChildren: 0.06 } },
+};
+
+const principleIn: Variants = {
+  hidden: { opacity: 0, y: 26 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut } },
+};
+
+const cardIn: Variants = {
+  hidden: { opacity: 0, y: 52, scale: 0.97 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 120, damping: 19, mass: 0.9 },
+  },
+};
+
+const rowIn: Variants = {
+  hidden: { opacity: 0, x: -18 },
+  show: { opacity: 1, x: 0, transition: { duration: 0.42, ease: easeOut } },
+};
+
+const footerColIn: Variants = {
+  hidden: { opacity: 0, y: 34 },
+  show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: easeOut } },
+};
+
+/** The two hero CTAs drop in a beat after the headline finishes typing. */
+const actionsIn: Variants = {
+  hidden: {},
+  show: { transition: { delayChildren: 1.5, staggerChildren: 0.09 } },
+};
+
+const buttonIn: Variants = {
+  hidden: { opacity: 0, scale: 0.55, y: 18 },
+  show: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 460, damping: 15, mass: 0.7 },
+  },
 };
 
 function useResponsiveVariant() {
@@ -242,7 +293,7 @@ function RevealBlock({
   children: ReactNode;
   className?: string;
   reducedMotion: boolean;
-  variants: typeof sectionReveal;
+  variants: Variants;
 }) {
   return (
     <motion.div
@@ -254,6 +305,138 @@ function RevealBlock({
     >
       {children}
     </motion.div>
+  );
+}
+
+function RevealGroup({
+  children,
+  className,
+  reducedMotion,
+  variants,
+}: {
+  children: ReactNode;
+  className?: string;
+  reducedMotion: boolean;
+  variants: Variants;
+}) {
+  return (
+    <motion.div
+      className={className}
+      initial={reducedMotion ? false : "hidden"}
+      whileInView={reducedMotion ? undefined : "show"}
+      viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+      variants={variants}
+    >
+      {children}
+    </motion.div>
+  );
+}
+
+function TypeChar({
+  char,
+  index,
+  count,
+}: {
+  char: string;
+  index: number;
+  count: MotionValue<number>;
+}) {
+  const opacity = useTransform(count, [index, index + 0.35], [0, 1]);
+  return (
+    <motion.span data-type-char style={{ opacity, display: "inline", whiteSpace: "pre" }}>
+      {char}
+    </motion.span>
+  );
+}
+
+/** Types a line of text out one character at a time, keeping emphasis runs intact. */
+function TypewriterLine({
+  segments,
+  startDelay,
+  charDuration,
+  reducedMotion,
+}: {
+  segments: { text: string; em?: boolean }[];
+  startDelay: number;
+  charDuration: number;
+  reducedMotion: boolean;
+}) {
+  const total = segments.reduce((n, segment) => n + Array.from(segment.text).length, 0);
+  const count = useMotionValue(reducedMotion ? total : 0);
+  const lineRef = useRef<HTMLSpanElement>(null);
+  // Right edge of every character, so one caret can follow the typing head without
+  // living inside the text (that would break copying and text selection).
+  const [caretPositions, setCaretPositions] = useState<number[]>([0, 0]);
+
+  useEffect(() => {
+    if (reducedMotion) {
+      count.set(total);
+      return;
+    }
+    // Driven by hand so the typing always runs at the intended pace.
+    let frame = 0;
+    const started = performance.now();
+    const tick = (now: number) => {
+      const typed = (Math.max(0, now - started) - startDelay * 1000) / (charDuration * 1000);
+      const progress = Math.min(1, Math.max(0, typed / total));
+      count.set(progress * total);
+      if (progress < 1) frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [charDuration, count, reducedMotion, startDelay, total]);
+
+  useLayoutEffect(() => {
+    const line = lineRef.current;
+    if (!line) return;
+    const measure = () => {
+      const left = line.getBoundingClientRect().left;
+      const edges = Array.from(line.querySelectorAll("[data-type-char]")).map(
+        (character) => character.getBoundingClientRect().right - left,
+      );
+      setCaretPositions([0, ...edges]);
+    };
+    measure();
+    const frame = window.requestAnimationFrame(measure);
+    let cancelled = false;
+    document.fonts?.ready.then(() => {
+      if (!cancelled) measure();
+    }).catch(() => {});
+    window.addEventListener("resize", measure);
+    return () => {
+      cancelled = true;
+      window.cancelAnimationFrame(frame);
+      window.removeEventListener("resize", measure);
+    };
+  }, []);
+
+  const caretX = useTransform(
+    count,
+    caretPositions.map((_, positionIndex) => positionIndex),
+    caretPositions,
+  );
+  const caretOpacity = useTransform(count, [0, 0.25, total - 0.4, total], [0, 1, 1, 0]);
+
+  let index = 0;
+  return (
+    <span className="type-line" ref={lineRef}>
+      {segments.map((segment, segmentIndex) => {
+        const chars = Array.from(segment.text);
+        const nodes = chars.map((char, charIndex) => (
+          <TypeChar
+            key={`${segmentIndex}-${charIndex}`}
+            char={char}
+            index={index + charIndex}
+            count={count}
+          />
+        ));
+        index += chars.length;
+        return segment.em ? <em key={segmentIndex}>{nodes}</em> : <span key={segmentIndex}>{nodes}</span>;
+      })}
+      <motion.span className="type-caret" style={{ x: caretX, opacity: caretOpacity }} aria-hidden="true">
+        <span className="type-caret__blink" />
+      </motion.span>
+    </span>
   );
 }
 
@@ -333,27 +516,41 @@ export default function Home() {
           <CodeFlowBackground className="hero-flow" />
           <div className="content-frame opening-grid">
             <div>
-              <h1>
-                <motion.span
-                  className="hero-line"
-                  initial={reducedMotion ? false : "hidden"}
-                  animate="show"
-                  variants={heroLineReveal}
-                  style={{ display: "inline-block" }}
-                >Hello, I&apos;m Andrei.</motion.span><br />
-                <motion.span
-                  className="hero-line hero-line--design"
-                  initial={reducedMotion ? false : "hidden"}
-                  animate="show"
-                  variants={heroLineReveal}
-                  transition={{ duration: 0.32, ease: easeOut, delay: 0.045 }}
-                  style={{ display: "inline-block" }}
-                >A <em>Web Developer.</em></motion.span>
+              <h1 aria-label="Hello, I'm Andrei. A Web Developer.">
+                <span className="hero-line" aria-hidden="true">
+                  <TypewriterLine
+                    segments={[{ text: "Hello, I'm Andrei." }]}
+                    startDelay={0.18}
+                    charDuration={0.048}
+                    reducedMotion={!!reducedMotion}
+                  />
+                </span><br />
+                <span className="hero-line hero-line--design" aria-hidden="true">
+                  <TypewriterLine
+                    segments={[{ text: "A " }, { text: "Web Developer.", em: true }]}
+                    startDelay={1.15}
+                    charDuration={0.055}
+                    reducedMotion={!!reducedMotion}
+                  />
+                </span>
               </h1>
-              <div className="hero-actions">
-                <a className="hero-action hero-action--primary" href="mailto:hello@visionfx.studio">Start a conversation</a>
-                <a className="hero-action hero-action--secondary" href="#projects">See projects</a>
-              </div>
+              <motion.div
+                className="hero-actions"
+                initial={reducedMotion ? false : "hidden"}
+                animate="show"
+                variants={actionsIn}
+              >
+                <motion.a
+                  className="hero-action hero-action--primary"
+                  href="mailto:hello@visionfx.studio"
+                  variants={buttonIn}
+                >Start a conversation</motion.a>
+                <motion.a
+                  className="hero-action hero-action--secondary"
+                  href="#projects"
+                  variants={buttonIn}
+                >See projects</motion.a>
+              </motion.div>
             </div>
             <motion.div
               className="opening-side"
@@ -368,7 +565,17 @@ export default function Home() {
             </motion.div>
           </div>
           <figure className="hero-portrait">
-            <img src={portraitImg} alt="Halftone portrait of Andrei on torn paper" />
+            <motion.img
+              src={portraitImg}
+              alt="Halftone portrait of Andrei on torn paper"
+              initial={reducedMotion ? false : { y: 130, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={
+                reducedMotion
+                  ? undefined
+                  : { type: "spring", stiffness: 58, damping: 18, mass: 1.1, delay: 0.45 }
+              }
+            />
           </figure>
         </section>
 
@@ -417,20 +624,20 @@ export default function Home() {
               </p>
               <a className="quiet-link" href="#projects">See the work <span aria-hidden="true">→</span></a>
             </RevealBlock>
-            <RevealBlock className="principle-list" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <div className="principle">
+            <RevealGroup className="principle-list" reducedMotion={!!reducedMotion} variants={groupStagger}>
+              <motion.div className="principle" variants={principleIn}>
                 <h3>Find the leak</h3>
                 <p>Where visitors drop off, and what stops them from acting.</p>
-              </div>
-              <div className="principle">
+              </motion.div>
+              <motion.div className="principle" variants={principleIn}>
                 <h3>Build the shortest path</h3>
                 <p>Clear pages, fast load times, and one obvious next step on every screen.</p>
-              </div>
-              <div className="principle">
+              </motion.div>
+              <motion.div className="principle" variants={principleIn}>
                 <h3>Measure what matters</h3>
                 <p>Enquiries, bookings, and quote requests — not just visits.</p>
-              </div>
-            </RevealBlock>
+              </motion.div>
+            </RevealGroup>
           </div>
         </section>
 
@@ -440,9 +647,9 @@ export default function Home() {
               <h2>Latest work</h2>
               <p className="projects-intro">Selected projects, with the problem, the work, and the result.</p>
             </RevealBlock>
-            <div className="project-grid">
+            <RevealGroup className="project-grid" reducedMotion={!!reducedMotion} variants={groupStagger}>
               {projects.map((project) => (
-                <RevealBlock className="project-card" key={project.title} reducedMotion={!!reducedMotion} variants={revealVariants}>
+                <motion.div className="project-card" key={project.title} variants={cardIn}>
                   <img
                     src={project.image}
                     alt={project.title}
@@ -461,9 +668,9 @@ export default function Home() {
                       <span aria-hidden="true">→</span>
                     </a>
                   </div>
-                </RevealBlock>
+                </motion.div>
               ))}
-            </div>
+            </RevealGroup>
           </div>
         </section>
 
@@ -478,14 +685,14 @@ export default function Home() {
                 <span aria-hidden="true">→</span>
               </a>
             </RevealBlock>
-            <RevealBlock className="writing-list" reducedMotion={!!reducedMotion} variants={revealVariants}>
+            <RevealGroup className="writing-list" reducedMotion={!!reducedMotion} variants={groupStagger}>
               {writingEntries.map((entry) => (
-                <a key={entry.title} className="writing-row" href={entry.href}>
+                <motion.a key={entry.title} className="writing-row" href={entry.href} variants={rowIn}>
                   <span className="writing-row__title">{entry.title}</span>
                   <span className="writing-row__topic">{entry.topic}</span>
-                </a>
+                </motion.a>
               ))}
-            </RevealBlock>
+            </RevealGroup>
           </div>
         </section>
 
@@ -493,15 +700,15 @@ export default function Home() {
 
       <footer id="footer" className="site-footer">
         <div className="content-frame">
-          <RevealBlock className="footer-layout" reducedMotion={!!reducedMotion} variants={revealVariants}>
-            <div className="footer-col footer-brand">
+          <RevealGroup className="footer-layout" reducedMotion={!!reducedMotion} variants={groupStagger}>
+            <motion.div className="footer-col footer-brand" variants={footerColIn}>
               <Wordmark />
               <p className="footer-tagline">
                 Web developer building fast, responsive, and accessible digital products. Full-stack TypeScript, React, Next.js, and modern UI engineering.
               </p>
               <a className="footer-email" href="mailto:hello@visionfx.studio">hello@visionfx.studio</a>
-            </div>
-            <nav className="footer-col" aria-label="Sitemap">
+            </motion.div>
+            <motion.nav className="footer-col" aria-label="Sitemap" variants={footerColIn}>
               <h4 className="footer-heading">Sitemap</h4>
               <ul>
                 <li><a href="#top">Home</a></li>
@@ -509,8 +716,8 @@ export default function Home() {
                 <li><a href="#writing">Writing</a></li>
                 <li><a href="mailto:hello@visionfx.studio">Contact</a></li>
               </ul>
-            </nav>
-            <nav className="footer-col" aria-label="Expertise">
+            </motion.nav>
+            <motion.nav className="footer-col" aria-label="Expertise" variants={footerColIn}>
               <h4 className="footer-heading">Expertise</h4>
               <ul>
                 <li>Full-Stack Web Apps</li>
@@ -518,8 +725,8 @@ export default function Home() {
                 <li>Web Performance &amp; Vitals</li>
                 <li>UI Systems &amp; Accessibility</li>
               </ul>
-            </nav>
-            <nav className="footer-col" aria-label="Social">
+            </motion.nav>
+            <motion.nav className="footer-col" aria-label="Social" variants={footerColIn}>
               <h4 className="footer-heading">Elsewhere</h4>
               <ul>
                 <li><a href="https://github.com/" rel="noopener noreferrer" target="_blank">GitHub</a></li>
@@ -527,8 +734,8 @@ export default function Home() {
                 <li><a href="https://twitter.com/" rel="noopener noreferrer" target="_blank">Twitter</a></li>
                 <li><a href="/rss.xml">RSS</a></li>
               </ul>
-            </nav>
-          </RevealBlock>
+            </motion.nav>
+          </RevealGroup>
           <div className="footer-base">
             <p>&copy; {new Date().getFullYear()} Andrei. All rights reserved.</p>
             <p className="footer-meta">Built with care · Last updated <time dateTime="2026-08">August 2026</time></p>

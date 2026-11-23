@@ -58,7 +58,9 @@ export default function CodeFlowBackground({
     const started = performance.now();
 
     const tick = (now: number) => {
-      const elapsed = now - started;
+      // rAF can report a timestamp slightly before the setup time; keep it non-negative
+      // so the clip rect never gets an invalid width.
+      const elapsed = Math.max(0, now - started);
       const intro = Math.min(1, elapsed / INTRO_MS);
 
       path.setAttribute("stroke-dashoffset", (pathLength * (1 - intro)).toFixed(2));
