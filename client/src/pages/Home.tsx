@@ -500,10 +500,10 @@ const WORK_MOBILE = { card: 26, gap: 9, drag: 1.6 };
 
 /**
  * Hero parallax in px over the hero's own scroll range. Only the copy — the headline and
- * the action buttons — travels past the fixed code line underneath it. `fadeStart` is the
+ * the action buttons — travels; the portrait and the code line stay put. `fadeStart` is the
  * progress where the copy begins to leave, before the slab edge reaches it.
  */
-const HERO_PARALLAX = { flow: 56, copy: 84, fadeStart: 0.6 };
+const HERO_PARALLAX = { copy: 84, fadeStart: 0.6 };
 
 /** Blurred, over-scaled copy of a screenshot that fills the stage behind the column. */
 function WorkBackdrop({
@@ -714,8 +714,6 @@ export default function Home() {
     target: heroRef,
     offset: ["start start", "end start"],
   });
-  const heroFlowY = useTransform(heroProgress, [0, 1], [0, HERO_PARALLAX.flow]);
-  const heroFlowScale = useTransform(heroProgress, [0, 1], [1, 1.04]);
   const heroCopyY = useTransform(heroProgress, [0, 1], [0, -HERO_PARALLAX.copy]);
   const heroCopyOpacity = useTransform(
     heroProgress,
@@ -856,17 +854,11 @@ export default function Home() {
 
       <main id="main">
         <section ref={heroRef} id="top" className="hero-section">
+          <CodeFlowBackground className="hero-flow" />
           <motion.div
-            className="hero-flow-wrap"
-            style={heroParallaxOff ? undefined : { y: heroFlowY, scale: heroFlowScale }}
-          >
-            <CodeFlowBackground className="hero-flow" />
-          </motion.div>
-          <motion.div
-            className="hero-copy"
+            className="content-frame opening-grid"
             style={heroParallaxOff ? undefined : { y: heroCopyY, opacity: heroCopyOpacity }}
           >
-          <div className="content-frame opening-grid">
             <div>
               <h1 aria-label="Hello, I'm Andrei. A Web Developer.">
                 <span className="hero-line" aria-hidden="true">
@@ -917,7 +909,6 @@ export default function Home() {
                 Full-Stack Web Dev · UI Engineering · Open to work
               </motion.p>
             </motion.div>
-          </div>
           </motion.div>
           <figure className="hero-portrait">
             {/* Clipped at the hero's bottom edge: the portrait is fully hidden behind the
