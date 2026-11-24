@@ -5,16 +5,11 @@ import { Route, Switch } from "wouter";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { ThemeProvider } from "./contexts/ThemeContext";
 import Home from "./pages/Home";
-import BlogIndex from "./pages/BlogIndex";
-import BlogPost from "./pages/BlogPost";
-import RouteSeo from "./components/RouteSeo";
 
 function Router() {
   return (
     <Switch>
       <Route path={"/"} component={Home} />
-      <Route path={"/writing"} component={BlogIndex} />
-      <Route path={"/writing/:slug"} component={BlogPost} />
       <Route path={"/404"} component={NotFound} />
       {/* Final fallback route */}
       <Route component={NotFound} />
@@ -36,7 +31,6 @@ function App() {
       >
         <TooltipProvider>
           <Toaster />
-          <RouteSeo />
           <Router />
         </TooltipProvider>
       </ThemeProvider>

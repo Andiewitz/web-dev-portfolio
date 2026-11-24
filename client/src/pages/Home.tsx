@@ -25,11 +25,9 @@ import cafeLibreImg from "@/assets/Cafe Libre.png";
 import comfortProPreviewImg from "@/assets/Comfort Pro Preview.png";
 import elevateHealthPreviewImg from "@/assets/Elevate Health Preview.png";
 import portraitImg from "@/assets/Torn Paper Halftone Portrait.webp";
-import { posts as writingPosts, postPath, formatDate } from "@/data/writing";
 
 const navItems = [
   { href: "#projects", label: "Projects" },
-  { href: "/writing", label: "Writing" },
   { href: "#contact", label: "Contact" },
 ];
 
@@ -120,8 +118,6 @@ const projects = [
   },
 ];
 
-const writingEntries = writingPosts.slice(0, 5).map(post => ({ title: post.title, topic: post.category, date: formatDate(post.published), href: postPath(post) }));
-
 const easeOut = [0.23, 1, 0.32, 1] as const;
 
 const charContainer = {
@@ -190,11 +186,6 @@ const cardIn: Variants = {
     scale: 1,
     transition: { type: "spring", stiffness: 120, damping: 19, mass: 0.9 },
   },
-};
-
-const rowIn: Variants = {
-  hidden: { opacity: 0, x: -18 },
-  show: { opacity: 1, x: 0, transition: { duration: 0.42, ease: easeOut } },
 };
 
 const footerColIn: Variants = {
@@ -286,7 +277,6 @@ function useNavbarTheme() {
       { id: 'approach', theme: 'dark' },
       { id: 'projects', theme: 'light' },
       { id: 'contact', theme: 'dark' },
-      { id: 'writing', theme: 'dark' },
       { id: 'footer', theme: 'light' },
     ];
     const probe = 37;
@@ -1033,7 +1023,7 @@ export default function Home() {
                 </a>
                 <a className="quiet-link" href="#approach">See how I work</a>
               </div>
-              <p className="closing-meta">Replies within one working day · Remote · Full-Stack Web Dev</p>
+              <p className="closing-meta">hello@visionfx.studio · Remote · Full-Stack Web Dev</p>
             </RevealBlock>
             <RevealGroup className="closing-steps" reducedMotion={!!reducedMotion} variants={groupStagger}>
               {closingSteps.map((step, index) => (
@@ -1044,28 +1034,6 @@ export default function Home() {
                   <h3>{step.title}</h3>
                   <p>{step.body}</p>
                 </motion.div>
-              ))}
-            </RevealGroup>
-          </div>
-        </section>
-
-        <section id="writing" className="writing-section">
-          <div className="content-frame writing-layout">
-            <RevealBlock className="writing-headline" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <h2>
-                Notes on modern web engineering — frontend architecture, reactive systems, and Core Web Vitals.
-              </h2>
-              <a className="writing-cta" href="/writing">
-                <span>Read all posts</span>
-                <span aria-hidden="true">→</span>
-              </a>
-            </RevealBlock>
-            <RevealGroup className="writing-list" reducedMotion={!!reducedMotion} variants={groupStagger}>
-              {writingEntries.map((entry) => (
-                <motion.a key={entry.title} className="writing-row" href={entry.href} variants={rowIn}>
-                  <span className="writing-row__title">{entry.title}</span>
-                  <span className="writing-row__topic">{entry.topic}</span>
-                </motion.a>
               ))}
             </RevealGroup>
           </div>
@@ -1088,7 +1056,6 @@ export default function Home() {
               <ul>
                 <li><a href="#top">Home</a></li>
                 <li><a href="#projects">Projects</a></li>
-                <li><a href="#writing">Writing</a></li>
                 <li><a href="#contact">Contact</a></li>
               </ul>
             </motion.nav>
