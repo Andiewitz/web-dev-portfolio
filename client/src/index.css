@@ -135,29 +135,25 @@ button { border: 0; }
 
 /* Questions sit in the bands above and below the statement so they can never cross it. */
 .float-q { position: absolute; max-width: clamp(150px, 16vw, 220px); font-family: var(--font-editorial); font-style: italic; font-size: clamp(15px, 1.5vw, 21px); line-height: 1.25; color: rgba(248,243,232,0.6); will-change: transform, opacity; pointer-events: none; }
-.float-q--1 { top: 12%; left: 5%; text-align: left; }
-.float-q--2 { top: 12%; right: 5%; text-align: right; }
-.float-q--3 { top: 18%; left: 9%; text-align: left; }
-.float-q--4 { top: 18%; right: 9%; text-align: right; }
-.float-q--5 { bottom: 16%; left: 7%; text-align: left; }
-.float-q--6 { bottom: 12%; right: 6%; text-align: right; }
+.float-q--1 { top: 10%; left: 5%; text-align: left; }
+.float-q--2 { top: 10%; right: 5%; text-align: right; }
+.float-q--3 { top: 15%; left: 9%; text-align: left; }
+.float-q--4 { top: 15%; right: 9%; text-align: right; }
+.float-q--5 { bottom: 12%; left: 7%; text-align: left; }
+.float-q--6 { bottom: 10%; right: 6%; text-align: right; }
 
-/* Leader lines from each question toward the statement, drawn by scroll progress. */
-.float-q__line { position: absolute; width: 1px; height: 64px; background: rgba(248,243,232,0.3); transform-origin: top center; pointer-events: none; }
-.float-q--1 .float-q__line { top: 100%; left: 90%; rotate: -26deg; }
-.float-q--2 .float-q__line { top: 100%; right: 10%; rotate: 26deg; }
-.float-q--3 .float-q__line { top: 100%; left: 50%; }
-.float-q--4 .float-q__line { top: 100%; right: 50%; }
-.float-q--5 .float-q__line { bottom: 100%; left: 90%; rotate: 26deg; transform-origin: bottom center; }
-.float-q--6 .float-q__line { bottom: 100%; right: 10%; rotate: -26deg; transform-origin: bottom center; }
+/* Leader lines dropping from each question toward the statement, drawn by scroll progress. */
+.float-q__line { position: absolute; left: 50%; width: 1px; height: 80px; background: rgba(248,243,232,0.26); transform-origin: top center; pointer-events: none; }
+.float-q--1 .float-q__line, .float-q--2 .float-q__line, .float-q--3 .float-q__line, .float-q--4 .float-q__line { top: 100%; margin-top: 12px; }
+.float-q--5 .float-q__line, .float-q--6 .float-q__line { bottom: 100%; margin-bottom: 12px; transform-origin: bottom center; }
 
 @media (max-width: 920px) {
-  .float-q--1 { top: 10%; left: 4%; }
-  .float-q--2 { top: 10%; right: 4%; }
-  .float-q--3 { top: 16%; left: 6%; }
-  .float-q--4 { top: 16%; right: 6%; }
-  .float-q--5 { bottom: 16%; left: 5%; }
-  .float-q--6 { bottom: 10%; right: 4%; }
+  .float-q--1 { top: 8%; left: 4%; }
+  .float-q--2 { top: 8%; right: 4%; }
+  .float-q--3 { top: 13%; left: 6%; }
+  .float-q--4 { top: 13%; right: 6%; }
+  .float-q--5 { bottom: 12%; left: 5%; }
+  .float-q--6 { bottom: 8%; right: 4%; }
 }
 
 .approach-section { background: var(--canvas-linen); color: var(--ink); padding: 136px 0; }

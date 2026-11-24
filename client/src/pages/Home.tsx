@@ -734,37 +734,38 @@ export default function Home() {
   );
   const heroParallaxOff = reducedMotion || isMobile;
 
-  // Eased in three stops so the slab widens, settles, then holds instead of creeping.
-  const slabScaleX = useTransform(scrollYProgress, [0, 0.5, 0.85, 1], [0.86, 0.95, 1, 1]);
-  const headlineOpacity = useTransform(scrollYProgress, [0.14, 0.34], [0, 1]);
-  const headlineY = useTransform(scrollYProgress, [0.14, 0.34], [64, 0]);
-  const subOpacity = useTransform(scrollYProgress, [0.26, 0.46], [0, 1]);
-  const subY = useTransform(scrollYProgress, [0.26, 0.46], [32, 0]);
+  // Everything reveals in the first half of the pin and then holds, so the rest of the
+  // scroll is settled time with the statement in place rather than a slow build.
+  const slabScaleX = useTransform(scrollYProgress, [0, 0.12, 0.26, 1], [0.86, 0.95, 1, 1]);
+  const headlineOpacity = useTransform(scrollYProgress, [0.02, 0.1], [0, 1]);
+  const headlineY = useTransform(scrollYProgress, [0.02, 0.1], [48, 0]);
+  const subOpacity = useTransform(scrollYProgress, [0.08, 0.17], [0, 1]);
+  const subY = useTransform(scrollYProgress, [0.08, 0.17], [24, 0]);
   const slabStill = reducedMotion || isMobile;
 
   // Each question waits its turn, then branches out from the statement as it fades in.
   const slabFloat = (start: number, x: number, y: number) => ({
-    opacity: useTransform(scrollYProgress, [start, start + 0.12], [0, 1]),
-    x: useTransform(scrollYProgress, [start, start + 0.3], [0, x]),
-    y: useTransform(scrollYProgress, [start, start + 0.3], [0, y]),
+    opacity: useTransform(scrollYProgress, [start, start + 0.05], [0, 1]),
+    x: useTransform(scrollYProgress, [start, start + 0.11], [0, x]),
+    y: useTransform(scrollYProgress, [start, start + 0.11], [0, y]),
   });
   // Its leader line draws itself toward the statement just after the question lands.
   const slabLine = (start: number) => ({
-    opacity: useTransform(scrollYProgress, [start + 0.02, start + 0.1], [0, 1]),
-    scaleY: useTransform(scrollYProgress, [start + 0.02, start + 0.18], [0, 1]),
+    opacity: useTransform(scrollYProgress, [start + 0.01, start + 0.04], [0, 1]),
+    scaleY: useTransform(scrollYProgress, [start + 0.01, start + 0.1], [0, 1]),
   });
-  const q1 = slabFloat(0.5, -34, -26);
-  const q2 = slabFloat(0.55, 34, -18);
-  const q3 = slabFloat(0.6, -46, 10);
-  const q4 = slabFloat(0.65, 46, 14);
-  const q5 = slabFloat(0.7, -28, 22);
-  const q6 = slabFloat(0.75, 28, 26);
-  const l1 = slabLine(0.5);
-  const l2 = slabLine(0.55);
-  const l3 = slabLine(0.6);
-  const l4 = slabLine(0.65);
-  const l5 = slabLine(0.7);
-  const l6 = slabLine(0.75);
+  const q1 = slabFloat(0.22, -30, -14);
+  const q2 = slabFloat(0.255, 30, -10);
+  const q3 = slabFloat(0.29, -38, 8);
+  const q4 = slabFloat(0.325, 38, 10);
+  const q5 = slabFloat(0.36, -24, 16);
+  const q6 = slabFloat(0.395, 24, 18);
+  const l1 = slabLine(0.22);
+  const l2 = slabLine(0.255);
+  const l3 = slabLine(0.29);
+  const l4 = slabLine(0.325);
+  const l5 = slabLine(0.36);
+  const l6 = slabLine(0.395);
 
   const closeNav = () => setNavOpen(false);
 
