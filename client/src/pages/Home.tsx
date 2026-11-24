@@ -30,6 +30,7 @@ import { posts as writingPosts, postPath, formatDate } from "@/data/writing";
 const navItems = [
   { href: "#projects", label: "Projects" },
   { href: "/writing", label: "Writing" },
+  { href: "#contact", label: "Contact" },
 ];
 
 const projects = [
@@ -284,6 +285,7 @@ function useNavbarTheme() {
       { id: 'slab-region', theme: 'light' },
       { id: 'approach', theme: 'dark' },
       { id: 'projects', theme: 'light' },
+      { id: 'contact', theme: 'dark' },
       { id: 'writing', theme: 'dark' },
       { id: 'footer', theme: 'light' },
     ];
@@ -504,6 +506,22 @@ const WORK_MOBILE = { card: 26, gap: 9, drag: 1.6 };
  * progress where the copy begins to leave, before the slab edge reaches it.
  */
 const HERO_PARALLAX = { copy: 84, fadeStart: 0.45 };
+
+/** The three beats of working together, shown beside the closing call to action. */
+const closingSteps = [
+  {
+    title: "You send the brief",
+    body: "Where the site is now, and the one action it should be earning.",
+  },
+  {
+    title: "I reply with a plan",
+    body: "Where visitors drop off, and the first change I'd make.",
+  },
+  {
+    title: "We start on the first fix",
+    body: "A short first sprint, judged on enquiries rather than visits.",
+  },
+];
 
 /** Blurred, over-scaled copy of a screenshot that fills the stage behind the column. */
 function WorkBackdrop({
@@ -997,6 +1015,40 @@ export default function Home() {
           <WorkShowcase reducedMotion={!!reducedMotion} isMobile={!!isMobile} />
         </section>
 
+        <section id="contact" className="closing-section" aria-labelledby="closing-title">
+          <div className="content-frame closing-layout">
+            <RevealBlock className="closing-copy" reducedMotion={!!reducedMotion} variants={revealVariants}>
+              <p className="eyebrow">Next step</p>
+              <h2 id="closing-title">Let's make the next visit worth something.</h2>
+              <p className="closing-lede">
+                Tell me what the site should be earning — a call, a booking, a quote request — and I'll reply with where the path breaks and what I'd change first.
+              </p>
+              <div className="closing-actions">
+                <a
+                  className="closing-action closing-action--primary"
+                  href="mailto:hello@visionfx.studio?subject=Project%20enquiry"
+                >
+                  Start a conversation
+                  <span aria-hidden="true">→</span>
+                </a>
+                <a className="quiet-link" href="#approach">See how I work</a>
+              </div>
+              <p className="closing-meta">Replies within one working day · Remote · Full-Stack Web Dev</p>
+            </RevealBlock>
+            <RevealGroup className="closing-steps" reducedMotion={!!reducedMotion} variants={groupStagger}>
+              {closingSteps.map((step, index) => (
+                <motion.div key={step.title} className="closing-step" variants={principleIn}>
+                  <span className="closing-step__index" aria-hidden="true">
+                    {String(index + 1).padStart(2, "0")}
+                  </span>
+                  <h3>{step.title}</h3>
+                  <p>{step.body}</p>
+                </motion.div>
+              ))}
+            </RevealGroup>
+          </div>
+        </section>
+
         <section id="writing" className="writing-section">
           <div className="content-frame writing-layout">
             <RevealBlock className="writing-headline" reducedMotion={!!reducedMotion} variants={revealVariants}>
@@ -1037,7 +1089,7 @@ export default function Home() {
                 <li><a href="#top">Home</a></li>
                 <li><a href="#projects">Projects</a></li>
                 <li><a href="#writing">Writing</a></li>
-                <li><a href="mailto:hello@visionfx.studio">Contact</a></li>
+                <li><a href="#contact">Contact</a></li>
               </ul>
             </motion.nav>
             <motion.nav className="footer-col" aria-label="Expertise" variants={footerColIn}>
