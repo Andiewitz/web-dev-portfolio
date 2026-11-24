@@ -500,16 +500,16 @@ const HERO_PARALLAX = { copy: 84, fadeStart: 0.45 };
 /** The three beats of working together, shown beside the closing call to action. */
 const closingSteps = [
   {
-    title: "You send the brief",
-    body: "Where the site is now, and the one action it should be earning.",
+    title: "You send the email",
+    body: "What the site is now, and what it should be doing.",
   },
   {
     title: "I reply with a plan",
-    body: "Where visitors drop off, and the first change I'd make.",
+    body: "Where it loses people, and the first change I'd make.",
   },
   {
     title: "We start on the first fix",
-    body: "A short first sprint, judged on enquiries rather than visits.",
+    body: "A short first job, measured by enquiries rather than visits.",
   },
 ];
 
@@ -1008,22 +1008,19 @@ export default function Home() {
         <section id="contact" className="closing-section" aria-labelledby="closing-title">
           <div className="content-frame closing-layout">
             <RevealBlock className="closing-copy" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <p className="eyebrow">Next step</p>
-              <h2 id="closing-title">Let's make the next visit worth something.</h2>
+              <h2 id="closing-title">Have a site that should be booking more work?</h2>
               <p className="closing-lede">
-                Tell me what the site should be earning — a call, a booking, a quote request — and I'll reply with where the path breaks and what I'd change first.
+                Tell me what you want it to do — get calls, bookings or quote requests — and I'll reply with what I'd change first.
               </p>
-              <div className="closing-actions">
+              <div className="hero-actions">
                 <a
-                  className="closing-action closing-action--primary"
+                  className="hero-action hero-action--primary"
                   href="mailto:hello@visionfx.studio?subject=Project%20enquiry"
                 >
                   Start a conversation
-                  <span aria-hidden="true">→</span>
                 </a>
-                <a className="quiet-link" href="#approach">See how I work</a>
+                <a className="hero-action hero-action--secondary" href="#projects">See projects</a>
               </div>
-              <p className="closing-meta">hello@visionfx.studio · Remote · Full-Stack Web Dev</p>
             </RevealBlock>
             <RevealGroup className="closing-steps" reducedMotion={!!reducedMotion} variants={groupStagger}>
               {closingSteps.map((step, index) => (
