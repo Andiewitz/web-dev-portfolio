@@ -2,7 +2,7 @@
  * VisionFX design reminder: reference-driven editorial placement with original VisionFX content.
  * Begin with a cream two-column argument and a single dark slab; use imagery only in later supporting sections.
  */
-import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useLayoutEffect, useRef, useState, type ReactNode } from "react";
 import {
   AnimatePresence,
   motion,
@@ -146,16 +146,6 @@ const lineItem = {
   show: { opacity: 1, y: 0, transition: { duration: 0.3, ease: easeOut } },
 };
 
-const sectionReveal = {
-  hidden: { opacity: 0, y: 64, scale: 0.985 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.5, ease: easeOut } },
-};
-
-const sectionRevealMobile = {
-  hidden: { opacity: 0, y: 18, scale: 1 },
-  show: { opacity: 1, y: 0, scale: 1, transition: { duration: 0.4, ease: easeOut } },
-};
-
 /** The hero side copy sweeps in from the left as the headline finishes typing. */
 const heroSideReveal: Variants = {
   hidden: {},
@@ -174,8 +164,14 @@ const groupStagger: Variants = {
 };
 
 const principleIn: Variants = {
-  hidden: { opacity: 0, y: 26 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: easeOut } },
+  hidden: { opacity: 0, y: 36, scale: 0.98 },
+  show: { opacity: 1, y: 0, scale: 1, transition: { type: "spring", stiffness: 190, damping: 22, mass: 0.9 } },
+};
+
+/** Section action rows land like the hero's: a spring per button, one after another. */
+const sectionActionsIn: Variants = {
+  hidden: {},
+  show: { transition: { delayChildren: 0.12, staggerChildren: 0.08 } },
 };
 
 const cardIn: Variants = {
@@ -325,27 +321,35 @@ function MotionTitle({ text, as: Tag = "h3" }: { text: string; as?: "h2" | "h3" 
   return <Tag aria-label={text}><CharacterText text={text} /></Tag>;
 }
 
-function RevealBlock({
-  children,
-  className,
-  reducedMotion,
-  variants,
-}: {
-  children: ReactNode;
-  className?: string;
-  reducedMotion: boolean;
-  variants: Variants;
-}) {
+/**
+ * Section headline that builds character by character when it enters, the same way the
+ * hero types. Spaces stay plain text nodes so the headline still wraps normally.
+ */
+function RevealTitle({ text, id, reducedMotion }: { text: string; id?: string; reducedMotion: boolean }) {
   return (
-    <motion.div
-      className={className}
-      initial={reducedMotion ? false : "hidden"}
-      whileInView={reducedMotion ? undefined : "show"}
-      viewport={{ once: true, margin: "0px 0px -10% 0px" }}
-      variants={variants}
-    >
-      {children}
-    </motion.div>
+    <h2 id={id} aria-label={text}>
+      <motion.span
+        aria-hidden="true"
+        initial={reducedMotion ? false : "hidden"}
+        whileInView={reducedMotion ? undefined : "show"}
+        viewport={{ once: true, margin: "0px 0px -12% 0px" }}
+        variants={charContainer}
+      >
+        {text.split(" ").map((word, wordIndex, words) => (
+          <Fragment key={`${wordIndex}-${word}`}>
+            {/* Nowrap per word: inline-block characters would otherwise break mid-word. */}
+            <span className="reveal-title__word">
+              {Array.from(word).map((character, characterIndex) => (
+                <motion.span className="motion-char" key={`${characterIndex}-${character}`} variants={charItem}>
+                  {character}
+                </motion.span>
+              ))}
+            </span>
+            {wordIndex < words.length - 1 ? " " : null}
+          </Fragment>
+        ))}
+      </motion.span>
+    </h2>
   );
 }
 
@@ -704,10 +708,11 @@ export default function Home() {
   const [navOpen, setNavOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
+  const approachRef = useRef<HTMLElement>(null);
+  const closingRef = useRef<HTMLElement>(null);
   const slabRegionRef = useRef<HTMLElement>(null);
   const reducedMotion = useReducedMotion();
   const isMobile = useResponsiveVariant();
-  const revealVariants = isMobile ? sectionRevealMobile : sectionReveal;
   const navTheme = useNavbarTheme();
 
   // The range covers the whole sticky run: it starts as the slab rises into view and ends
@@ -754,6 +759,19 @@ export default function Home() {
   const q4 = slabFloat(0.325, 38, 10);
   const q5 = slabFloat(0.36, -24, 16);
   const q6 = slabFloat(0.395, 24, 18);
+
+  // Sections past the hero drift against the scroll the way the hero copy does, at a
+  // quarter of the distance so it reads as depth rather than decoration.
+  const { scrollYProgress: approachScroll } = useScroll({
+    target: approachRef,
+    offset: ["start end", "end start"],
+  });
+  const approachDrift = useTransform(approachScroll, [0, 1], [30, -30]);
+  const { scrollYProgress: closingScroll } = useScroll({
+    target: closingRef,
+    offset: ["start end", "end start"],
+  });
+  const closingDrift = useTransform(closingScroll, [0, 1], [26, -26]);
 
   const closeNav = () => setNavOpen(false);
 
@@ -980,15 +998,25 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="approach" className="approach-section">
+        <section ref={approachRef} id="approach" className="approach-section">
           <div className="content-frame approach-layout">
-            <RevealBlock className="approach-heading" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <h2>Most websites don't have a traffic problem. They have a conversion problem.</h2>
-              <p>
+            <motion.div
+              className="approach-heading"
+              style={reducedMotion || isMobile ? undefined : { y: approachDrift }}
+            >
+              <RevealTitle
+                text="Most websites don't have a traffic problem. They have a conversion problem."
+                reducedMotion={!!reducedMotion}
+              />
+              <motion.p
+                initial={reducedMotion ? false : "hidden"}
+                whileInView={reducedMotion ? undefined : "show"}
+                viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+                variants={heroSideLine}
+              >
                 I find where visitors hesitate, remove the friction, and build the shortest path to the action that matters — a call, a booking, or a quote request.
-              </p>
-              <a className="quiet-link" href="#projects">See the work <span aria-hidden="true">→</span></a>
-            </RevealBlock>
+              </motion.p>
+            </motion.div>
             <RevealGroup className="principle-list" reducedMotion={!!reducedMotion} variants={groupStagger}>
               <motion.div className="principle" variants={principleIn}>
                 <h3>Find the leak</h3>
@@ -1011,23 +1039,45 @@ export default function Home() {
           <WorkShowcase reducedMotion={!!reducedMotion} isMobile={!!isMobile} />
         </section>
 
-        <section id="contact" className="closing-section" aria-labelledby="closing-title">
+        <section ref={closingRef} id="contact" className="closing-section" aria-labelledby="closing-title">
           <div className="content-frame closing-layout">
-            <RevealBlock className="closing-copy" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <h2 id="closing-title">Need more calls, bookings or quote requests?</h2>
-              <p className="closing-lede">
+            <motion.div
+              className="closing-copy"
+              style={reducedMotion || isMobile ? undefined : { y: closingDrift }}
+            >
+              <RevealTitle
+                id="closing-title"
+                text="Need more calls, bookings or quote requests?"
+                reducedMotion={!!reducedMotion}
+              />
+              <motion.p
+                className="closing-lede"
+                initial={reducedMotion ? false : "hidden"}
+                whileInView={reducedMotion ? undefined : "show"}
+                viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+                variants={heroSideLine}
+              >
                 Tell me what you want it to do — get calls, bookings or quote requests — and I'll reply with what I'd change first.
-              </p>
-              <div className="hero-actions">
-                <a
+              </motion.p>
+              <motion.div
+                className="hero-actions"
+                initial={reducedMotion ? false : "hidden"}
+                whileInView={reducedMotion ? undefined : "show"}
+                viewport={{ once: true, margin: "0px 0px -10% 0px" }}
+                variants={sectionActionsIn}
+              >
+                <motion.a
                   className="hero-action hero-action--primary"
                   href="mailto:hello@visionfx.studio?subject=Project%20enquiry"
+                  variants={buttonIn}
                 >
                   Start a conversation
-                </a>
-                <a className="hero-action hero-action--secondary" href="#projects">See projects</a>
-              </div>
-            </RevealBlock>
+                </motion.a>
+                <motion.a className="hero-action hero-action--secondary" href="#projects" variants={buttonIn}>
+                  See projects
+                </motion.a>
+              </motion.div>
+            </motion.div>
             <RevealGroup className="closing-steps" reducedMotion={!!reducedMotion} variants={groupStagger}>
               {closingSteps.map((step, index) => (
                 <motion.div key={step.title} className="closing-step" variants={principleIn}>
