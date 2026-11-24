@@ -711,9 +711,11 @@ export default function Home() {
   const revealVariants = isMobile ? sectionRevealMobile : sectionReveal;
   const navTheme = useNavbarTheme();
 
+  // The range covers the whole sticky run: it starts as the slab rises into view and ends
+  // only when the stage unpins, so extra region height buys scroll time for every beat.
   const { scrollYProgress } = useScroll({
     target: slabRegionRef,
-    offset: ["start 75vh", "start -10vh"],
+    offset: ["start end", "end end"],
   });
 
   // The hero runs from page load to the moment the slab region pins, so every layer
@@ -732,18 +734,26 @@ export default function Home() {
   );
   const heroParallaxOff = reducedMotion || isMobile;
 
-  const slabScaleX = useTransform(scrollYProgress, [0, 1], [0.86, 1]);
-  const innerY = useTransform(scrollYProgress, [0, 1], [32, 0]);
-  const innerOpacity = useTransform(scrollYProgress, [0, 1], [0.76, 1]);
+  // Eased in three stops so the slab widens, settles, then holds instead of creeping.
+  const slabScaleX = useTransform(scrollYProgress, [0, 0.5, 0.85, 1], [0.86, 0.95, 1, 1]);
+  const headlineOpacity = useTransform(scrollYProgress, [0.12, 0.32], [0, 1]);
+  const headlineY = useTransform(scrollYProgress, [0.12, 0.32], [64, 0]);
+  const subOpacity = useTransform(scrollYProgress, [0.24, 0.46], [0, 1]);
+  const subY = useTransform(scrollYProgress, [0.24, 0.46], [32, 0]);
+  const slabStill = reducedMotion || isMobile;
 
-  const floatY = (from: number, to: number) =>
-    useTransform(scrollYProgress, [0, 1], [from, to]);
-  const q1Y = floatY(60, -60);
-  const q2Y = floatY(-40, 80);
-  const q3Y = floatY(40, -100);
-  const q4Y = floatY(-80, 50);
-  const q5Y = floatY(80, -40);
-  const q6Y = floatY(-30, 100);
+  // Each question waits its turn, then branches out from the statement as it fades in.
+  const slabFloat = (start: number, x: number, y: number) => ({
+    opacity: useTransform(scrollYProgress, [start, start + 0.16], [0, 1]),
+    x: useTransform(scrollYProgress, [start, 1], [0, x]),
+    y: useTransform(scrollYProgress, [start, 1], [0, y]),
+  });
+  const q1 = slabFloat(0.42, -34, -26);
+  const q2 = slabFloat(0.48, 34, -18);
+  const q3 = slabFloat(0.54, -46, 10);
+  const q4 = slabFloat(0.6, 46, 14);
+  const q5 = slabFloat(0.66, -28, 22);
+  const q6 = slabFloat(0.72, 28, 26);
 
   const closeNav = () => setNavOpen(false);
 
@@ -943,34 +953,31 @@ export default function Home() {
             <motion.div
               ref={slabRef}
               className="hero-slab"
-              style={reducedMotion || isMobile ? undefined : { scaleX: slabScaleX }}
+              style={slabStill ? undefined : { scaleX: slabScaleX }}
             >
-              <motion.div
-                className="hero-slab__inner"
-                style={reducedMotion || isMobile ? undefined : { y: innerY, opacity: innerOpacity }}
-              >
-                <motion.div
-                  className="questions-statement"
-                  initial={reducedMotion ? false : "hidden"}
-                  whileInView={reducedMotion ? undefined : "show"}
-                  viewport={{ once: true, margin: "0px 0px -12% 0px" }}
-                  variants={sectionReveal}
-                >
-                  <h2 className="questions-headline">
+              <div className="hero-slab__inner">
+                <div className="questions-statement">
+                  <motion.h2
+                    className="questions-headline"
+                    style={slabStill ? undefined : { opacity: headlineOpacity, y: headlineY }}
+                  >
                     A website should earn its keep. Not just look good.
-                  </h2>
-                  <p className="questions-sub">
+                  </motion.h2>
+                  <motion.p
+                    className="questions-sub"
+                    style={slabStill ? undefined : { opacity: subOpacity, y: subY }}
+                  >
                     Every screen is a salesperson. I design the path from first impression to enquiry, remove the friction that loses customers, and treat speed as a business metric — more qualified leads, fewer abandoned visits, and a site your team can run without calling a developer.
-                  </p>
-                </motion.div>
-              </motion.div>
+                  </motion.p>
+                </div>
+              </div>
             </motion.div>
-            <motion.span className="float-q float-q--1" style={reducedMotion || isMobile ? undefined : { y: q1Y }}>where are visitors dropping off?</motion.span>
-            <motion.span className="float-q float-q--2" style={reducedMotion || isMobile ? undefined : { y: q2Y }}>does this page turn interest into enquiries?</motion.span>
-            <motion.span className="float-q float-q--3" style={reducedMotion || isMobile ? undefined : { y: q3Y }}>how fast does it load on a phone?</motion.span>
-            <motion.span className="float-q float-q--4" style={reducedMotion || isMobile ? undefined : { y: q4Y }}>can customers find what they need in three clicks?</motion.span>
-            <motion.span className="float-q float-q--5" style={reducedMotion || isMobile ? undefined : { y: q5Y }}>what is a slow site costing you in lost sales?</motion.span>
-            <motion.span className="float-q float-q--6" style={reducedMotion || isMobile ? undefined : { y: q6Y }}>can your team update it without a developer?</motion.span>
+            <motion.span className="float-q float-q--1" style={slabStill ? undefined : q1}>where are visitors dropping off?</motion.span>
+            <motion.span className="float-q float-q--2" style={slabStill ? undefined : q2}>does this page turn interest into enquiries?</motion.span>
+            <motion.span className="float-q float-q--3" style={slabStill ? undefined : q3}>how fast does it load on a phone?</motion.span>
+            <motion.span className="float-q float-q--4" style={slabStill ? undefined : q4}>can customers find what they need in three clicks?</motion.span>
+            <motion.span className="float-q float-q--5" style={slabStill ? undefined : q5}>what is a slow site costing you in lost sales?</motion.span>
+            <motion.span className="float-q float-q--6" style={slabStill ? undefined : q6}>can your team update it without a developer?</motion.span>
           </div>
         </section>
 
