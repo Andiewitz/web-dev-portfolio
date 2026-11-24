@@ -503,7 +503,7 @@ const WORK_MOBILE = { card: 26, gap: 9, drag: 1.6 };
  * the action buttons — travels; the portrait and the code line stay put. `fadeStart` is the
  * progress where the copy begins to leave, before the slab edge reaches it.
  */
-const HERO_PARALLAX = { copy: 84, fadeStart: 0.6 };
+const HERO_PARALLAX = { copy: 84, fadeStart: 0.45 };
 
 /** Blurred, over-scaled copy of a screenshot that fills the stage behind the column. */
 function WorkBackdrop({
@@ -717,8 +717,8 @@ export default function Home() {
   const heroCopyY = useTransform(heroProgress, [0, 1], [0, -HERO_PARALLAX.copy]);
   const heroCopyOpacity = useTransform(
     heroProgress,
-    [0, HERO_PARALLAX.fadeStart, 1],
-    [1, 1, 0],
+    [0, HERO_PARALLAX.fadeStart, 0.8, 0.92, 1],
+    [1, 1, 0.55, 0.12, 0],
   );
   const heroParallaxOff = reducedMotion || isMobile;
 
@@ -923,7 +923,7 @@ export default function Home() {
                   : { type: "spring", stiffness: 92, damping: 19, mass: 1.05, delay: 0.95 }
               }
             >
-              <img src={portraitImg} alt="Halftone portrait of Andrei on torn paper" />
+              <img src={portraitImg} alt="Halftone portrait of Andrei on torn paper" loading="eager" />
             </motion.div>
           </figure>
         </section>

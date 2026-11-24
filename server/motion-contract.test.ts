@@ -37,9 +37,9 @@ describe("VisionFX motion contract", () => {
     expect(css).not.toContain("@keyframes visionfx-hero-enter");
 
     // Asset references and eager loading are preserved.
-    expect(home).toContain("visionfx-paper-architecture-final_544f85b5.jpg");
-    expect(home).toContain("visionfx-fold-detail-final_2d166ab8.jpg");
-    expect(home).toContain("visionfx-worktable-final_9bf25587.jpg");
+    expect(home).toContain("Meshwork Studio.png");
+    expect(home).toContain("Morrow Architecture.png");
+    expect(home).toContain("Torn Paper Halftone Portrait.webp");
     expect(home).toContain('loading="eager"');
 
     // Reduced-motion fallback is handled by Framer Motion.
