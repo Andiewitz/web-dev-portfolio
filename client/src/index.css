@@ -142,11 +142,6 @@ button { border: 0; }
 .float-q--5 { bottom: 12%; left: 7%; text-align: left; }
 .float-q--6 { bottom: 10%; right: 6%; text-align: right; }
 
-/* Leader lines dropping from each question toward the statement, drawn by scroll progress. */
-.float-q__line { position: absolute; left: 50%; width: 1px; height: 80px; background: rgba(248,243,232,0.26); transform-origin: top center; pointer-events: none; }
-.float-q--1 .float-q__line, .float-q--2 .float-q__line, .float-q--3 .float-q__line, .float-q--4 .float-q__line { top: 100%; margin-top: 12px; }
-.float-q--5 .float-q__line, .float-q--6 .float-q__line { bottom: 100%; margin-bottom: 12px; transform-origin: bottom center; }
-
 @media (max-width: 920px) {
   .float-q--1 { top: 8%; left: 4%; }
   .float-q--2 { top: 8%; right: 4%; }

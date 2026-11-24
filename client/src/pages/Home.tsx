@@ -749,23 +749,12 @@ export default function Home() {
     x: useTransform(scrollYProgress, [start, start + 0.11], [0, x]),
     y: useTransform(scrollYProgress, [start, start + 0.11], [0, y]),
   });
-  // Its leader line draws itself toward the statement just after the question lands.
-  const slabLine = (start: number) => ({
-    opacity: useTransform(scrollYProgress, [start + 0.01, start + 0.04], [0, 1]),
-    scaleY: useTransform(scrollYProgress, [start + 0.01, start + 0.1], [0, 1]),
-  });
   const q1 = slabFloat(0.22, -30, -14);
   const q2 = slabFloat(0.255, 30, -10);
   const q3 = slabFloat(0.29, -38, 8);
   const q4 = slabFloat(0.325, 38, 10);
   const q5 = slabFloat(0.36, -24, 16);
   const q6 = slabFloat(0.395, 24, 18);
-  const l1 = slabLine(0.22);
-  const l2 = slabLine(0.255);
-  const l3 = slabLine(0.29);
-  const l4 = slabLine(0.325);
-  const l5 = slabLine(0.36);
-  const l6 = slabLine(0.395);
 
   const closeNav = () => setNavOpen(false);
 
@@ -984,30 +973,12 @@ export default function Home() {
                 </div>
               </div>
             </motion.div>
-            <motion.span className="float-q float-q--1" style={slabStill ? undefined : q1}>
-              where are visitors dropping off?
-              <motion.span className="float-q__line" aria-hidden="true" style={slabStill ? undefined : l1} />
-            </motion.span>
-            <motion.span className="float-q float-q--2" style={slabStill ? undefined : q2}>
-              does this page turn interest into enquiries?
-              <motion.span className="float-q__line" aria-hidden="true" style={slabStill ? undefined : l2} />
-            </motion.span>
-            <motion.span className="float-q float-q--3" style={slabStill ? undefined : q3}>
-              how fast does it load on a phone?
-              <motion.span className="float-q__line" aria-hidden="true" style={slabStill ? undefined : l3} />
-            </motion.span>
-            <motion.span className="float-q float-q--4" style={slabStill ? undefined : q4}>
-              can customers find what they need in three clicks?
-              <motion.span className="float-q__line" aria-hidden="true" style={slabStill ? undefined : l4} />
-            </motion.span>
-            <motion.span className="float-q float-q--5" style={slabStill ? undefined : q5}>
-              what is a slow site costing you in lost sales?
-              <motion.span className="float-q__line" aria-hidden="true" style={slabStill ? undefined : l5} />
-            </motion.span>
-            <motion.span className="float-q float-q--6" style={slabStill ? undefined : q6}>
-              can your team update it without a developer?
-              <motion.span className="float-q__line" aria-hidden="true" style={slabStill ? undefined : l6} />
-            </motion.span>
+            <motion.span className="float-q float-q--1" style={slabStill ? undefined : q1}>where are visitors dropping off?</motion.span>
+            <motion.span className="float-q float-q--2" style={slabStill ? undefined : q2}>does this page turn interest into enquiries?</motion.span>
+            <motion.span className="float-q float-q--3" style={slabStill ? undefined : q3}>how fast does it load on a phone?</motion.span>
+            <motion.span className="float-q float-q--4" style={slabStill ? undefined : q4}>can customers find what they need in three clicks?</motion.span>
+            <motion.span className="float-q float-q--5" style={slabStill ? undefined : q5}>what is a slow site costing you in lost sales?</motion.span>
+            <motion.span className="float-q float-q--6" style={slabStill ? undefined : q6}>can your team update it without a developer?</motion.span>
           </div>
         </section>
 
