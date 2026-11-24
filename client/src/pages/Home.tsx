@@ -705,7 +705,6 @@ export default function Home() {
   const [scrolled, setScrolled] = useState(false);
   const heroRef = useRef<HTMLElement>(null);
   const slabRegionRef = useRef<HTMLElement>(null);
-  const slabRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
   const isMobile = useResponsiveVariant();
   const revealVariants = isMobile ? sectionRevealMobile : sectionReveal;
@@ -952,7 +951,6 @@ export default function Home() {
         <section ref={slabRegionRef} id="slab-region" className="hero-slab-scroll-region" aria-label="A website should earn its keep, not just look good">
           <div className="hero-slab-stage">
             <motion.div
-              ref={slabRef}
               className="hero-slab"
               style={slabStill ? undefined : { scaleX: slabScaleX }}
             >
