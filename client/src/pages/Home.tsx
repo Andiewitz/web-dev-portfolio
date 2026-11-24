@@ -715,10 +715,12 @@ export default function Home() {
     offset: ["start start", "end start"],
   });
   const heroCopyY = useTransform(heroProgress, [0, 1], [0, -HERO_PARALLAX.copy]);
+  // Even ease-out from `fadeStart` to 0: the copy has already left the viewport by then,
+  // so the ramp only has to stay continuous rather than drop in one fast step.
   const heroCopyOpacity = useTransform(
     heroProgress,
-    [0, HERO_PARALLAX.fadeStart, 0.8, 0.92, 1],
-    [1, 1, 0.55, 0.12, 0],
+    [0, HERO_PARALLAX.fadeStart, 0.59, 0.73, 0.86, 1],
+    [1, 1, 0.84, 0.5, 0.16, 0],
   );
   const heroParallaxOff = reducedMotion || isMobile;
 
