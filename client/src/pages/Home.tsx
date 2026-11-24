@@ -736,24 +736,35 @@ export default function Home() {
 
   // Eased in three stops so the slab widens, settles, then holds instead of creeping.
   const slabScaleX = useTransform(scrollYProgress, [0, 0.5, 0.85, 1], [0.86, 0.95, 1, 1]);
-  const headlineOpacity = useTransform(scrollYProgress, [0.12, 0.32], [0, 1]);
-  const headlineY = useTransform(scrollYProgress, [0.12, 0.32], [64, 0]);
-  const subOpacity = useTransform(scrollYProgress, [0.24, 0.46], [0, 1]);
-  const subY = useTransform(scrollYProgress, [0.24, 0.46], [32, 0]);
+  const headlineOpacity = useTransform(scrollYProgress, [0.14, 0.34], [0, 1]);
+  const headlineY = useTransform(scrollYProgress, [0.14, 0.34], [64, 0]);
+  const subOpacity = useTransform(scrollYProgress, [0.26, 0.46], [0, 1]);
+  const subY = useTransform(scrollYProgress, [0.26, 0.46], [32, 0]);
   const slabStill = reducedMotion || isMobile;
 
   // Each question waits its turn, then branches out from the statement as it fades in.
   const slabFloat = (start: number, x: number, y: number) => ({
-    opacity: useTransform(scrollYProgress, [start, start + 0.16], [0, 1]),
-    x: useTransform(scrollYProgress, [start, 1], [0, x]),
-    y: useTransform(scrollYProgress, [start, 1], [0, y]),
+    opacity: useTransform(scrollYProgress, [start, start + 0.12], [0, 1]),
+    x: useTransform(scrollYProgress, [start, start + 0.3], [0, x]),
+    y: useTransform(scrollYProgress, [start, start + 0.3], [0, y]),
   });
-  const q1 = slabFloat(0.42, -34, -26);
-  const q2 = slabFloat(0.48, 34, -18);
-  const q3 = slabFloat(0.54, -46, 10);
-  const q4 = slabFloat(0.6, 46, 14);
-  const q5 = slabFloat(0.66, -28, 22);
-  const q6 = slabFloat(0.72, 28, 26);
+  // Its leader line draws itself toward the statement just after the question lands.
+  const slabLine = (start: number) => ({
+    opacity: useTransform(scrollYProgress, [start + 0.02, start + 0.1], [0, 1]),
+    scaleY: useTransform(scrollYProgress, [start + 0.02, start + 0.18], [0, 1]),
+  });
+  const q1 = slabFloat(0.5, -34, -26);
+  const q2 = slabFloat(0.55, 34, -18);
+  const q3 = slabFloat(0.6, -46, 10);
+  const q4 = slabFloat(0.65, 46, 14);
+  const q5 = slabFloat(0.7, -28, 22);
+  const q6 = slabFloat(0.75, 28, 26);
+  const l1 = slabLine(0.5);
+  const l2 = slabLine(0.55);
+  const l3 = slabLine(0.6);
+  const l4 = slabLine(0.65);
+  const l5 = slabLine(0.7);
+  const l6 = slabLine(0.75);
 
   const closeNav = () => setNavOpen(false);
 
@@ -972,12 +983,30 @@ export default function Home() {
                 </div>
               </div>
             </motion.div>
-            <motion.span className="float-q float-q--1" style={slabStill ? undefined : q1}>where are visitors dropping off?</motion.span>
-            <motion.span className="float-q float-q--2" style={slabStill ? undefined : q2}>does this page turn interest into enquiries?</motion.span>
-            <motion.span className="float-q float-q--3" style={slabStill ? undefined : q3}>how fast does it load on a phone?</motion.span>
-            <motion.span className="float-q float-q--4" style={slabStill ? undefined : q4}>can customers find what they need in three clicks?</motion.span>
-            <motion.span className="float-q float-q--5" style={slabStill ? undefined : q5}>what is a slow site costing you in lost sales?</motion.span>
-            <motion.span className="float-q float-q--6" style={slabStill ? undefined : q6}>can your team update it without a developer?</motion.span>
+            <motion.span className="float-q float-q--1" style={slabStill ? undefined : q1}>
+              where are visitors dropping off?
+              <motion.span className="float-q__line" aria-hidden="true" style={slabStill ? undefined : l1} />
+            </motion.span>
+            <motion.span className="float-q float-q--2" style={slabStill ? undefined : q2}>
+              does this page turn interest into enquiries?
+              <motion.span className="float-q__line" aria-hidden="true" style={slabStill ? undefined : l2} />
+            </motion.span>
+            <motion.span className="float-q float-q--3" style={slabStill ? undefined : q3}>
+              how fast does it load on a phone?
+              <motion.span className="float-q__line" aria-hidden="true" style={slabStill ? undefined : l3} />
+            </motion.span>
+            <motion.span className="float-q float-q--4" style={slabStill ? undefined : q4}>
+              can customers find what they need in three clicks?
+              <motion.span className="float-q__line" aria-hidden="true" style={slabStill ? undefined : l4} />
+            </motion.span>
+            <motion.span className="float-q float-q--5" style={slabStill ? undefined : q5}>
+              what is a slow site costing you in lost sales?
+              <motion.span className="float-q__line" aria-hidden="true" style={slabStill ? undefined : l5} />
+            </motion.span>
+            <motion.span className="float-q float-q--6" style={slabStill ? undefined : q6}>
+              can your team update it without a developer?
+              <motion.span className="float-q__line" aria-hidden="true" style={slabStill ? undefined : l6} />
+            </motion.span>
           </div>
         </section>
 
