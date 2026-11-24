@@ -313,7 +313,7 @@ button { border: 0; }
   .hero-flow { display: none; }
   .hero-portrait { position: absolute; left: 50%; bottom: 0; width: var(--portrait-w); margin: 0; transform: translateX(-50%); }
 
-  .hero-slab-scroll-region { height: auto; padding: 0 0 72px; }
+  .hero-slab-scroll-region { height: auto; padding: 0; }
   .hero-slab-stage { position: relative; height: auto; overflow: visible; }
   .float-q { display: none; }
   .hero-slab { position: relative; min-height: 420px; border-radius: 0; transform: none !important; }
