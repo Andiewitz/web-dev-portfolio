@@ -43,7 +43,7 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; min-width: 320px; background: var(--canvas); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
+body { margin: 0; background: var(--canvas); color: var(--ink); font-family: var(--font-body); font-size: 17px; line-height: 1.5; -webkit-font-smoothing: antialiased; }
 a, button { font: inherit; }
 a { color: inherit; }
 button { border: 0; }
@@ -300,8 +300,10 @@ button { border: 0; }
   .footer-links { justify-content: flex-start; }
 }
 @media (max-width: 767px) {
-  /* Phone hero: one screen exactly — copy on top, the portrait meeting the slab below it. */
-  .hero-section { display: block; min-height: calc(100svh - 64px); padding: 84px 0 0; }
+  /* Phone hero: copy on top, the portrait meeting the slab below it. The portrait's width is
+     shared with the bottom padding so the copy can never reach the face: 0.8 is the image's
+     height ratio and its top 7% is empty paper, which leaves 0.744 of the width to reserve. */
+  .hero-section { --portrait-w: min(88vw, 44svh); display: block; min-height: calc(100svh - 64px); padding: 84px 0 calc(var(--portrait-w) * 0.744 + 14px); }
   .opening-grid { gap: 18px; }
   .opening-grid h1 { font-size: clamp(34px, 10vw, 44px); }
   .hero-actions { margin-top: 18px; }
@@ -309,7 +311,7 @@ button { border: 0; }
   .opening-statement { max-width: 340px; margin: 0; font-size: 16px; line-height: 1.4; }
   .opening-proof { margin-top: 12px; }
   .hero-flow { display: none; }
-  .hero-portrait { position: absolute; left: 50%; bottom: 0; width: min(88vw, 46svh); margin: 0; transform: translateX(-50%); }
+  .hero-portrait { position: absolute; left: 50%; bottom: 0; width: var(--portrait-w); margin: 0; transform: translateX(-50%); }
 
   .hero-slab-scroll-region { height: auto; padding: 0 0 72px; }
   .hero-slab-stage { position: relative; height: auto; overflow: visible; }
@@ -317,19 +319,20 @@ button { border: 0; }
   .hero-slab { position: relative; min-height: 420px; border-radius: 0; transform: none !important; }
   .hero-slab__inner { width: 100%; min-height: 420px; padding: 26px; }
 }
+@media (max-width: 359px) {
+  /* Smallest phones: pull the type in a step so the hero still lands close to one screen. */
+  .hero-section { padding-top: 72px; }
+  .opening-grid { gap: 14px; }
+  .opening-grid h1 { font-size: 30px; }
+  .hero-actions { margin-top: 16px; }
+  .opening-statement { font-size: 15px; }
+  .opening-proof { margin-top: 10px; }
+}
 @media (max-width: 600px) {
   .content-frame, .site-header__inner, .mobile-nav nav { width: min(100% - 32px, 1180px); }
   .site-header__inner { min-height: 64px; }
   .questions-headline { font-size: clamp(40px, 11vw, 56px); }
   .hero-lede { margin: 24px 0 28px; font-size: 16px; }
-  .work-backdrop { inset: -16%; filter: blur(8px) saturate(1.06) brightness(0.6); }
-  .work-info__title { top: auto; bottom: 24svh; left: 24px; right: 24px; width: auto; translate: 0 0; }
-  .work-info__title h3 { font-size: 26px; }
-  .work-info__aside { top: auto; bottom: 8svh; right: 24px; left: 24px; width: auto; translate: 0 0; gap: 8px; }
-  .work-info__desc { display: none; }
-  .work-counter { right: 24px; bottom: 28px; }
-  .work-card { max-width: 90vw; }
-  .work-card__label { padding: 14px 16px; font-size: 14px; }
   /* Projects on a phone: a readable stack instead of the pinned stage — full-bleed shots,
      the copy inset under them. */
   .work-static { gap: 56px; padding: 64px 20px 80px; }
