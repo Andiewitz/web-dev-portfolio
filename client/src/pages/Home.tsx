@@ -492,7 +492,6 @@ type Project = (typeof projects)[number];
  * layout, so one card takes ~118svh of page scroll instead of a single screen.
  */
 const WORK_DESKTOP = { card: 50, gap: 8, drag: 1.95 };
-const WORK_MOBILE = { card: 26, gap: 9, drag: 1.6 };
 
 /**
  * Hero parallax in px over the hero's own scroll range. Only the copy — the headline and
@@ -591,12 +590,39 @@ function WorkCard({
  * full card step so the background turns slowly rather than snapping.
  */
 function WorkShowcase({ reducedMotion, isMobile }: { reducedMotion: boolean; isMobile: boolean }) {
+  // Phones get the plain stacked list: the pinned stage needs a full-screen viewport and
+  // leaves the captions fighting the card for room. Choosing here keeps the stage's scroll
+  // hooks out of the tree when it is not rendered.
+  if (reducedMotion || isMobile) return <WorkStatic />;
+  return <WorkStage reducedMotion={reducedMotion} />;
+}
+
+function WorkStatic() {
+  return (
+    <div className="work-static">
+      {projects.map((project) => (
+        <figure className="work-static__item" key={project.title}>
+          <img src={project.image} alt={`${project.title} — ${project.category}`} loading="lazy" />
+          <figcaption>
+            <span>{project.category} · {project.date}</span>
+            <strong style={{ fontFamily: project.titleFont }}>{project.title}</strong>
+            <a href={project.href ?? "#projects"} {...(project.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
+              {project.cta} <span aria-hidden="true">→</span>
+            </a>
+          </figcaption>
+        </figure>
+      ))}
+    </div>
+  );
+}
+
+function WorkStage({ reducedMotion }: { reducedMotion: boolean }) {
   const stageRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: stageRef,
     offset: ["start start", "end end"],
   });
-  const metrics = isMobile ? WORK_MOBILE : WORK_DESKTOP;
+  const metrics = WORK_DESKTOP;
   const step = metrics.card + metrics.gap;
   const index = useTransform(scrollYProgress, [0, 1], [0, projects.length - 1]);
   const trackY = useTransform(
@@ -610,25 +636,6 @@ function WorkShowcase({ reducedMotion, isMobile }: { reducedMotion: boolean; isM
     const next = Math.min(projects.length - 1, Math.max(0, Math.round(value)));
     setActive((current) => (current === next ? current : next));
   });
-
-  if (reducedMotion) {
-    return (
-      <div className="work-static">
-        {projects.map((project) => (
-          <figure className="work-static__item" key={project.title}>
-            <img src={project.image} alt={`${project.title} — ${project.category}`} loading="lazy" />
-            <figcaption>
-              <span>{project.category} · {project.date}</span>
-              <strong style={{ fontFamily: project.titleFont }}>{project.title}</strong>
-              <a href={project.href ?? "#projects"} {...(project.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
-                {project.cta} <span aria-hidden="true">→</span>
-              </a>
-            </figcaption>
-          </figure>
-        ))}
-      </div>
-    );
-  }
 
   const runway = (projects.length - 1) * step * metrics.drag;
   const activeProject = projects[active];
