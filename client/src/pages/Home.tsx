@@ -1008,7 +1008,7 @@ export default function Home() {
         <section id="contact" className="closing-section" aria-labelledby="closing-title">
           <div className="content-frame closing-layout">
             <RevealBlock className="closing-copy" reducedMotion={!!reducedMotion} variants={revealVariants}>
-              <h2 id="closing-title">Have a site that should be booking more work?</h2>
+              <h2 id="closing-title">Need more calls, bookings or quote requests?</h2>
               <p className="closing-lede">
                 Tell me what you want it to do — get calls, bookings or quote requests — and I'll reply with what I'd change first.
               </p>
