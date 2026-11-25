@@ -56,7 +56,7 @@ const projects: Project[] = [
     image: kemetImg,
   },
   {
-    title: "Furnway",
+    title: "Fernway",
     titleFont: "'Geomini', system-ui, sans-serif",
     description: "A product analytics tool needed to explain account risk without a sales call. The page names the problem first, then shows the live workspace, so the product can be judged before signing up.",
     outcome: "More signups from the page",
