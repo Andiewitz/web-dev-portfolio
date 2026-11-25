@@ -17,13 +17,10 @@ import {
 import { Menu, X } from "lucide-react";
 import Wordmark from "@/components/Wordmark";
 import CodeFlowBackground from "@/components/CodeFlowBackground";
-import meshworkImg from "@/assets/Meshwork Studio.png";
-import hefestusImg from "@/assets/Festus.png";
-import morrowImg from "@/assets/Morrow Architecture.png";
-import matchaImg from "@/assets/Matcha.png";
-import cafeLibreImg from "@/assets/Cafe Libre.png";
-import comfortProPreviewImg from "@/assets/Comfort Pro Preview.png";
-import elevateHealthPreviewImg from "@/assets/Elevate Health Preview.png";
+import kemetImg from "@/assets/Kemet.webp";
+import furnwayImg from "@/assets/Furnway.webp";
+import forkfastImg from "@/assets/Forkfast.webp";
+import hearthLoomImg from "@/assets/Hearth and Loom.webp";
 import portraitImg from "@/assets/Torn Paper Halftone Portrait.webp";
 
 const navItems = [
@@ -31,90 +28,64 @@ const navItems = [
   { href: "#contact", label: "Contact" },
 ];
 
-const projects = [
+type Project = {
+  title: string;
+  titleFont: string;
+  description: string;
+  outcome: string;
+  cta: string;
+  /** Left out until the site has a public URL; the card and caption drop the link when it is missing. */
+  href?: string;
+  date: string;
+  category: string;
+  buttonLabel: string;
+  image: string;
+};
+
+const projects: Project[] = [
   {
-    title: "Comfort Pro",
+    title: "Kemet",
     titleFont: "'Bricolage Grotesque', system-ui, sans-serif",
-    description: "A family-owned HVAC company needed urgent repair searches to become booked jobs. Clear service paths, trust signals, and a fast mobile experience make the next step obvious.",
-    outcome: "More qualified service calls",
+    description: "A tour operator selling Egypt trips needed the landscape to carry the page and the booking to stay in reach. Full-bleed photography, clear tour routes, and one Book now button start the enquiry.",
+    outcome: "More tour enquiries",
     cta: "View live site",
-    href: "https://comfort-pro-nu.vercel.app/",
     date: "2026",
-    category: "Service Website",
+    category: "Travel Website",
     buttonLabel: "View project",
-    image: comfortProPreviewImg,
+    image: kemetImg,
   },
   {
-    title: "Elevate Health",
-    titleFont: "'DM Serif Display', Georgia, serif",
-    description: "A chiropractic practice needed patients to understand their options and book with confidence. The site leads with clear care pathways and a simple route to a first visit.",
-    outcome: "More first-visit bookings",
-    cta: "View live site",
-    href: "https://elevate-health-nu.vercel.app/",
-    date: "2026",
-    category: "Healthcare Website",
-    buttonLabel: "View project",
-    image: elevateHealthPreviewImg,
-  },
-  {
-    title: "Meshwork Studio",
+    title: "Furnway",
     titleFont: "'Geomini', system-ui, sans-serif",
-    description: "A diagramming platform for systems architects needed to stay smooth under complex diagrams. Real-time sync and a fast canvas make product demos feel instant and credible.",
-    outcome: "Smoother product demos",
+    description: "A product analytics tool needed to explain account risk without a sales call. The page names the problem first, then shows the live workspace, so the product can be judged before signing up.",
+    outcome: "More signups from the page",
     cta: "View live site",
-    href: "https://meshwork-studiocom.vercel.app/",
     date: "2026",
-    category: "Web Application",
+    category: "SaaS Product Site",
     buttonLabel: "View project",
-    image: meshworkImg,
+    image: furnwayImg,
   },
   {
-    title: "Hefestus",
+    title: "Forkfast",
+    titleFont: "'Bricolage Grotesque', system-ui, sans-serif",
+    description: "A burger delivery brand needed appetite to survive the screen. Product photography at full size, ratings beside the hero, and a one-step order button keep the path to checkout short.",
+    outcome: "More direct orders",
+    cta: "View live site",
+    date: "2026",
+    category: "Food Ordering",
+    buttonLabel: "View project",
+    image: forkfastImg,
+  },
+  {
+    title: "Hearth & Loom",
     titleFont: "'Lora', Georgia, serif",
-    description: "A retail platform with a powerful product needed a website that could explain it quickly. The site turns a complex offer into a clear, credible path to a demo.",
-    outcome: "Clearer path to demo",
-    cta: "View live site",
-    href: "https://festus-five.vercel.app/",
-    date: "2026",
-    category: "Full-Stack SaaS",
-    buttonLabel: "View project",
-    image: hefestusImg,
-  },
-  {
-    title: "Morrow Bureau",
-    titleFont: "'DM Serif Display', Georgia, serif",
-    description: "An architecture practice needed a digital archive that matched the quality of its built work. Editorial pacing and strong imagery make the practice memorable.",
+    description: "An interior studio needed a portfolio that felt like its rooms. Large photography, a warm quiet palette, and a short route to the studio make the work easy to trust and to enquire about.",
     outcome: "Stronger project enquiries",
     cta: "View live site",
-    href: "https://kononenko-recreation.vercel.app/",
     date: "2026",
-    category: "Digital Archive",
+    category: "Studio Website",
     buttonLabel: "View project",
-    image: morrowImg,
-  },
-  {
-    title: "Matcha",
-    titleFont: "'DM Serif Display', Georgia, serif",
-    description: "A ceremonial matcha store needed to sell a sensory product online. Origin story, ritual, and a frictionless checkout build trust before the first purchase.",
-    outcome: "Higher checkout confidence",
-    cta: "View live site",
-    href: "https://matcha-haven.vercel.app/",
-    date: "2025",
-    category: "E-Commerce",
-    buttonLabel: "View project",
-    image: matchaImg,
-  },
-  {
-    title: "Café Libre",
-    titleFont: "'Bricolage Grotesque', system-ui, sans-serif",
-    description: "An artisanal coffee house needed a web presence that felt as considered as its roast. Ambient visuals and mobile ordering turn interest into a visit.",
-    outcome: "More table-side orders",
-    cta: "View live site",
-    href: "https://cafe-libre.vercel.app/",
-    date: "2025",
-    category: "Web Experience",
-    buttonLabel: "View project",
-    image: cafeLibreImg,
+    image: hearthLoomImg,
   },
 ];
 
@@ -485,8 +456,6 @@ function TypewriterLine({
   );
 }
 
-type Project = (typeof projects)[number];
-
 /**
  * Size of the work column. `drag` multiplies the scroll runway without changing the
  * layout, so one card takes ~118svh of page scroll instead of a single screen.
@@ -568,7 +537,7 @@ function WorkCard({
   return (
     <motion.a
       className="work-card"
-      href={project.href ?? "#projects"}
+      href={project.href}
       {...(project.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}
       style={{
         height: `${cardHeight}svh`,
@@ -606,9 +575,11 @@ function WorkStatic() {
           <figcaption>
             <span>{project.category} · {project.date}</span>
             <strong style={{ fontFamily: project.titleFont }}>{project.title}</strong>
-            <a href={project.href ?? "#projects"} {...(project.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}>
-              {project.cta} <span aria-hidden="true">→</span>
-            </a>
+            {project.href && (
+              <a href={project.href} target="_blank" rel="noopener noreferrer">
+                {project.cta} <span aria-hidden="true">→</span>
+              </a>
+            )}
           </figcaption>
         </figure>
       ))}
@@ -691,13 +662,11 @@ function WorkStage({ reducedMotion }: { reducedMotion: boolean }) {
               <div className="work-info__aside">
                 <p className="work-info__outcome">{activeProject.outcome}</p>
                 <p className="work-info__desc">{activeProject.description}</p>
-                <a
-                  className="work-info__cta"
-                  href={activeProject.href ?? "#projects"}
-                  {...(activeProject.href ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                >
-                  {activeProject.cta} <span aria-hidden="true">→</span>
-                </a>
+                {activeProject.href && (
+                  <a className="work-info__cta" href={activeProject.href} target="_blank" rel="noopener noreferrer">
+                    {activeProject.cta} <span aria-hidden="true">→</span>
+                  </a>
+                )}
               </div>
             </motion.div>
           </AnimatePresence>
