@@ -14,7 +14,7 @@ import {
   type MotionValue,
   type Variants,
 } from "framer-motion";
-import { Menu, X, Github, Linkedin, Twitter, Rss } from "lucide-react";
+import { Menu, X, Github, Linkedin, Twitter, Rss, Mail } from "lucide-react";
 import Wordmark from "@/components/Wordmark";
 import CodeFlowBackground from "@/components/CodeFlowBackground";
 import kemetImg from "@/assets/Kemet.webp";
@@ -926,6 +926,12 @@ export default function Home() {
               <motion.p className="opening-proof" variants={heroSideLine}>
                 Full-Stack Web Dev · UI Engineering · Open to work
               </motion.p>
+              <motion.div className="hero-socials" variants={heroSideLine}>
+                <a href="mailto:gracefulandrei@gmail.com" aria-label="Email"><Mail size={18} /></a>
+                <a href="https://github.com/Andiewitz" rel="noopener noreferrer" target="_blank" aria-label="GitHub"><Github size={18} /></a>
+                <a href="https://www.linkedin.com/in/andrei-gamarcha-b02017390" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn"><Linkedin size={18} /></a>
+                <a href="https://x.com/andrei_gracie" rel="noopener noreferrer" target="_blank" aria-label="X"><Twitter size={18} /></a>
+              </motion.div>
             </motion.div>
           </motion.div>
           <figure className="hero-portrait">
