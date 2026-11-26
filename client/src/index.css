@@ -245,7 +245,7 @@ button { border: 0; }
 .footer-layout { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: clamp(28px, 4vw, 56px); align-items: start; padding-bottom: 56px; border-bottom: 0.5px solid var(--hairline-dark); }
 .footer-col h4.footer-heading { margin: 0 0 18px; font-family: var(--font-mono); font-size: 10px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-muted); }
 .footer-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
-.footer-socials { flex-direction: row; gap: 16px; align-items: center; }
+.footer-col ul.footer-socials { flex-direction: row; gap: 16px; align-items: center; }
 .footer-socials a { display: inline-flex; align-items: center; justify-content: center; }
 .footer-col li { font-size: 14px; color: rgba(251,248,241,0.78); }
 .footer-col a { color: var(--paper); text-decoration: none; transition: color 150ms var(--ease-out); }
