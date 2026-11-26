@@ -923,9 +923,6 @@ export default function Home() {
               <motion.p className="opening-statement" variants={heroSideLine}>
                 Fast, accessible sites that make a good first impression in seconds, then turn that visit into an enquiry, a booking or a sale.
               </motion.p>
-              <motion.p className="opening-proof" variants={heroSideLine}>
-                Full-Stack Web Dev · UI Engineering · Open to work
-              </motion.p>
               <motion.div className="hero-socials" variants={heroSideLine}>
                 <a href="mailto:gracefulandrei@gmail.com" aria-label="Email"><Mail size={18} /></a>
                 <a href="https://github.com/Andiewitz" rel="noopener noreferrer" target="_blank" aria-label="GitHub"><Github size={18} /></a>
