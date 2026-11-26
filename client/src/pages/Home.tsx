@@ -804,7 +804,7 @@ export default function Home() {
             ))}
           </motion.nav>
           <motion.a
-            href="mailto:hello@visionfx.studio"
+            href="mailto:gracefulandrei@gmail.com"
             className="header-cta"
             initial={reducedMotion ? false : "hidden"}
             animate="show"
@@ -861,7 +861,7 @@ export default function Home() {
                     {item.label}
                   </motion.a>
                 ))}
-                <motion.a href="mailto:hello@visionfx.studio" onClick={closeNav} variants={mobileLinkIn}>
+                <motion.a href="mailto:gracefulandrei@gmail.com" onClick={closeNav} variants={mobileLinkIn}>
                   Start a conversation
                 </motion.a>
               </motion.nav>
@@ -904,7 +904,7 @@ export default function Home() {
               >
                 <motion.a
                   className="hero-action hero-action--primary"
-                  href="mailto:hello@visionfx.studio"
+                  href="mailto:gracefulandrei@gmail.com"
                   variants={buttonIn}
                 >Start a conversation</motion.a>
                 <motion.a
@@ -1048,7 +1048,7 @@ export default function Home() {
               >
                 <motion.a
                   className="hero-action hero-action--primary"
-                  href="mailto:hello@visionfx.studio?subject=Project%20enquiry"
+                  href="mailto:gracefulandrei@gmail.com?subject=Project%20enquiry"
                   variants={buttonIn}
                 >
                   Start a conversation
@@ -1082,7 +1082,7 @@ export default function Home() {
               <p className="footer-tagline">
                 Web developer building fast, responsive, and accessible digital products. Full-stack TypeScript, React, Next.js, and modern UI engineering.
               </p>
-              <a className="footer-email" href="mailto:hello@visionfx.studio">hello@visionfx.studio</a>
+              <a className="footer-email" href="mailto:gracefulandrei@gmail.com">gracefulandrei@gmail.com</a>
             </motion.div>
             <motion.nav className="footer-col" aria-label="Sitemap" variants={footerColIn}>
               <h4 className="footer-heading">Sitemap</h4>
@@ -1104,9 +1104,9 @@ export default function Home() {
             <motion.nav className="footer-col" aria-label="Social" variants={footerColIn}>
               <h4 className="footer-heading">Elsewhere</h4>
               <ul>
-                <li><a href="https://github.com/" rel="noopener noreferrer" target="_blank">GitHub</a></li>
-                <li><a href="https://www.linkedin.com/" rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
-                <li><a href="https://twitter.com/" rel="noopener noreferrer" target="_blank">Twitter</a></li>
+                <li><a href="https://github.com/Andiewitz" rel="noopener noreferrer" target="_blank">GitHub</a></li>
+                <li><a href="https://www.linkedin.com/in/andrei-gamarcha-b02017390" rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
+                <li><a href="https://x.com/andrei_gracie" rel="noopener noreferrer" target="_blank">X</a></li>
                 <li><a href="/rss.xml">RSS</a></li>
               </ul>
             </motion.nav>
