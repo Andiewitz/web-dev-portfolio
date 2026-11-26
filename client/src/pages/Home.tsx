@@ -14,7 +14,7 @@ import {
   type MotionValue,
   type Variants,
 } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Github, Linkedin, Twitter, Rss } from "lucide-react";
 import Wordmark from "@/components/Wordmark";
 import CodeFlowBackground from "@/components/CodeFlowBackground";
 import kemetImg from "@/assets/Kemet.webp";
@@ -1103,11 +1103,11 @@ export default function Home() {
             </motion.nav>
             <motion.nav className="footer-col" aria-label="Social" variants={footerColIn}>
               <h4 className="footer-heading">Elsewhere</h4>
-              <ul>
-                <li><a href="https://github.com/Andiewitz" rel="noopener noreferrer" target="_blank">GitHub</a></li>
-                <li><a href="https://www.linkedin.com/in/andrei-gamarcha-b02017390" rel="noopener noreferrer" target="_blank">LinkedIn</a></li>
-                <li><a href="https://x.com/andrei_gracie" rel="noopener noreferrer" target="_blank">X</a></li>
-                <li><a href="/rss.xml">RSS</a></li>
+              <ul className="footer-socials">
+                <li><a href="https://github.com/Andiewitz" rel="noopener noreferrer" target="_blank" aria-label="GitHub"><Github size={18} /></a></li>
+                <li><a href="https://www.linkedin.com/in/andrei-gamarcha-b02017390" rel="noopener noreferrer" target="_blank" aria-label="LinkedIn"><Linkedin size={18} /></a></li>
+                <li><a href="https://x.com/andrei_gracie" rel="noopener noreferrer" target="_blank" aria-label="X"><Twitter size={18} /></a></li>
+                <li><a href="/rss.xml" aria-label="RSS"><Rss size={18} /></a></li>
               </ul>
             </motion.nav>
           </RevealGroup>
